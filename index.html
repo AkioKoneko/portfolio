@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alexandr Detushev — Game Design Portfolio</title>
+  <meta name="description" content="Game Design Portfolio of Alexandr Detushev — Lead Game Designer at Warspear Online. 6+ years of class design, endgame systems, long-term progression, and live economy." />
+  <meta property="og:title" content="Alexandr Detushev — Game Design Portfolio" />
+  <meta property="og:description" content="Lead Game Designer on Warspear Online. Case studies and deep dives on playable classes, competitive guild raids, talent systems, and more." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Variables ────────────────────────────────────── */
+    :root {
+      --bg-primary:       #111318;
+      --bg-secondary:     #1a1e26;
+      --bg-tertiary:      #222733;
+      --accent:           #6C9EFF;
+      --accent-secondary: #9B7EFF;
+      --text-primary:     #E8EAF0;
+      --text-secondary:   #8A8FA8;
+      --border:           #2E3347;
+      --heading-color:    #FFFFFF;
+      --content-width:    860px;
+      --nav-height:       60px;
+    }
+
+    /* ── Reset ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── Width handle ─────────────────────────────────── */
+    #width-handle {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      height: 8px;
+      cursor: ew-resize;
+      z-index: 999;
+      background: transparent;
+      transition: background 0.2s;
+    }
+    #width-handle:hover,
+    #width-handle.dragging { background: rgba(108, 158, 255, 0.25); }
+
+    #width-tooltip {
+      position: fixed;
+      top: calc(var(--nav-height) + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-tertiary);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 1000;
+    }
+    #width-tooltip.visible { opacity: 1; }
+
+    /* ── Navbar ───────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+      background: transparent;
+      transition: background 0.3s, border-bottom 0.3s;
+    }
+    #navbar.scrolled {
+      background: rgba(17, 19, 24, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    @media (max-width: 640px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-height);
+        right: 0;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 0 0 10px 10px;
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+        min-width: 180px;
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ── Content wrapper ──────────────────────────────── */
+    .content-wrapper {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: calc(var(--nav-height) + 2.5rem) 1.5rem 4rem;
+    }
+
+    /* ── Typography ───────────────────────────────────── */
+    h1, h2, h3, h4 {
+      color: var(--heading-color);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .page-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    h1 { font-size: 1.75rem; margin: 2.5rem 0 1rem; }
+    h2 { font-size: 1.5rem;  margin: 3rem 0 1rem; letter-spacing: -0.01em; }
+    h3 { font-size: 1.2rem;  margin: 2.5rem 0 0.75rem; color: var(--accent); }
+    h4 { font-size: 1rem; margin: 1.5rem 0 0.5rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; }
+
+    p { margin: 0.6em 0; color: var(--text-primary); }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; text-decoration: underline; }
+
+    ul, ol { padding-left: 1.6em; margin: 0.6em 0; }
+    li { margin: 0.3em 0; }
+    ul li { list-style-type: disc; }
+    ul li::marker { color: var(--accent); }
+
+    strong { color: var(--heading-color); font-weight: 600; }
+    em { color: var(--text-secondary); font-style: italic; }
+
+    hr {
+      border: none;
+      border-bottom: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    .contact-line {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .contact-line a { color: var(--accent); }
+
+    /* ── Section divider header ───────────────────────── */
+    .section-banner {
+      width: 100%;
+      border-radius: 10px;
+      margin: 1rem 0 1.5rem;
+      display: block;
+    }
+
+    /* ── Images ───────────────────────────────────────── */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+    .img-center {
+      margin: 1rem auto;
+      display: block;
+    }
+    .img-full {
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    /* ── Column grid (2-col image layout) ─────────────── */
+    .column-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 1rem 0;
+    }
+    @media (max-width: 600px) {
+      .column-grid { grid-template-columns: 1fr; }
+    }
+    .column-grid img { width: 100%; }
+
+    /* ── Accordion ────────────────────────────────────── */
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 1rem 0;
+      background: var(--bg-secondary);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      text-align: left;
+      color: var(--heading-color);
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: background 0.2s;
+      gap: 0.75rem;
+    }
+    .accordion-header:hover { background: rgba(108, 158, 255, 0.06); }
+
+    .accordion-arrow {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.25s;
+      color: var(--text-secondary);
+    }
+    .accordion[aria-expanded="false"] .accordion-arrow { transform: rotate(-90deg); }
+
+    .accordion-body {
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .accordion[aria-expanded="false"] .accordion-body { max-height: 0 !important; }
+
+    .accordion-inner {
+      padding: 0 1.25rem 1.25rem;
+    }
+    .accordion-inner p,
+    .accordion-inner li { font-size: 0.95rem; }
+    .accordion-inner h4 { margin-top: 1.25rem; }
+
+    /* ── TOC card ─────────────────────────────────────── */
+    .toc-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .toc-card .toc-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .toc-parent {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0.75rem 0 0.25rem;
+    }
+    .toc-parent a { color: var(--text-primary); }
+    .toc-parent a:hover { color: var(--accent); text-decoration: none; }
+    .toc-children {
+      padding-left: 1rem;
+      border-left: 2px solid var(--border);
+      margin-left: 0.25rem;
+    }
+    .toc-child {
+      display: block;
+      font-size: 0.825rem;
+      color: var(--text-secondary);
+      padding: 0.2rem 0;
+      transition: color 0.2s;
+    }
+    .toc-child:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Callout ──────────────────────────────────────── */
+    .callout {
+      background: var(--bg-tertiary);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+
+    /* ── Links list ───────────────────────────────────── */
+    .links-list { list-style: none; padding: 0; }
+    .links-list li { margin: 0.5rem 0; }
+    .links-list a {
+      color: var(--accent);
+      font-size: 0.9rem;
+      word-break: break-all;
+    }
+    .links-group-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 1.2rem 0 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    /* ── Video links ──────────────────────────────────── */
+    .video-link {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 0.5rem 0;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    .video-link:hover { border-color: var(--accent); text-decoration: none; }
+    .video-link-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .video-link-text { font-size: 0.875rem; color: var(--text-primary); }
+
+    /* ── Dev challenges ───────────────────────────────── */
+    .challenge-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+    .challenge-list li {
+      padding: 0.5rem 0 0.5rem 1rem;
+      border-left: 2px solid var(--border);
+      margin: 0.4rem 0;
+      font-size: 0.95rem;
+    }
+    .challenge-list li strong { display: block; color: var(--text-primary); margin-bottom: 0.15rem; }
+    .challenge-list li span { color: var(--text-secondary); font-size: 0.875rem; }
+
+    /* ── Takeaways ────────────────────────────────────── */
+    .takeaways {
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .takeaways-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-secondary);
+      margin-bottom: 0.6rem;
+    }
+    .takeaways ul { margin: 0; }
+    .takeaways li { font-size: 0.9rem; }
+
+    /* ── Section intro ────────────────────────────────── */
+    .section-intro {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin: 0 0 1.5rem;
+    }
+
+    /* ── Reaper note ──────────────────────────────────── */
+    .note-box {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────── -->
+<nav id="navbar">
+  <span class="nav-name">Alexandr Detushev</span>
+  <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#case-studies">Case Studies</a></li>
+    <li><a href="#deep-dives">Deep Dives</a></li>
+  </ul>
+</nav>
+
+<!-- ── Width handle ────────────────────────────────────── -->
+<div id="width-handle" title="Drag to resize content width"></div>
+<div id="width-tooltip"></div>
+
+<!-- ── Content ─────────────────────────────────────────── -->
+<div class="content-wrapper">
+
+  <!-- Page title -->
+  <h1 class="page-title">Game Design Portfolio – Alexandr Detushev</h1>
+  <p class="contact-line">
+    <a href="tel:+382-68-541-158">+382-68-541-158</a> ·
+    <a href="mailto:Sashadetush@gmail.com">Sashadetush@gmail.com</a> ·
+    <a href="https://www.linkedin.com/in/aleksandr-detushev-aa2945234" target="_blank" rel="noopener">LinkedIn</a>
+  </p>
+
+  <hr />
+
+  <!-- ── About ──────────────────────────────────────── -->
+  <h1 id="about">🔥 About me</h1>
+
+  <p>For the past <strong>six years</strong>, I have been working on <a href="https://warspear-online.com/en/" target="_blank" rel="noopener">Warspear Online</a> as a <strong>Lead Game Designer</strong>, contributing to the game's continuous evolution and expansion. My responsibilities include <strong>game balance, event creation, system design, and the development of new character classes and core mechanics</strong>.</p>
+
+  <p><em>Warspear Online</em> is a classic <strong>2D MMORPG</strong> that has been running for over <strong>15 years</strong>. As <strong>one of the first mobile MMORPGs</strong>, it has built a strong and dedicated community over the years. The game is available on multiple platforms, including <a href="https://play.google.com/store/apps/details?id=com.aigrind.warspear" target="_blank" rel="noopener">Google Play</a> and <a href="https://apps.apple.com/app/warspear-online-mmorpg/id444772528" target="_blank" rel="noopener">App Store</a>, and has surpassed <strong>5 million downloads</strong> on Google Play alone.</p>
+
+  <!-- Accordion: What is Warspear Online? -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>What is Warspear Online?</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/warspear_logo.png" alt="Warspear Online logo" class="img-center" style="max-width:336px;" />
+        <div class="column-grid">
+          <img src="assets/images/warspear_gameplay_1.gif" alt="Warspear Online gameplay" />
+          <img src="assets/images/warspear_gameplay_2.gif" alt="Warspear Online gameplay" />
+        </div>
+        <p>Warspear Online is a <strong>retro-style MMORPG</strong> that has traits of classic role-playing games while offering a deep and engaging multiplayer experience. The game features:</p>
+        <ul>
+          <li><strong>Four factions</strong> and <strong>two opposing alliances</strong>, allowing for large-scale PvP battles.</li>
+          <li><strong>20 unique classes</strong>, each with distinct abilities and playstyles.</li>
+          <li>A vast open world with multiple continents, dungeons, and cities to explore.</li>
+          <li>A deep guild system with exclusive PvE raids and competitive guild wars.</li>
+          <li>Dynamic seasonal events and frequent content updates.</li>
+          <li>A rich economy with crafting, trading, and an extensive in-game marketplace.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ── Quick Overview ─────────────────────────────── -->
+  <h1 id="overview">Quick Overview</h1>
+
+  <h4>TL;DR</h4>
+  <p>Lead Game Designer on Warspear Online with 6+ years in live MMORPG development.</p>
+  <p>I focus on class systems, long-term progression, endgame features, and live economy design.</p>
+
+  <h4>What I build</h4>
+  <ul>
+    <li>Playable classes and ecosystem balance across a 20+ class roster</li>
+    <li>Endgame features for high-end players and organized guilds</li>
+    <li>Long-term progression systems such as talents and guild talent trees</li>
+    <li>Daily engagement loops tied to multiple activities and seasonal content</li>
+  </ul>
+
+  <h4>Highlights</h4>
+  <ul>
+    <li>Shipped 4 new playable classes: Templar, Chieftain, Beastmaster, Reaper</li>
+    <li>Built seasonal and rotating Competitive Guild Raids with 15 difficulty levels and leaderboard-driven competition</li>
+    <li>Reworked the Talent system into a long-term progression pillar with stronger build diversity</li>
+    <li>Designed Non-Combat Guild systems that combine daily loops with additional buildcrafting</li>
+  </ul>
+
+  <hr />
+
+  <!-- ── Table of Contents ──────────────────────────── -->
+  <h2 id="contents">Contents</h2>
+  <div class="toc-card">
+    <div class="toc-title">On this page</div>
+
+    <div class="toc-parent"><a href="#case-studies">Case Studies (Summary)</a></div>
+    <div class="toc-children">
+      <a href="#playable-classes-summary" class="toc-child">Playable Classes</a>
+      <a href="#guild-raids-summary" class="toc-child">Competitive Guild Raids</a>
+      <a href="#talents-summary" class="toc-child">Talents and Long-term Progression</a>
+      <a href="#non-combat-guilds-summary" class="toc-child">Non-Combat Guilds</a>
+      <a href="#live-balance" class="toc-child">Live Balance Approach</a>
+      <a href="#catacombs-summary" class="toc-child">Catacombs</a>
+    </div>
+
+    <div class="toc-parent" style="margin-top:1rem;"><a href="#deep-dives">Deep Dives (Details)</a></div>
+    <div class="toc-children">
+      <a href="#playable-classes-detail" class="toc-child">Playable Classes</a>
+      <a href="#guild-raids-detail" class="toc-child">Competitive Guild Raids</a>
+      <a href="#talents-detail" class="toc-child">Talents and Long-term Progression</a>
+      <a href="#non-combat-guilds-detail" class="toc-child">Non-Combat Guilds</a>
+      <a href="#catacombs-detail" class="toc-child">Catacombs</a>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- CASE STUDIES (SUMMARY)                          -->
+  <!-- ════════════════════════════════════════════════ -->
+  <h2 id="case-studies">Case Studies (Summary)</h2>
+  <img src="assets/images/banner_case_studies.png" alt="Case Studies banner" class="section-banner" />
+
+  <!-- Playable Classes Summary -->
+  <h3 id="playable-classes-summary">Playable Classes</h3>
+  <p>I designed and shipped four new playable classes for Warspear Online.</p>
+  <p>The goal was not only to expand the roster, but to fill missing archetypes, open new build and itemization paths, and create reasons for both new and existing players to invest into different characters.</p>
+  <p>Because Warspear Online is a progression-heavy game, class design also affects economy and player trust. New classes can create fresh demand for specific gear paths and upgrades, while balance changes must feel fair for players who already invested a lot of time and money into existing characters.</p>
+
+  <h4>Quick overview</h4>
+  <ul>
+    <li><strong>Templar</strong> — filled a missing control niche for the Guardians alliance. A hybrid tank/support with a high skill ceiling and strong endgame value.</li>
+    <li><strong>Chieftain</strong> — mobility-first and highly solo-friendly. A very popular choice for new players. Uses dual one-handed magical maces, which increased demand for that weapon path.</li>
+    <li><strong>Beastmaster</strong> — a solo-friendly class built around a combat companion. Strong QoL and one of the most accessible classes for beginners. Uses a two-handed spear as a core weapon path, which created strong upgrade pressure.</li>
+    <li><strong>Reaper</strong> — introduced a transformation-based gameplay state, additional resource support, and new UI needs. A strong PvP class with form-based skill changes.</li>
+  </ul>
+
+  <!-- Competitive Guild Raids Summary -->
+  <h3 id="guild-raids-summary">Competitive Guild Raids</h3>
+  <p>Competitive Guild Raids became one of the main endgame pillars for high-level guilds and competitive players.</p>
+  <p>The system combines repeatable guild PvE, leaderboard pressure, and staged difficulty progression. It gives organized groups a clear seasonal goal while also creating strong demand for preparation, optimization, and consumable use.</p>
+
+  <h4>Key points</h4>
+  <ul>
+    <li>Seasonal raid showdowns tied to major events</li>
+    <li>Rotating guild raids that can also exist outside seasonal event structure</li>
+    <li>15 difficulty levels with staged escalation</li>
+    <li>Strong motivation for top guilds through rare rewards, large gold payouts, and leaderboard competition</li>
+  </ul>
+
+  <h4>My role</h4>
+  <ul>
+    <li>Co-designed the overall raid system with another designer</li>
+    <li>Designed all raid encounters end-to-end</li>
+  </ul>
+
+  <h4>Why it matters</h4>
+  <ul>
+    <li>Gives top guilds a real long-term PvE target</li>
+    <li>Creates a strong economy sink through raid preparation and recovery items</li>
+    <li>Increases engagement in other systems because many raid resources are earned elsewhere</li>
+  </ul>
+
+  <!-- Talents Summary -->
+  <h3 id="talents-summary">Talents and Long-term Progression</h3>
+  <p>The Talent system was rebuilt to turn progression into a stronger long-term loop and to give players more meaningful build choices.</p>
+  <p>Before that, many classes had a small number of obvious "best" builds. The new structure created more room for class differentiation, more reasons to keep playing daily content, and more ways to connect progression with events, battle pass, and guild systems.</p>
+
+  <h4>Key points</h4>
+  <ul>
+    <li>Talents are per character and per class</li>
+    <li>Progress comes from multiple activity types, each with its own cap</li>
+    <li>Build switching is supported and also works as a resource sink</li>
+    <li>Event talent trees refresh regularly while class trees evolve over longer cycles</li>
+  </ul>
+
+  <h4>Why it matters</h4>
+  <ul>
+    <li>More build diversity across the roster</li>
+    <li>Stronger daily engagement because progression is spread across multiple loops</li>
+    <li>Better connection between seasonal content and real character growth</li>
+  </ul>
+
+  <!-- Non-Combat Guilds Summary -->
+  <h3 id="non-combat-guilds-summary">Non-Combat Guilds</h3>
+  <p>Non-Combat Guilds were designed as daily progression systems that also extend buildcrafting through guild talent trees.</p>
+  <p>Each guild has its own activity loop and thematic identity, but all of them follow the same core principle: players return because daily reward caps reset, and guild progression adds long-term value beyond the daily routine.</p>
+  <p>At the same time, these guilds are not just "extra chores". Their talent trees create a second layer of character development. Part of that talent progression is class-specific, which means guild progression can directly affect build decisions.</p>
+
+  <h4>Guilds at a glance</h4>
+  <ul>
+    <li><strong>Adventurers</strong> — PvE-focused loop built around repeatable exploration and mini-dungeon style content</li>
+    <li><strong>Assassins</strong> — PvP-focused loop with PvP pressure and PvP boss objectives</li>
+    <li><strong>Mages</strong> — hybrid loop that starts with PvP access pressure and continues into PvE inside the tower</li>
+  </ul>
+
+  <h4>Why it matters</h4>
+  <ul>
+    <li>Adds daily retention loops without relying on only one content type</li>
+    <li>Encourages cooperation because players can access rewards across guild systems with help from others</li>
+    <li>Extends character builds through guild-specific and class-specific talents</li>
+  </ul>
+
+  <!-- Live Balance Approach -->
+  <h3 id="live-balance">Live Balance Approach</h3>
+  <p>In Warspear Online, balance is not only a gameplay problem. It is also a trust problem.</p>
+  <p>Players invest heavily into characters over time, so major balance changes can feel like lost value. My goal is to keep the meta fresh without making players feel punished for past investment.</p>
+
+  <h4>How I approach balance</h4>
+  <ul>
+    <li>Avoid large direct nerfs when possible</li>
+    <li>Strengthen alternatives so players have a positive direction to move into</li>
+    <li>Sometimes change the gameplay loop of an overperforming class instead of only cutting raw power</li>
+    <li>Work closely with community expectations, because changes land better when players already understand the problem</li>
+  </ul>
+
+  <h4>Signals I track</h4>
+  <ul>
+    <li>Forum and Discord sentiment</li>
+    <li>Class activity and popularity trends</li>
+    <li>Monetization behavior, especially around new classes and major reworks</li>
+  </ul>
+
+  <!-- Catacombs Summary -->
+  <h3 id="catacombs-summary">Catacombs</h3>
+  <p>Catacombs is a timed group PvPvE dungeon built around extraction-style reward logic.</p>
+  <p>Inside the mode, players earn virtual loot through PvE objectives and combat, but that loot is not fully safe. If a player dies, part of the rewards drops into the instance and can be taken by others. To convert progress into real rewards, players need to leave before the timer ends through a dedicated extraction point.</p>
+
+  <h4>Why it matters</h4>
+  <ul>
+    <li>Combines PvE progression, PvP pressure, and risk management in one loop</li>
+    <li>Turns survival and exit timing into part of the reward structure</li>
+    <li>Creates tension through loot loss, contested space, and extraction decisions</li>
+    <li>Adds a more modern session-based format on top of a classic MMORPG foundation</li>
+  </ul>
+
+  <!-- Accordion: Official Links & Sources -->
+  <div class="accordion" aria-expanded="true" style="margin-top:2rem;">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Official Links &amp; Sources</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <p class="links-group-title">Classes</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/201611-20200917-update-warspear-online-90-heroes-of-the-new-era-preview/" target="_blank" rel="noopener">Update 9.0 Preview — introduces new classes incl. Templar &amp; Chieftain</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/204623-20200924-update-warspear-online-90-heroes-of-the-new-era-release/" target="_blank" rel="noopener">Update 9.0 Release</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/353775-20220830-update-warspear-online-110-new-legends-preview/" target="_blank" rel="noopener">Update 11.0 Preview — introduces Beastmaster &amp; Reaper</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/356083-20220908-update-warspear-online-110-new-legends-release/" target="_blank" rel="noopener">Update 11.0 Release</a></li>
+        </ul>
+        <p class="links-group-title">Competitive Guild Raids</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/472517-20250522-guild-raids-%E2%80%93-seasons-1-3-infographic/" target="_blank" rel="noopener">Guild Raids – Seasons 1–3 Infographic</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/471360-20250211-guild-raid-results-mandate-of-the-winter-runes/" target="_blank" rel="noopener">Guild Raid Results — example season results post</a></li>
+        </ul>
+        <p class="links-group-title">Talents / Balance</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/475467-20251212-warspear-online-update-132-announcement-part-i/" target="_blank" rel="noopener">Update 13.2 announcement — class skill &amp; talent balance</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/473958-20250913-warspear-online-update-130-tales-of-the-desert-announcement-part-ii/" target="_blank" rel="noopener">Update 13.0 announcement part II — Mage's Guild talents</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- DEEP DIVES (DETAILS)                            -->
+  <!-- ════════════════════════════════════════════════ -->
+  <h2 id="deep-dives">Deep Dives (Details)</h2>
+  <img src="assets/images/banner_deep_dives.png" alt="Deep Dives banner" class="section-banner" />
+  <p class="section-intro">This section goes deeper into design decisions, development challenges, and why specific choices mattered.</p>
+  <p class="section-intro">The Summary section above is meant for a fast read. The blocks below are for people who want more detail on class design, endgame systems, long-term progression, and supporting loops.</p>
+
+  <!-- ── Playable Classes – Deep Dives ──────────── -->
+  <h3 id="playable-classes-detail">Playable Classes</h3>
+  <p class="section-intro">These four classes were designed to fill missing archetypes, expand itemisation paths, and create new long-term character choices.</p>
+  <p class="section-intro">In the deep dives below I focus on design intent, the hardest development problems, and the impact on player behaviour, economy, and role coverage.</p>
+
+  <!-- Templar -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Templar (Sentinels)</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/templar_skill.gif" alt="Templar skill animation" class="img-full" />
+        <div class="column-grid" style="margin-top:0.75rem;">
+          <img src="assets/images/templar_skill_2.gif" alt="Templar skill" />
+          <img src="assets/images/templar_skill_3.gif" alt="Templar skill" />
+        </div>
+
+        <p>Templar was designed to close a missing control niche for the Sentinels. The official class concept describes him as a monk-knight hybrid that supports allies and controls enemies, and the main goal was to help Sentinels catch up with Legion in control tools. (<a href="https://forum.warspear-online.com/index.php?/topic/201611-20200917-update-warspear-online-90-heroes-of-the-new-era-preview/" target="_blank" rel="noopener">Official 9.0 preview</a>)</p>
+
+        <p>In gameplay terms, I wanted a class that feels powerful in coordinated groups and in endgame. Templar is a hybrid tank/support, but not a "comfort pick" for beginners. It has a high skill ceiling. Good timing and positioning matter, and the kit rewards players who enjoy mastery and tactical play.</p>
+
+        <p>A key part of the design was flexibility without losing identity. Templar can wear heavy armor or cloth, and can use either mace + shield or a staff. This was intentional. It lets players build into a frontline controller or a more support-oriented caster style while still staying inside the same core fantasy.</p>
+
+        <p>The control kit was built around creating windows, not permanent lockdown. I wanted strong tools that still feel fair. For example, <em>Reverse Flow</em> creates an area that pushes enemies away and can stun them, which enables space control rather than simple "hard CC spam". <em>Touch of Truth</em> creates a moment where enemies cannot use skills, which is strong but also clearly telegraphed. <em>Whirlwind of Repentance</em> adds slow and later reduces accuracy to make positioning and decision-making matter.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Keeping control strong without turning fights into "you cannot play"</strong><span>I focused on clear windows and positioning requirements instead of permanent lockdown</span></li>
+          <li><strong>Making the kit useful against both auto-attacks and skill-heavy opponents</strong><span>The class needed answers for different combat styles without becoming a universal counter to everything</span></li>
+          <li><strong>Supporting multiple builds without losing identity</strong><span>Heavy armor vs cloth, mace + shield vs staff had to feel like meaningful choices, not a balance trap</span></li>
+          <li><strong>Readability and fairness</strong><span>Strong effects like displacement and skill denial had to be clearly telegraphed so opponents understand what is happening and why</span></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Added a high-skill control archetype for Sentinels</li>
+            <li>Improved endgame group composition options</li>
+            <li>Enabled more tactical PvP and PvE through displacement and skill denial</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chieftain -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Chieftain (Legion)</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/chieftain_banner.gif" alt="Chieftain banner" class="img-full" />
+        <div class="column-grid">
+          <img src="assets/images/chieftain_skill_1.gif" alt="Chieftain skill" />
+          <img src="assets/images/chieftain_skill_2.gif" alt="Chieftain skill" />
+        </div>
+
+        <p>Chieftain was designed as a mobility-first class that feels great in solo play. The goal was a fast and smooth character with strong quality of life, and a kit that helps players move through content without constant friction.</p>
+
+        <p>The core QoL comes from simple things that matter every minute of play. The class can move fast, it has reliable self-healing, and the ability kit is easy to read. You have clear tools for single target fights and clear tools for AoE situations. This makes the class friendly for new players while still feeling satisfying to optimise.</p>
+
+        <p>Players pick Chieftain because it is fast, self-sustained, and easy to understand.</p>
+
+        <p>Itemisation was also an important lever. Chieftain uses one-handed magical maces and can wield two at once. This created a clean gear path and increased demand for that weapon category, including upgrades and enhancements. It gave players a fresh reason to invest into gear even if they already had developed characters.</p>
+
+        <p>I also wanted the class to stay relevant long-term. Chieftain remains one of the most popular classes in the game. That comes from a mix of strong solo value, fast pacing, and a kit that stays useful across many content types.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Making mobility feel powerful without turning the class into "always safe"</strong><span>I aimed for speed and flow, but still kept risk and decision-making</span></li>
+          <li><strong>Keeping the class beginner-friendly without making it shallow for experienced players</strong><span>The kit needed clear value for both new accounts and high-end players</span></li>
+          <li><strong>Itemisation impact without forcing players into one build</strong><span>Dual one-handed magical maces are a strong identity, but the class still needs build room</span></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>A fast and solo-friendly class with strong QoL</li>
+            <li>High new-player adoption and long-term popularity</li>
+            <li>Clear item demand driver through dual one-handed magical maces and related upgrades</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Beastmaster -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Beastmaster (Sentinels)</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <div class="column-grid">
+          <img src="assets/images/beastmaster_skill_1.gif" alt="Beastmaster skill" />
+          <img src="assets/images/beastmaster_skill_2.gif" alt="Beastmaster skill" />
+        </div>
+
+        <p>Beastmaster was designed as a solo-friendly class that feels modern and accessible. Guardians needed a character that new players could pick without pain, and still have real depth later. The core idea was simple: give the player a combat companion that makes solo play reliable, then build a clear and satisfying progression path around it.</p>
+
+        <p>A big part of the class success came from quality of life, but not in a "free power" way. The companion is a permanent summon, not a timed duration. If it dies you have to resummon it, so keeping it alive becomes part of the gameplay skill. This creates a forgiving baseline for solo play, but still punishes mistakes and rewards good play and positioning. The kit stays readable and the class feels good even with average gear, which made it a strong entry point for new players.</p>
+
+        <p>Itemisation was a key lever. Beastmaster uses a two-handed spear as its primary weapon. That choice created a strong gear identity and a clear upgrade pressure. Players invest into spear progression, sharpening, and upgrades. It also opened a fresh equipment path for many players who already had established characters and gear.</p>
+
+        <p>The class was designed to be flexible in group play too. Beastmaster can function as a damage dealer or as a support, so it stays useful beyond early game. For new players it is probably one of the best picks in the game because it is forgiving, but it does not turn into a "brain-off" class at endgame.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Making the companion feel helpful without turning it into an autopilot win condition</strong><span>The companion had to support the player, not replace the player</span></li>
+          <li><strong>Making the companion feel like a real gameplay resource</strong><span>It is a permanent summon, but if it dies you must resummon it, so failure states stay meaningful</span></li>
+          <li><strong>Keeping the class beginner-friendly while still offering depth for experienced players</strong><span>The kit needed clear basics and meaningful optimisation paths</span></li>
+          <li><strong>Building a strong weapon identity without locking the class into a narrow playstyle</strong><span>Two-handed spear is a clear progression driver, but build choices still matter</span></li>
+          <li><strong>Avoiding frustration in solo gameplay</strong><span>QoL and reliability were priorities, but risk and decision-making had to stay</span></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Strong solo class with a companion that reduces friction and supports new players</li>
+            <li>Skill expression through companion survival and resummon failure states</li>
+            <li>Clear monetisation and economy impact through the two-handed spear upgrade path</li>
+            <li>Flexible role options for both solo and group play</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reaper -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Reaper (Legion)</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <div class="column-grid">
+          <img src="assets/images/reaper_skill_1.gif" alt="Reaper skill" />
+          <img src="assets/images/reaper_skill_2.gif" alt="Reaper skill" />
+        </div>
+
+        <p>Reaper was built around one core idea: transformation as a real gameplay state. I wanted a class where your decisions change your entire toolkit, not just numbers. The result is a form-based kit where abilities gain additional properties and become stronger while you are transformed.</p>
+
+        <p>This concept needed clear rules and clear UI. Transformation is not free. It has a cooldown and it requires building a dedicated resource. When you transform, that resource is spent. This creates a natural rhythm: build up, choose the moment, transform, then play a stronger window with improved skills. It also creates counterplay because the opponent can look for the right moments to punish or disengage.</p>
+
+        <p>Because the class relies on state and extra resources, I had to design new UI elements to keep it readable. The player must always understand what form they are in, how close they are to transformation, and what their next options are. Without that clarity the class would feel confusing instead of powerful.</p>
+
+        <p>Reaper was designed to be a strong PvP class. The transformation window creates pressure and timing advantages. If you commit at the wrong moment you can be punished. If you manage your resource and cooldown correctly you can dominate a fight. That makes the class high impact and high expression.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Designing a transformation window that feels powerful but still fair</strong><span>Cooldown and resource gating were essential for balance and counterplay</span></li>
+          <li><strong>Building readable state and resource UI</strong><span>Players must understand form, resource, and timing at a glance</span></li>
+          <li><strong>Keeping PvP power high without removing counterplay</strong><span>Strong windows need clear costs and punish moments</span></li>
+          <li><strong>Avoiding complexity overload</strong><span>Skills change behaviour in form, so clarity and learning curve had to stay manageable</span></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Transformation-based class with a clear build-up and power window loop</li>
+            <li>Skills gain extra properties in form, which changes decision making and combat flow</li>
+            <li>Required new UI elements and additional resource support</li>
+            <li>Strong PvP identity driven by timing windows and state management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ── Competitive Guild Raids – Deep Dives ────── -->
+  <h3 id="guild-raids-detail">Competitive Guild Raids</h3>
+  <p class="section-intro">After expanding the class roster, the next big focus was organised endgame. Competitive Guild Raids became one of the main systems for top guilds. They needed to work both as a repeatable PvE challenge and as a long-term competitive structure with seasonal momentum.</p>
+
+  <img src="assets/images/guild_raid_1.gif" alt="Guild Raid gameplay" class="img-full" />
+
+  <!-- Guild Raids - System -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Competitive Guild Raids — System</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <p>Competitive Guild Raids were designed as an endgame pillar for high-level guilds. The core goal was to create repeatable competitive PvE that strengthens guild identity and creates real reasons to coordinate, practice, and optimise.</p>
+
+        <p>A key design decision was the seasonal structure. Raids run as timed showdowns with leaderboards and clear progression. Difficulty scaling is part of the motivation loop. Players feel growth because each new tier demands better execution, stronger preparation, and better team play. In some seasons the rollout starts with 10 difficulty levels and later expands to 15. This staging helps build momentum and gives guilds time to adapt.</p>
+
+        <p>The raid feature is supported by strong UX. Players can quickly access raid functions, check rewards, track results, and compare guild standings. This makes the system easier to follow and increases participation, because the competitive part is visible and easy to read.</p>
+
+        <p>Economy impact was a major focus. Raid seasons create a strong sink for consumables and entry-related resources. It also boosts engagement in other game modes because many raid prep resources are earned elsewhere. The reward structure supports this loop by offering rare power rewards and large gold gains that matter to top guilds.</p>
+
+        <h4>My role</h4>
+        <p>I co-designed the overall raid system with another designer. I designed all raid encounters end-to-end.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Building a competitive PvE loop that stays fun across repeated runs</strong></li>
+          <li><strong>Difficulty scaling that feels meaningful, not just "more HP"</strong></li>
+          <li><strong>Clear UX for competitive features like rewards, standings, and results</strong></li>
+          <li><strong>Economy impact without turning the system into mandatory grind for everyone</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Seasonal endgame pillar with leaderboard-driven competition</li>
+            <li>15-difficulty scaling model with staged rollout in some seasons</li>
+            <li>Strong engagement driver for top guilds and strong consumable sink</li>
+            <li>Positive cross-mode impact through raid preparation needs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guild Raids - Encounters -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Competitive Guild Raids — Encounters</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/guild_raid_2.gif" alt="Guild Raid encounter" class="img-full" />
+
+        <p>For raids I owned full encounter design. The goal was to make fights that feel like "guild content", not just a boss with numbers. Encounters needed coordination checks, role pressure, and decision points that scale with difficulty.</p>
+
+        <p>A core principle was staged complexity. Lower difficulties teach the fight and establish patterns. After key thresholds the raid introduces new mechanics or stronger versions of existing ones. This keeps progression meaningful and gives guilds new problems to solve instead of repeating the same execution forever.</p>
+
+        <p>Readability mattered a lot. In competitive content players accept failure, but only if it feels fair. Mechanics must be telegraphed, punish windows must be learnable, and success must feel earned. I also had to consider anti-cheese design because high-end groups will always look for degenerate strategies.</p>
+
+        <p>Another important part was resource pressure. Raids naturally push players into preparation and consumption. Healing resources, buffs, and recovery tools become part of strategy. This supports the economy loop without forcing it through artificial restrictions. Players spend because it helps them win and climb.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Designing mechanics that scale difficulty through skill, not only stats</strong></li>
+          <li><strong>Keeping encounters readable under chaos and high player density</strong></li>
+          <li><strong>Creating counterplay against cheese strategies without removing creativity</strong></li>
+          <li><strong>Balancing "pressure" so it feels intense, not exhausting</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Encounter-driven progression that stays interesting across 15 difficulties</li>
+            <li>Staged mechanics that reward learning and coordination</li>
+            <li>Fair but demanding fights built for competitive guild play</li>
+            <li>Natural integration with consumable-driven preparation and optimisation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Examples -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Video Examples</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <a href="https://www.youtube.com/watch?v=apL5wsF-szQ" target="_blank" rel="noopener" class="video-link">
+          <span class="video-link-icon">📽️</span>
+          <span class="video-link-text">How to complete raids and what to expect? — A full guide on raid mechanics.</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=Op4EHwoDB8o" target="_blank" rel="noopener" class="video-link">
+          <span class="video-link-icon">📽️</span>
+          <span class="video-link-text">First attempt at the new raid system — Testing the mechanics on a new server.</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=5DY6Ld-WTTI" target="_blank" rel="noopener" class="video-link">
+          <span class="video-link-icon">📽️</span>
+          <span class="video-link-text">World record time: 15th raid of the third season! — A record-breaking run.</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ── Talents – Deep Dives ───────────────────── -->
+  <h3 id="talents-detail">Talents and Long-term Progression</h3>
+  <p class="section-intro">This section focuses on how the Talent system supports build diversity, daily engagement, and long-term progression. The goal was not just to add more stats, but to create another layer of character identity and to connect progression with multiple recurring activities.</p>
+
+  <!-- Talent System -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Talent System</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/talents_1.gif" alt="Talent system" class="img-full" />
+        <div class="column-grid">
+          <img src="assets/images/talent_tree_1.png" alt="Talent tree" />
+          <img src="assets/images/talent_tree_2.png" alt="Talent tree" />
+        </div>
+
+        <p>When I started working on the project, the existing Talent system felt too shallow and did not create strong long-term goals. I rebuilt it almost from scratch to support build diversity, daily engagement, and progression in a live economy.</p>
+
+        <p>The key principle is simple: talents are tied to each character and to each class. Every class has its own tree, and on top of that there are separate guild-related talent trees that also work per character. This makes talents an actual build layer rather than a small passive bonus system.</p>
+
+        <p>Progression is intentionally spread across many activity types. Each source has its own cap, which helps avoid a single optimal grind path and pushes healthier daily variety. This also lets the system connect naturally to seasonal content, events, and battle pass progression.</p>
+
+        <p>Build switching is supported, but it is not free. This was important by design. Players should be able to experiment, but choices should still matter. Over time, build switching also became a useful resource sink for players who already maxed most other progression.</p>
+
+        <p>Another important part of the system is evolution. Event talent trees refresh multiple times per year. Class trees grow over longer cycles and receive regular tweaks during balance updates. This keeps the system alive and prevents the meta from becoming static.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Designing daily caps that encourage variety without feeling restrictive</strong></li>
+          <li><strong>Supporting build diversity without creating impossible balance costs</strong></li>
+          <li><strong>Making build switching flexible while still keeping it meaningful</strong></li>
+          <li><strong>Keeping the system scalable for future classes, events, and guild layers</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Talents became a real long-term progression pillar</li>
+            <li>Daily engagement increased because progression is spread across multiple activities</li>
+            <li>Build diversity grew through class trees and guild-related talent layers</li>
+            <li>Build switching supports experimentation and also works as a controlled sink</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ── Non-Combat Guilds – Deep Dives ─────────── -->
+  <h3 id="non-combat-guilds-detail">Non-Combat Guilds</h3>
+  <p class="section-intro">This section covers the three non-combat guilds and how they work as both daily loops and an additional build layer. These guilds are not just side activities. Each one has its own gameplay loop, but all of them are tied to reputation, guild talents, and long-term character growth.</p>
+
+  <!-- Non-Combat Guilds System -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Non-Combat Guilds — System</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/guild_noncombat_1.gif" alt="Non-Combat Guild" class="img-full" />
+
+        <p>Non-Combat Guilds were designed as daily engagement systems with long-term value. Each guild has its own theme and its own gameplay loop, but they all serve two broader goals: give players reliable recurring activities, and extend buildcrafting through guild talent progression.</p>
+
+        <p>A key part of the system is gated access. Unique guild mechanics are not available immediately. Players unlock them through the guild talent tree, which makes progression feel earned and gives the system a stronger long-term arc. The same trees also add class-specific effects, so guild progression changes how characters are built, not only what rewards players collect.</p>
+
+        <p>Another important layer is social access. Players can benefit not only from their own guild path, but also from other guild activities if another player helps open access to them. This creates regular cooperation moments and makes the system feel more social than a simple solo checklist.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Making three guild loops feel clearly different without breaking the overall daily rhythm</strong></li>
+          <li><strong>Turning guild progression into a real build layer instead of a reputation-only track</strong></li>
+          <li><strong>Creating long-term value without making the system feel like mandatory daily chores</strong></li>
+          <li><strong>Supporting social access in a way that encourages cooperation rather than frustration</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Daily retention loop with real long-term progression value</li>
+            <li>Three distinct guild identities with different player motivations</li>
+            <li>Guild talents as a second layer of buildcrafting</li>
+            <li>Social cooperation built directly into access and rewards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adventurers -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Adventurers</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/guild_adventurers_1.gif" alt="Adventurers guild" class="img-full" />
+
+        <p>Adventurers are the PvE-focused guild path, but the core loop is more than just "run a dungeon". Players search the desert for the correct entrance among several marked locations, activate the hidden object, and then open a temporary mini-dungeon for their group. This makes the activity feel closer to exploration and discovery than to a standard queue-based instance.</p>
+
+        <p>That structure was important for pacing. The activity starts in the open world, creates a short search phase, and then turns into a small self-contained PvE run. It gives players a lighter and more repeatable progression loop than full-scale organised content, while still feeding long-term guild growth through reputation and talents.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Making the search phase feel meaningful without becoming annoying</strong></li>
+          <li><strong>Keeping repeatable mini-dungeons varied enough for daily use</strong></li>
+          <li><strong>Letting the activity feel exploratory while still staying readable and efficient for regular players</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>PvE-first daily loop with an exploration layer</li>
+            <li>Procedural mini-dungeon structure instead of a fixed static routine</li>
+            <li>Strong connection between daily activity, reputation, and guild talent growth</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assassins -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Assassins</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/guild_assassins_1.gif" alt="Assassins guild" class="img-full" />
+
+        <p>Assassins are the PvP-focused guild path, built around a risk-reward loop rather than a simple checklist. Players gather "Information" by killing special PvPvE monsters, but that progress is not fully safe. If another Assassin kills them, part of that progress is transferred. Once the bar is filled, the player gets access to a personal entrance leading to a separate boss encounter.</p>
+
+        <p>This creates a much stronger tension curve than a normal daily. Progression happens through active conflict, pressure, and interception. The system rewards PvP-oriented players not only with immediate progress, but with long-term build value through guild talents.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Creating PvP incentives without making the loop feel unfairly punishing</strong></li>
+          <li><strong>Making loss and transfer of progress feel tense, but not hopeless</strong></li>
+          <li><strong>Connecting PvP pressure to a satisfying PvE payoff through the boss dungeon</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>PvP-first daily loop with real risk and progress transfer</li>
+            <li>Progress bar structure creates tension and player-to-player pressure</li>
+            <li>Guild progression turns PvP routine into long-term build value</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mages -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Mages</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <img src="assets/images/guild_mages_1.gif" alt="Mages guild" class="img-full" />
+
+        <p>Mages were designed as the most system-heavy of the three guild paths. The loop starts in the open world, where the player locates and activates a magical object, summons a bound creature, and then follows it across the desert while clearing hostile spawns that appear along the route. When the escort reaches the destination, the player activates the entrance and moves into a separate tower encounter with wave-based PvE combat.</p>
+
+        <p>This structure was important because it combines several kinds of play in one flow: navigation, protection, transition, and payoff. Compared to the other guilds, Mages feel less like a single task and more like a short adventure with a clear beginning, middle, and end.</p>
+
+        <p>The talent layer makes this guild especially strong from a portfolio point of view. The mechanic itself is unlocked through the guild tree, and the tree also includes progression that improves the escort and tower experience. That makes the system a very direct example of activity design and build crafting reinforcing each other.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Making the escort phase readable and reliable across multiple locations</strong></li>
+          <li><strong>Keeping the PvE payoff strong enough to justify the longer setup</strong></li>
+          <li><strong>Designing guild talents that improve the mechanic without collapsing it into a solved routine</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Hybrid open-world plus instance loop with escort and tower phases</li>
+            <li>Strongest example of activity structure and talent structure working together</li>
+            <li>Guild progression directly improves how the mechanic is played, not only the rewards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ── Catacombs – Deep Dive ──────────────────── -->
+  <h3 id="catacombs-detail">Catacombs</h3>
+  <p class="section-intro">This section covers a session-based PvPvE dungeon built around loot risk, extraction timing, and group-based hostility. The goal was to create a mode where reward value comes not only from what players earn, but from whether they can successfully leave with it.</p>
+
+  <!-- Catacombs accordion -->
+  <div class="accordion" aria-expanded="true">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>Catacombs</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <p>Catacombs was designed as a timed group PvPvE dungeon with extraction-style reward logic. The core idea was to create a mode where rewards are earned inside the session, but only become fully secured if the group exits successfully before the timer ends.</p>
+
+        <p>Inside the mode, players complete PvE objectives, fight over space, and gather virtual rewards such as currency and items. That reward state creates tension because it is not fully safe. If a player dies, part of the earned loot is dropped into the instance as a separate object that can be claimed by others. This makes death more meaningful than a simple respawn setback and turns player encounters into real risk decisions.</p>
+
+        <p>The extraction layer is what gives the mode its identity. There are different ways to leave: a safe evacuation path and an emergency exit with a penalty. That means the end of a run is not automatic. Players need to decide when to continue pushing for more value and when to secure what they already earned. That choice is where a large part of the tension comes from.</p>
+
+        <p>From a systems point of view, Catacombs also needed a clear session structure. Access happens through a lobby object, groups register in advance, and the mode starts only when participation reaches the required threshold. Hostility inside the instance is determined by group, which makes team coordination and target recognition especially important.</p>
+
+        <p>Another important design layer is reward conversion. Knowledge, currency, and reputation are granted directly, while item rewards are moved into Catacomb Storage after the run. This separation keeps the system readable and lets the mode support both immediate and delayed reward satisfaction.</p>
+
+        <h4>Development challenges</h4>
+        <ul class="challenge-list">
+          <li><strong>Creating real loot tension without making losses feel unfair or random</strong></li>
+          <li><strong>Making PvE objectives and PvP pressure reinforce each other instead of competing for attention</strong></li>
+          <li><strong>Building extraction decisions that feel meaningful, not scripted</strong></li>
+          <li><strong>Structuring registration, matchmaking, and storage in a way that keeps the session understandable</strong></li>
+        </ul>
+
+        <div class="takeaways">
+          <div class="takeaways-title">Key takeaways</div>
+          <ul>
+            <li>Session-based PvPvE mode with extraction-style reward logic</li>
+            <li>Strong risk-reward loop built around loot loss and successful evacuation</li>
+            <li>Group-based hostility creates readable team conflict inside the dungeon</li>
+            <li>Reward conversion and storage design support both tension during the run and clean payout after it</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-wrapper -->
+
+<!-- ── JavaScript ───────────────────────────────────── -->
+<script>
+  // ── Accordion ────────────────────────────────────
+  function toggleAccordion(el) {
+    const isOpen = el.getAttribute('aria-expanded') === 'true';
+    const body = el.querySelector('.accordion-body');
+    if (isOpen) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      requestAnimationFrame(() => {
+        body.style.maxHeight = '0px';
+        el.setAttribute('aria-expanded', 'false');
+      });
+    } else {
+      el.setAttribute('aria-expanded', 'true');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function once() {
+        if (el.getAttribute('aria-expanded') === 'true') body.style.maxHeight = 'none';
+        body.removeEventListener('transitionend', once);
+      });
+    }
+  }
+
+  // Init all open accordions with explicit maxHeight
+  document.querySelectorAll('.accordion[aria-expanded="true"] .accordion-body').forEach(body => {
+    body.style.maxHeight = 'none';
+  });
+
+  // ── Navbar scroll ─────────────────────────────────
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // ── Width handle ──────────────────────────────────
+  const handle = document.getElementById('width-handle');
+  const tooltip = document.getElementById('width-tooltip');
+  const root = document.documentElement;
+
+  const MIN_WIDTH = 600;
+  const MAX_WIDTH = 1400;
+
+  function applyWidth(w) {
+    w = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, w));
+    root.style.setProperty('--content-width', w + 'px');
+    return w;
+  }
+
+  // Restore saved width
+  const savedWidth = localStorage.getItem('portfolio_width');
+  if (savedWidth) applyWidth(parseInt(savedWidth));
+
+  let dragging = false;
+  let startX = 0;
+  let startWidth = 0;
+
+  handle.addEventListener('mousedown', e => {
+    dragging = true;
+    startX = e.clientX;
+    startWidth = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
+    handle.classList.add('dragging');
+    tooltip.classList.add('visible');
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'ew-resize';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const delta = (e.clientX - startX) * 2;
+    const newW = applyWidth(startWidth + delta);
+    tooltip.textContent = newW + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    tooltip.classList.remove('visible');
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+    const current = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
+    localStorage.setItem('portfolio_width', current);
+  });
+
+  // Touch support
+  handle.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    dragging = true;
+    startX = t.clientX;
+    startWidth = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
+    handle.classList.add('dragging');
+    tooltip.classList.add('visible');
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    const delta = (t.clientX - startX) * 2;
+    const newW = applyWidth(startWidth + delta);
+    tooltip.textContent = newW + 'px';
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    tooltip.classList.remove('visible');
+    const current = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
+    localStorage.setItem('portfolio_width', current);
+  });
+
+  // ── Mobile nav close on link click ───────────────
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>

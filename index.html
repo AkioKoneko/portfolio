@@ -234,6 +234,12 @@
       margin-bottom: 0.5rem;
     }
     .contact-line a { color: var(--accent); }
+    .footer-text {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 2.5rem;
+    }
 
     /* ── Section divider header ───────────────────────── */
     .section-banner {
@@ -1133,53 +1139,54 @@
 
   <hr />
 
-  <h2>References &amp; Links</h2>
+  <div class="accordion" aria-expanded="false">
+    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+      <span>References &amp; Links</span>
+      <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </button>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <p class="links-group-title">Playable Classes</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/201611-20200917-update-warspear-online-90-heroes-of-the-new-era-preview/" target="_blank" rel="noopener">Update 9.0 Preview — Templar &amp; Chieftain</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/204623-20200924-update-warspear-online-90-heroes-of-the-new-era-release/" target="_blank" rel="noopener">Update 9.0 Release</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/353775-20220830-update-warspear-online-110-new-legends-preview/" target="_blank" rel="noopener">Update 11.0 Preview — Beastmaster &amp; Reaper</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/356083-20220908-update-warspear-online-110-new-legends-release/" target="_blank" rel="noopener">Update 11.0 Release</a></li>
+        </ul>
 
-  <p class="links-group-title">Profile &amp; Project</p>
-  <ul class="links-list">
-    <li><a href="https://www.linkedin.com/in/aleksandr-detushev-aa2945234" target="_blank" rel="noopener">LinkedIn</a></li>
-    <li><a href="https://akiokoneko.github.io/resume/" target="_blank" rel="noopener">Resume</a></li>
-    <li><a href="https://warspear-online.com/en/" target="_blank" rel="noopener">Warspear Online</a></li>
-    <li><a href="https://play.google.com/store/apps/details?id=com.aigrind.warspear" target="_blank" rel="noopener">Google Play</a></li>
-    <li><a href="https://apps.apple.com/app/warspear-online/id444772528" target="_blank" rel="noopener">App Store</a></li>
-  </ul>
+        <p class="links-group-title">Competitive Guild Raids</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/472517-20250522-guild-raids-%E2%80%93-seasons-1-3-infographic/" target="_blank" rel="noopener">Guild Raids – Seasons 1–3 Infographic</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/471360-20250211-guild-raid-results-mandate-of-the-winter-runes/" target="_blank" rel="noopener">Guild Raid Results — Mandate of the Winter Runes</a></li>
+        </ul>
 
-  <p class="links-group-title">Playable Classes</p>
-  <ul class="links-list">
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/201611-20200917-update-warspear-online-90-heroes-of-the-new-era-preview/" target="_blank" rel="noopener">Update 9.0 Preview — Templar &amp; Chieftain</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/204623-20200924-update-warspear-online-90-heroes-of-the-new-era-release/" target="_blank" rel="noopener">Update 9.0 Release</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/353775-20220830-update-warspear-online-110-new-legends-preview/" target="_blank" rel="noopener">Update 11.0 Preview — Beastmaster &amp; Reaper</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/356083-20220908-update-warspear-online-110-new-legends-release/" target="_blank" rel="noopener">Update 11.0 Release</a></li>
-  </ul>
+        <p class="links-group-title">Talents &amp; Long-term Progression</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/473958-20250913-warspear-online-update-130-tales-of-the-desert-announcement-part-ii/" target="_blank" rel="noopener">Update 13.0 Announcement Part II — Mage's Guild talents</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/475467-20251212-warspear-online-update-132-announcement-part-i/" target="_blank" rel="noopener">Update 13.2 Announcement Part I — class skill &amp; talent balance</a></li>
+        </ul>
 
-  <p class="links-group-title">Competitive Guild Raids</p>
-  <ul class="links-list">
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/472517-20250522-guild-raids-%E2%80%93-seasons-1-3-infographic/" target="_blank" rel="noopener">Guild Raids – Seasons 1–3 Infographic</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/471360-20250211-guild-raid-results-mandate-of-the-winter-runes/" target="_blank" rel="noopener">Guild Raid Results — Mandate of the Winter Runes</a></li>
-  </ul>
+        <p class="links-group-title">Non-Combat Guilds</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/439516-20230825-in-development-almahad-the-isle-of-chainless-league-part-ii/" target="_blank" rel="noopener">Almahad, the Isle of Chainless League. Part II</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/441906-20230923-update-warspear-online-120-rise-of-almahad-announcement/" target="_blank" rel="noopener">Rise of Almahad. Announcement</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/442406-20230928-update-warspear-online-120-rise-of-almahad-release/" target="_blank" rel="noopener">Rise of Almahad. Release</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/468821-20240830-warspear-online-update-125-treasures-of-almahad-announcement/" target="_blank" rel="noopener">Treasures of Almahad. Announcement</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/473958-20250913-warspear-online-update-130-tales-of-the-desert-announcement-part-ii/" target="_blank" rel="noopener">Update 13.0 Announcement Part II — Mage's Guild talents</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/474097-20250918-warspear-online-update-130-tales-of-the-desert-release/" target="_blank" rel="noopener">Update 13.0 Release</a></li>
+        </ul>
 
-  <p class="links-group-title">Talents &amp; Long-term Progression</p>
-  <ul class="links-list">
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/473958-20250913-warspear-online-update-130-tales-of-the-desert-announcement-part-ii/" target="_blank" rel="noopener">Update 13.0 Announcement Part II — Mage's Guild talents</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/475467-20251212-warspear-online-update-132-announcement-part-i/" target="_blank" rel="noopener">Update 13.2 Announcement Part I — class skill &amp; talent balance</a></li>
-  </ul>
+        <p class="links-group-title">Catacombs</p>
+        <ul class="links-list">
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/473967-20250912-warspear-online-update-130-tales-of-the-desert-announcement-part-i/" target="_blank" rel="noopener">13.0 Announcement Part I</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/474097-20250918-warspear-online-update-130-tales-of-the-desert-release/" target="_blank" rel="noopener">13.0 Release</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/474382-20251002-the-catacombs-of-almahad-await-the-brave/" target="_blank" rel="noopener">The Catacombs of Almahad Await the Brave</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-  <p class="links-group-title">Non-Combat Guilds</p>
-  <ul class="links-list">
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/439516-20230825-in-development-almahad-the-isle-of-chainless-league-part-ii/" target="_blank" rel="noopener">Almahad, the Isle of Chainless League. Part II</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/441906-20230923-update-warspear-online-120-rise-of-almahad-announcement/" target="_blank" rel="noopener">Rise of Almahad. Announcement</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/442406-20230928-update-warspear-online-120-rise-of-almahad-release/" target="_blank" rel="noopener">Rise of Almahad. Release</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/468821-20240830-warspear-online-update-125-treasures-of-almahad-announcement/" target="_blank" rel="noopener">Treasures of Almahad. Announcement</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/473958-20250913-warspear-online-update-130-tales-of-the-desert-announcement-part-ii/" target="_blank" rel="noopener">Update 13.0 Announcement Part II — Mage's Guild talents</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/474097-20250918-warspear-online-update-130-tales-of-the-desert-release/" target="_blank" rel="noopener">Update 13.0 Release</a></li>
-  </ul>
-
-  <p class="links-group-title">Catacombs</p>
-  <ul class="links-list">
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/473967-20250912-warspear-online-update-130-tales-of-the-desert-announcement-part-i/" target="_blank" rel="noopener">13.0 Announcement Part I</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/474097-20250918-warspear-online-update-130-tales-of-the-desert-release/" target="_blank" rel="noopener">13.0 Release</a></li>
-    <li><a href="https://forum.warspear-online.com/index.php?/topic/474382-20251002-the-catacombs-of-almahad-await-the-brave/" target="_blank" rel="noopener">The Catacombs of Almahad Await the Brave</a></li>
-  </ul>
+  <p class="footer-text">© 2026 Aleksandr Detushev</p>
 
 </div><!-- /content-wrapper -->
 

@@ -14,17 +14,19 @@
   <style>
     /* ── Variables ────────────────────────────────────── */
     :root {
-      --bg-primary:       #111318;
-      --bg-secondary:     #1a1e26;
-      --bg-tertiary:      #222733;
-      --accent:           #6C9EFF;
-      --accent-secondary: #9B7EFF;
-      --text-primary:     #E8EAF0;
-      --text-secondary:   #8A8FA8;
-      --border:           #2E3347;
+      --bg-primary:       #141211;
+      --bg-secondary:     #1d1a18;
+      --bg-tertiary:      #26221f;
+      --accent:           #c97850;
+      --accent-secondary: #e3a98a;
+      --text-primary:     #f2ede8;
+      --text-secondary:   #b8aaa0;
+      --border:           #3a312c;
       --heading-color:    #FFFFFF;
       --content-width:    860px;
       --nav-height:       60px;
+      --surface-shadow:   0 12px 32px rgba(0, 0, 0, 0.22);
+      --surface-shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.15);
     }
 
     /* ── Reset ────────────────────────────────────────── */
@@ -34,10 +36,13 @@
 
     body {
       font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-      background: var(--bg-primary);
+      background:
+        radial-gradient(circle at top, rgba(201, 120, 80, 0.08), transparent 38%),
+        var(--bg-primary);
       color: var(--text-primary);
-      line-height: 1.7;
+      line-height: 1.75;
       font-size: 16px;
+      letter-spacing: 0.005em;
     }
 
     /* ── Width handle ─────────────────────────────────── */
@@ -88,7 +93,7 @@
       transition: background 0.3s, border-bottom 0.3s;
     }
     #navbar.scrolled {
-      background: rgba(17, 19, 24, 0.88);
+      background: rgba(20, 18, 17, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -143,7 +148,7 @@
       height: 42px;
       border-radius: 50%;
       border: 1px solid var(--border);
-      background: rgba(26, 30, 38, 0.95);
+      background: rgba(29, 26, 24, 0.95);
       color: var(--text-primary);
       font-size: 1.2rem;
       line-height: 1;
@@ -151,7 +156,12 @@
       z-index: 220;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--surface-shadow-soft);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .mobile-menu-toggle:hover {
+      border-color: var(--accent-secondary);
+      transform: translateY(-1px);
     }
 
     .mobile-menu {
@@ -164,6 +174,7 @@
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 10px;
+      box-shadow: var(--surface-shadow);
       z-index: 220;
       list-style: none;
       gap: 0.55rem;
@@ -189,7 +200,7 @@
     .content-wrapper {
       max-width: var(--content-width);
       margin: 0 auto;
-      padding: calc(var(--nav-height) + 2.5rem) 1.5rem 4rem;
+      padding: calc(var(--nav-height) + 2.75rem) 1.5rem 4.5rem;
     }
 
     /* ── Typography ───────────────────────────────────── */
@@ -201,15 +212,15 @@
     .page-title {
       font-size: 2.4rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.03em;
     }
     h1 { font-size: 1.75rem; margin: 2.5rem 0 1rem; }
     h2 { font-size: 1.5rem;  margin: 3rem 0 1rem; letter-spacing: -0.01em; }
     h3 { font-size: 1.2rem;  margin: 2.5rem 0 0.75rem; color: var(--accent); }
     h4 { font-size: 1rem; margin: 1.5rem 0 0.5rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; }
 
-    p { margin: 0.6em 0; color: var(--text-primary); }
+    p { margin: 0.75em 0; color: var(--text-primary); }
 
     a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
     a:hover { opacity: 0.8; text-decoration: underline; }
@@ -244,16 +255,18 @@
     /* ── Section divider header ───────────────────────── */
     .section-banner {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       margin: 1rem 0 1.5rem;
       display: block;
+      border: 1px solid var(--border);
+      box-shadow: var(--surface-shadow-soft);
     }
 
     /* ── Images ───────────────────────────────────────── */
     img {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
+      border-radius: 10px;
       display: block;
     }
     .img-center {
@@ -280,10 +293,11 @@
     /* ── Accordion ────────────────────────────────────── */
     .accordion {
       border: 1px solid var(--border);
-      border-radius: 10px;
-      margin: 1rem 0;
+      border-radius: 12px;
+      margin: 1.1rem 0;
       background: var(--bg-secondary);
       overflow: hidden;
+      box-shadow: var(--surface-shadow-soft);
     }
 
     .accordion-header {
@@ -300,10 +314,13 @@
       font-family: inherit;
       font-size: 1.05rem;
       font-weight: 600;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
       gap: 0.75rem;
     }
-    .accordion-header:hover { background: rgba(108, 158, 255, 0.06); }
+    .accordion-header:hover {
+      background: rgba(201, 120, 80, 0.1);
+      color: #fff;
+    }
 
     .accordion-arrow {
       flex-shrink: 0;
@@ -331,9 +348,10 @@
     .toc-card {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 1.25rem 1.5rem;
       margin: 1.5rem 0;
+      box-shadow: var(--surface-shadow-soft);
     }
     .toc-card .toc-title {
       font-size: 0.75rem;
@@ -397,12 +415,17 @@
       padding: 0.75rem 1rem;
       background: var(--bg-tertiary);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       margin: 0.5rem 0;
       text-decoration: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
     }
-    .video-link:hover { border-color: var(--accent); text-decoration: none; }
+    .video-link:hover {
+      border-color: var(--accent);
+      background: rgba(201, 120, 80, 0.08);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
     .video-link-icon { font-size: 1.1rem; flex-shrink: 0; }
     .video-link-text { font-size: 0.875rem; color: var(--text-primary); }
 
@@ -420,9 +443,10 @@
     /* ── Takeaways ────────────────────────────────────── */
     .takeaways {
       background: var(--bg-tertiary);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 1rem 1.25rem;
       margin-top: 1.25rem;
+      border: 1px solid var(--border);
     }
     .takeaways-title {
       font-size: 0.75rem;
@@ -446,7 +470,7 @@
     .note-box {
       background: var(--bg-tertiary);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 0.75rem 1.25rem;
       font-size: 0.875rem;
       color: var(--text-secondary);

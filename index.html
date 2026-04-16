@@ -10,21 +10,27 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet" />
   <style>
     /* ── Variables ────────────────────────────────────── */
     :root {
-      --bg-primary:       #111318;
-      --bg-secondary:     #1a1e26;
-      --bg-tertiary:      #222733;
-      --accent:           #6C9EFF;
-      --accent-secondary: #9B7EFF;
-      --text-primary:     #E8EAF0;
-      --text-secondary:   #8A8FA8;
-      --border:           #2E3347;
-      --heading-color:    #FFFFFF;
+      --bg-primary:       #11100f;
+      --bg-secondary:     #1f1b18;
+      --bg-tertiary:      #28231f;
+      --surface-elevated: #312a24;
+      --surface-muted:    #241f1b;
+      --accent:           #c98661;
+      --accent-secondary: #e6b296;
+      --text-primary:     #f3eee8;
+      --text-secondary:   #c3b4a7;
+      --border:           #42362e;
+      --border-soft:      #54453a;
+      --heading-color:    #fff8f2;
       --content-width:    860px;
       --nav-height:       60px;
+      --surface-shadow:   0 16px 36px rgba(0, 0, 0, 0.32);
+      --surface-shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.24);
+      --surface-inset:    inset 0 1px 0 rgba(255, 245, 235, 0.045);
     }
 
     /* ── Reset ────────────────────────────────────────── */
@@ -34,10 +40,18 @@
 
     body {
       font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-      background: var(--bg-primary);
+      background:
+        radial-gradient(42rem 16rem at 50% -9rem, rgba(217, 153, 121, 0.12), rgba(17, 16, 15, 0) 74%),
+        radial-gradient(24rem 12rem at 100% 2%, rgba(124, 88, 67, 0.08), rgba(17, 16, 15, 0) 78%),
+        linear-gradient(180deg, #151311 0%, #11100f 44%, #0e0d0c 100%),
+        var(--bg-primary);
       color: var(--text-primary);
-      line-height: 1.7;
+      line-height: 1.78;
       font-size: 16px;
+      letter-spacing: 0.003em;
+      min-height: 100vh;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── Width handle ─────────────────────────────────── */
@@ -53,7 +67,7 @@
       transition: background 0.2s;
     }
     #width-handle:hover,
-    #width-handle.dragging { background: rgba(108, 158, 255, 0.25); }
+    #width-handle.dragging { background: rgba(201, 134, 97, 0.28); }
 
     #width-tooltip {
       position: fixed;
@@ -62,7 +76,7 @@
       transform: translateX(-50%);
       background: var(--bg-tertiary);
       color: var(--accent);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-soft);
       border-radius: 6px;
       padding: 3px 10px;
       font-size: 12px;
@@ -88,10 +102,10 @@
       transition: background 0.3s, border-bottom 0.3s;
     }
     #navbar.scrolled {
-      background: rgba(17, 19, 24, 0.88);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(20, 18, 16, 0.74);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
     }
 
     .nav-name {
@@ -143,7 +157,7 @@
       height: 42px;
       border-radius: 50%;
       border: 1px solid var(--border);
-      background: rgba(26, 30, 38, 0.95);
+      background: rgba(28, 24, 21, 0.96);
       color: var(--text-primary);
       font-size: 1.2rem;
       line-height: 1;
@@ -151,7 +165,13 @@
       z-index: 220;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--surface-shadow-soft);
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+    .mobile-menu-toggle:hover {
+      border-color: var(--accent-secondary);
+      background: var(--surface-elevated);
+      transform: translateY(-1px);
     }
 
     .mobile-menu {
@@ -161,9 +181,10 @@
       right: 14px;
       min-width: 180px;
       padding: 0.6rem 0.8rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
+      background: #1c1815;
+      border: 1px solid var(--border-soft);
       border-radius: 10px;
+      box-shadow: var(--surface-inset), var(--surface-shadow);
       z-index: 220;
       list-style: none;
       gap: 0.55rem;
@@ -189,30 +210,41 @@
     .content-wrapper {
       max-width: var(--content-width);
       margin: 0 auto;
-      padding: calc(var(--nav-height) + 2.5rem) 1.5rem 4rem;
+      padding: calc(var(--nav-height) + 2.75rem) 1.5rem 4.5rem;
+      background: linear-gradient(180deg, rgba(255, 236, 220, 0.02), rgba(255, 236, 220, 0));
     }
 
     /* ── Typography ───────────────────────────────────── */
     h1, h2, h3, h4 {
       color: var(--heading-color);
-      font-weight: 700;
-      line-height: 1.25;
+      font-family: 'Noto Serif', ui-serif, Georgia, serif;
+      font-weight: 600;
+      line-height: 1.3;
     }
     .page-title {
-      font-size: 2.4rem;
+      font-size: clamp(2rem, 3.4vw, 2.55rem);
       font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.018em;
+      line-height: 1.2;
     }
-    h1 { font-size: 1.75rem; margin: 2.5rem 0 1rem; }
-    h2 { font-size: 1.5rem;  margin: 3rem 0 1rem; letter-spacing: -0.01em; }
-    h3 { font-size: 1.2rem;  margin: 2.5rem 0 0.75rem; color: var(--accent); }
-    h4 { font-size: 1rem; margin: 1.5rem 0 0.5rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; }
+    h1 { font-size: clamp(1.6rem, 2.1vw, 1.9rem); margin: 2.7rem 0 1.15rem; letter-spacing: -0.01em; }
+    h2 { font-size: clamp(1.35rem, 1.75vw, 1.62rem); margin: 3.2rem 0 1.1rem; letter-spacing: -0.008em; }
+    h3 { font-size: clamp(1.1rem, 1.35vw, 1.25rem); margin: 2.6rem 0 0.85rem; color: var(--accent); letter-spacing: -0.004em; }
+    h4 {
+      margin: 1.6rem 0 0.55rem;
+      color: var(--text-secondary);
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+    }
 
-    p { margin: 0.6em 0; color: var(--text-primary); }
+    p { margin: 0.82em 0; color: var(--text-primary); }
 
-    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
-    a:hover { opacity: 0.8; text-decoration: underline; }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s, color 0.2s; }
+    a:hover { opacity: 0.88; text-decoration: underline; }
 
     ul, ol { padding-left: 1.6em; margin: 0.6em 0; }
     li { margin: 0.3em 0; }
@@ -224,7 +256,7 @@
 
     hr {
       border: none;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-soft);
       margin: 2rem 0;
     }
 
@@ -232,6 +264,7 @@
       font-size: 0.9rem;
       color: var(--text-secondary);
       margin-bottom: 0.5rem;
+      line-height: 1.65;
     }
     .contact-line a { color: var(--accent); }
     .footer-text {
@@ -244,16 +277,18 @@
     /* ── Section divider header ───────────────────────── */
     .section-banner {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       margin: 1rem 0 1.5rem;
       display: block;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--surface-inset), var(--surface-shadow-soft);
     }
 
     /* ── Images ───────────────────────────────────────── */
     img {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
+      border-radius: 10px;
       display: block;
     }
     .img-center {
@@ -279,11 +314,12 @@
 
     /* ── Accordion ────────────────────────────────────── */
     .accordion {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin: 1rem 0;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      margin: 1.1rem 0;
       background: var(--bg-secondary);
       overflow: hidden;
+      box-shadow: var(--surface-inset), var(--surface-shadow-soft);
     }
 
     .accordion-header {
@@ -300,10 +336,13 @@
       font-family: inherit;
       font-size: 1.05rem;
       font-weight: 600;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
       gap: 0.75rem;
     }
-    .accordion-header:hover { background: rgba(108, 158, 255, 0.06); }
+    .accordion-header:hover {
+      background: rgba(201, 134, 97, 0.12);
+      color: #fff;
+    }
 
     .accordion-arrow {
       flex-shrink: 0;
@@ -329,11 +368,12 @@
 
     /* ── TOC card ─────────────────────────────────────── */
     .toc-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255, 242, 230, 0.018), rgba(255, 242, 230, 0.004)), var(--bg-secondary);
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
       padding: 1.25rem 1.5rem;
       margin: 1.5rem 0;
+      box-shadow: var(--surface-inset), var(--surface-shadow-soft);
     }
     .toc-card .toc-title {
       font-size: 0.75rem;
@@ -353,7 +393,7 @@
     .toc-parent a:hover { color: var(--accent); text-decoration: none; }
     .toc-children {
       padding-left: 1rem;
-      border-left: 2px solid var(--border);
+      border-left: 2px solid var(--border-soft);
       margin-left: 0.25rem;
     }
     .toc-child {
@@ -367,7 +407,7 @@
 
     /* ── Callout ──────────────────────────────────────── */
     .callout {
-      background: var(--bg-tertiary);
+      background: var(--surface-muted);
       border-left: 3px solid var(--accent);
       border-radius: 0 8px 8px 0;
       padding: 1rem 1.25rem;
@@ -395,14 +435,20 @@
       align-items: flex-start;
       gap: 0.75rem;
       padding: 0.75rem 1rem;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
       margin: 0.5rem 0;
       text-decoration: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s, box-shadow 0.2s;
     }
-    .video-link:hover { border-color: var(--accent); text-decoration: none; }
+    .video-link:hover {
+      border-color: var(--accent);
+      background: rgba(201, 134, 97, 0.1);
+      transform: translateY(-1px);
+      box-shadow: var(--surface-shadow-soft);
+      text-decoration: none;
+    }
     .video-link-icon { font-size: 1.1rem; flex-shrink: 0; }
     .video-link-text { font-size: 0.875rem; color: var(--text-primary); }
 
@@ -410,7 +456,7 @@
     .challenge-list { list-style: none; padding: 0; margin: 0.5rem 0; }
     .challenge-list li {
       padding: 0.5rem 0 0.5rem 1rem;
-      border-left: 2px solid var(--border);
+      border-left: 2px solid var(--border-soft);
       margin: 0.4rem 0;
       font-size: 0.95rem;
     }
@@ -419,10 +465,11 @@
 
     /* ── Takeaways ────────────────────────────────────── */
     .takeaways {
-      background: var(--bg-tertiary);
-      border-radius: 8px;
+      background: var(--surface-muted);
+      border-radius: 10px;
       padding: 1rem 1.25rem;
       margin-top: 1.25rem;
+      border: 1px solid var(--border-soft);
     }
     .takeaways-title {
       font-size: 0.75rem;
@@ -444,13 +491,28 @@
 
     /* ── Reaper note ──────────────────────────────────── */
     .note-box {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
       padding: 0.75rem 1.25rem;
       font-size: 0.875rem;
       color: var(--text-secondary);
       margin: 1rem 0;
+    }
+
+    button,
+    .video-link,
+    .toc-child,
+    .nav-links a,
+    .mobile-menu a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid rgba(230, 178, 150, 0.7);
+      outline-offset: 2px;
+      border-radius: 6px;
     }
   </style>
 </head>

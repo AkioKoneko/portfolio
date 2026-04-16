@@ -11,6 +11,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet" />
+  <script>
+    (function () {
+      const THEME_KEY = 'portfolio_theme';
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <style>
     /* ── Variables ────────────────────────────────────── */
     :root {
@@ -31,6 +40,48 @@
       --surface-shadow:   0 16px 36px rgba(0, 0, 0, 0.32);
       --surface-shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.24);
       --surface-inset:    inset 0 1px 0 rgba(255, 245, 235, 0.045);
+      --bg-gradient-top: rgba(217, 153, 121, 0.12);
+      --bg-gradient-side: rgba(124, 88, 67, 0.08);
+      --bg-gradient-base-start: #151311;
+      --bg-gradient-base-mid: #11100f;
+      --bg-gradient-base-end: #0e0d0c;
+      --surface-ambient-overlay: linear-gradient(180deg, rgba(255, 236, 220, 0.02), rgba(255, 236, 220, 0));
+      --toc-overlay: linear-gradient(180deg, rgba(255, 242, 230, 0.018), rgba(255, 242, 230, 0.004));
+      --accent-soft-bg: rgba(201, 134, 97, 0.12);
+      --accent-strong-bg: rgba(201, 134, 97, 0.1);
+      --focus-ring: rgba(230, 178, 150, 0.7);
+      --nav-scrolled-bg: rgba(20, 18, 16, 0.74);
+      --floating-surface: rgba(28, 24, 21, 0.96);
+    }
+
+    :root[data-theme="light"] {
+      --bg-primary:       #f5f0e9;
+      --bg-secondary:     #fdf9f5;
+      --bg-tertiary:      #f3ebe3;
+      --surface-elevated: #fffdfa;
+      --surface-muted:    #f7efe8;
+      --accent:           #c97850;
+      --accent-secondary: #e3a98a;
+      --text-primary:     #2f2722;
+      --text-secondary:   #66584d;
+      --border:           #d5c2b2;
+      --border-soft:      #e0d1c4;
+      --heading-color:    #241d18;
+      --surface-shadow:   0 16px 30px rgba(82, 56, 39, 0.12);
+      --surface-shadow-soft: 0 8px 18px rgba(82, 56, 39, 0.1);
+      --surface-inset:    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      --bg-gradient-top: rgba(201, 120, 80, 0.12);
+      --bg-gradient-side: rgba(198, 146, 112, 0.09);
+      --bg-gradient-base-start: #fbf6ef;
+      --bg-gradient-base-mid: #f5eee6;
+      --bg-gradient-base-end: #ede3d9;
+      --surface-ambient-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+      --toc-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.2));
+      --accent-soft-bg: rgba(201, 120, 80, 0.12);
+      --accent-strong-bg: rgba(201, 120, 80, 0.14);
+      --focus-ring: rgba(201, 120, 80, 0.5);
+      --nav-scrolled-bg: rgba(249, 243, 236, 0.82);
+      --floating-surface: rgba(253, 249, 245, 0.97);
     }
 
     /* ── Reset ────────────────────────────────────────── */
@@ -41,9 +92,9 @@
     body {
       font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
       background:
-        radial-gradient(42rem 16rem at 50% -9rem, rgba(217, 153, 121, 0.12), rgba(17, 16, 15, 0) 74%),
-        radial-gradient(24rem 12rem at 100% 2%, rgba(124, 88, 67, 0.08), rgba(17, 16, 15, 0) 78%),
-        linear-gradient(180deg, #151311 0%, #11100f 44%, #0e0d0c 100%),
+        radial-gradient(42rem 16rem at 50% -9rem, var(--bg-gradient-top), rgba(17, 16, 15, 0) 74%),
+        radial-gradient(24rem 12rem at 100% 2%, var(--bg-gradient-side), rgba(17, 16, 15, 0) 78%),
+        linear-gradient(180deg, var(--bg-gradient-base-start) 0%, var(--bg-gradient-base-mid) 44%, var(--bg-gradient-base-end) 100%),
         var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.78;
@@ -67,7 +118,7 @@
       transition: background 0.2s;
     }
     #width-handle:hover,
-    #width-handle.dragging { background: rgba(201, 134, 97, 0.28); }
+    #width-handle.dragging { background: var(--accent-soft-bg); }
 
     #width-tooltip {
       position: fixed;
@@ -102,7 +153,7 @@
       transition: background 0.3s, border-bottom 0.3s;
     }
     #navbar.scrolled {
-      background: rgba(20, 18, 16, 0.74);
+      background: var(--nav-scrolled-bg);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-soft);
@@ -127,6 +178,7 @@
     .nav-links {
       list-style: none;
       display: flex;
+      align-items: center;
       gap: 2rem;
     }
     .nav-links a {
@@ -137,6 +189,37 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      background: var(--surface-muted);
+      padding: 2px;
+      gap: 2px;
+      box-shadow: var(--surface-inset);
+    }
+    .theme-option {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0.26rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .theme-option[aria-pressed="true"] {
+      background: var(--surface-elevated);
+      color: var(--heading-color);
+      box-shadow: var(--surface-shadow-soft);
+    }
+    .theme-option:hover {
+      color: var(--accent);
+    }
 
     .hamburger {
       display: none;
@@ -157,7 +240,7 @@
       height: 42px;
       border-radius: 50%;
       border: 1px solid var(--border);
-      background: rgba(28, 24, 21, 0.96);
+      background: var(--floating-surface);
       color: var(--text-primary);
       font-size: 1.2rem;
       line-height: 1;
@@ -181,7 +264,7 @@
       right: 14px;
       min-width: 180px;
       padding: 0.6rem 0.8rem;
-      background: #1c1815;
+      background: var(--floating-surface);
       border: 1px solid var(--border-soft);
       border-radius: 10px;
       box-shadow: var(--surface-inset), var(--surface-shadow);
@@ -198,6 +281,29 @@
       text-decoration: none;
     }
     .mobile-menu a:hover { color: var(--accent); text-decoration: none; }
+    .mobile-theme {
+      list-style: none;
+      margin-top: 0.25rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid var(--border-soft);
+    }
+    .mobile-theme-label {
+      display: block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-secondary);
+      margin-bottom: 0.45rem;
+    }
+    .mobile-theme .theme-toggle {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .mobile-theme .theme-option {
+      flex: 1;
+      text-align: center;
+      padding: 0.34rem 0.2rem;
+    }
 
     @media (max-width: 640px) {
       #navbar { display: none; }
@@ -211,7 +317,7 @@
       max-width: var(--content-width);
       margin: 0 auto;
       padding: calc(var(--nav-height) + 2.75rem) 1.5rem 4.5rem;
-      background: linear-gradient(180deg, rgba(255, 236, 220, 0.02), rgba(255, 236, 220, 0));
+      background: var(--surface-ambient-overlay);
     }
 
     /* ── Typography ───────────────────────────────────── */
@@ -340,8 +446,8 @@
       gap: 0.75rem;
     }
     .accordion-header:hover {
-      background: rgba(201, 134, 97, 0.12);
-      color: #fff;
+      background: var(--accent-soft-bg);
+      color: var(--heading-color);
     }
 
     .accordion-arrow {
@@ -368,7 +474,7 @@
 
     /* ── TOC card ─────────────────────────────────────── */
     .toc-card {
-      background: linear-gradient(180deg, rgba(255, 242, 230, 0.018), rgba(255, 242, 230, 0.004)), var(--bg-secondary);
+      background: var(--toc-overlay), var(--bg-secondary);
       border: 1px solid var(--border-soft);
       border-radius: 12px;
       padding: 1.25rem 1.5rem;
@@ -444,7 +550,7 @@
     }
     .video-link:hover {
       border-color: var(--accent);
-      background: rgba(201, 134, 97, 0.1);
+      background: var(--accent-strong-bg);
       transform: translateY(-1px);
       box-shadow: var(--surface-shadow-soft);
       text-decoration: none;
@@ -510,7 +616,7 @@
 
     button:focus-visible,
     a:focus-visible {
-      outline: 2px solid rgba(230, 178, 150, 0.7);
+      outline: 2px solid var(--focus-ring);
       outline-offset: 2px;
       border-radius: 6px;
     }
@@ -527,6 +633,12 @@
     <li><a href="#overview">Overview</a></li>
     <li><a href="#case-studies">Case Studies</a></li>
     <li><a href="#deep-dives">Deep Dives</a></li>
+    <li>
+      <div class="theme-toggle" role="group" aria-label="Theme switcher">
+        <button class="theme-option" type="button" data-theme-value="light" aria-pressed="false">Light</button>
+        <button class="theme-option" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -537,6 +649,13 @@
   <li><a href="#overview">Overview</a></li>
   <li><a href="#case-studies">Case Studies</a></li>
   <li><a href="#deep-dives">Deep Dives</a></li>
+  <li class="mobile-theme">
+    <span class="mobile-theme-label">Theme</span>
+    <div class="theme-toggle" role="group" aria-label="Mobile theme switcher">
+      <button class="theme-option" type="button" data-theme-value="light" aria-pressed="false">Light</button>
+      <button class="theme-option" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+    </div>
+  </li>
 </ul>
 
 <!-- ── Width handle ────────────────────────────────────── -->
@@ -1254,6 +1373,35 @@
 
 <!-- ── JavaScript ───────────────────────────────────── -->
 <script>
+  const THEME_STORAGE_KEY = 'portfolio_theme';
+  const prefersLightQuery = window.matchMedia('(prefers-color-scheme: light)');
+  const themeOptionButtons = document.querySelectorAll('.theme-option[data-theme-value]');
+  const hasSavedThemePreference = localStorage.getItem(THEME_STORAGE_KEY) !== null;
+
+  function setTheme(theme, persist = true) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeOptionButtons.forEach((button) => {
+      const isActive = button.dataset.themeValue === theme;
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+    if (persist) localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }
+
+  const initialTheme = document.documentElement.getAttribute('data-theme') || (prefersLightQuery.matches ? 'light' : 'dark');
+  setTheme(initialTheme, false);
+
+  if (!hasSavedThemePreference) {
+    prefersLightQuery.addEventListener('change', (event) => {
+      setTheme(event.matches ? 'light' : 'dark', false);
+    });
+  }
+
+  themeOptionButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      setTheme(button.dataset.themeValue, true);
+    });
+  });
+
   // ── Accordion ────────────────────────────────────
   function toggleAccordion(el) {
     const isOpen = el.getAttribute('aria-expanded') === 'true';

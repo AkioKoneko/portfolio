@@ -24,6 +24,10 @@ Source page: https://getdesign.md/claude/design-md
 - Slightly looser vertical spacing between blocks.
 - Strong heading hierarchy with tighter tracking on large headings.
 - Comfortable line length and readable paragraph color contrast.
+- Typography direction:
+  - **Body/UI**: modern neutral sans-serif for clarity and dense reading.
+  - **Headings**: restrained editorial serif for hierarchy and tone.
+  - Keep decorative styling minimal; rely on spacing, weight, and rhythm.
 
 ### 3) Refined surfaces
 - Cards/accordions/utility blocks use subtle elevation and soft borders.

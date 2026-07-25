@@ -1099,22 +1099,28 @@
 
 .portfolio-field-node:nth-of-type(1) {
   top: 24%;
-  left: 6%;
+  left: clamp(0.25rem, 2.5vw, 2.5rem);
+  opacity: 0.72;
 }
 
 .portfolio-field-node:nth-of-type(2) {
   top: 64%;
-  left: 16%;
+  left: clamp(0.5rem, 6.5vw, 6rem);
   width: 6px;
   height: 6px;
   border-radius: 1px;
   background: var(--atlas-signal);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--atlas-signal) 5%, transparent);
+  opacity: 0.48;
   transform: rotate(45deg);
 }
 
     :root[data-theme="light"] .portfolio-ambient-field {
       opacity: 0.82;
+    }
+
+    :root[data-theme="light"] .portfolio-field-node:nth-of-type(2) {
+      opacity: 0.28;
     }
 
     .portfolio-atlas {
@@ -2306,6 +2312,20 @@
         opacity: 0.18;
       }
 
+      .portfolio-field-node:nth-of-type(1) {
+        left: -0.2rem;
+        opacity: 0.46;
+      }
+
+      .portfolio-field-node:nth-of-type(2) {
+        left: 0.45rem;
+        opacity: 0.24;
+      }
+
+      :root[data-theme="light"] .portfolio-field-node:nth-of-type(2) {
+        opacity: 0.14;
+      }
+
       .portfolio-atlas {
         top: 4rem;
         right: -92vw;
@@ -2562,7 +2582,7 @@
   <p>This portfolio focuses on a few systems that are easiest to explain as case studies. The wider body of work also includes arena and GvG features, world bosses, events, dungeons, editors, telemetry requirements, UX specifications, and production support across disciplines.</p>
 
   <!-- Accordion: What is Warspear Online? -->
-  <div class="accordion" aria-expanded="true">
+  <div class="accordion" data-detail="Live world · systems context" aria-expanded="true">
     <button class="accordion-header" type="button">
       <span>What is Warspear Online?</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -2818,7 +2838,7 @@
   <div class="class-intro-route" aria-hidden="true"></div>
 
   <!-- Templar -->
-  <div class="accordion class-case class-case--templar" aria-expanded="false">
+  <div class="accordion class-case class-case--templar" data-detail="Space control · hybrid support" aria-expanded="false">
     <button class="accordion-header" type="button">
       <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/templar.jpg" width="1378" height="418" aria-hidden="true" tabindex="-1">
         <source src="assets/videos/templar_skill.mp4" type="video/mp4" />
@@ -2866,7 +2886,7 @@
   </div>
 
   <!-- Chieftain -->
-  <div class="accordion class-case class-case--chieftain" aria-expanded="false">
+  <div class="accordion class-case class-case--chieftain" data-detail="Fast movement · solo resilience" aria-expanded="false">
     <button class="accordion-header" type="button">
       <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/chieftain.jpg" width="1378" height="418" aria-hidden="true" tabindex="-1">
         <source src="assets/videos/chieftain_banner_fix.mp4" type="video/mp4" />
@@ -2910,7 +2930,7 @@
   </div>
 
   <!-- Beastmaster -->
-  <div class="accordion class-case class-case--beastmaster" aria-expanded="false">
+  <div class="accordion class-case class-case--beastmaster" data-detail="Companion · two-body play" aria-expanded="false">
     <button class="accordion-header" type="button">
       <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/beastmaster.jpg" width="1378" height="518" aria-hidden="true" tabindex="-1">
         <source src="assets/videos/beastmaster_skill_1.mp4" type="video/mp4" />
@@ -2952,7 +2972,7 @@
   </div>
 
   <!-- Reaper -->
-  <div class="accordion class-case class-case--reaper" aria-expanded="false">
+  <div class="accordion class-case class-case--reaper" data-detail="Build Hate · commit to form" aria-expanded="false">
     <button class="accordion-header" type="button">
       <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/reaper.jpg" width="1378" height="418" aria-hidden="true" tabindex="-1">
         <source src="assets/videos/reaper_skill_1.mp4" type="video/mp4" />
@@ -3005,7 +3025,7 @@
   </video>
 
   <!-- Guild Raids - System -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Seasonal ladders · guild progression" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Competitive Guild Raids — System</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3043,7 +3063,7 @@
   </div>
 
   <!-- Guild Raids - Encounters -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Readable pressure · staged difficulty" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Competitive Guild Raids — Encounters</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3082,7 +3102,7 @@
   </div>
 
   <!-- Video Examples -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Guide · first clear · record run" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Video Examples</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3135,7 +3155,7 @@
   <p class="section-intro">This section focuses on how the Talent system supports build diversity, daily engagement, and long-term progression. The goal was to create a system that adds meaningful build identity and connects progression across multiple gameplay loops, rather than simply increasing player power through stats.</p>
 
   <!-- Talent System -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Build identity · long-term growth" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Talent System</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3193,7 +3213,7 @@
   <p class="section-intro">This section covers the three non-combat guilds and how they function as both daily engagement loops and an additional build layer. Each system has its own gameplay loop while contributing to long-term character progression through reputation and guild talents.</p>
 
   <!-- Non-Combat Guilds System -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Daily loops · committed paths" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Non-Combat Guilds — System</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3233,7 +3253,7 @@
   </div>
 
   <!-- Adventurers -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Search · discover · clear" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Adventurers</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3266,7 +3286,7 @@
   </div>
 
   <!-- Assassins -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Steal progress · secure the payoff" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Assassins</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3305,7 +3325,7 @@
   </div>
 
   <!-- Mages -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Explore · escort · tower" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Mages</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3357,7 +3377,7 @@
   <p class="section-intro" style="margin-top:0.25rem;">Lobby registration → timed PvPvE run → pressure from monsters and hostile groups → extraction choice → secured rewards through Catacomb Storage.</p>
 
   <!-- Catacombs accordion -->
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Loot risk · extraction choice" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>Catacombs</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3395,7 +3415,7 @@
 
   <hr />
 
-  <div class="accordion" aria-expanded="false">
+  <div class="accordion" data-detail="Reports · releases · sources" aria-expanded="false">
     <button class="accordion-header" type="button">
       <span>References &amp; Links</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
@@ -3554,12 +3574,9 @@
     const title = button.querySelector('span');
     const arrow = button.querySelector('.accordion-arrow');
     const body = accordion.querySelector('.accordion-body');
-    const mediaCount = accordion.querySelectorAll('[data-looping-video]').length;
     const buttonId = `case-study-toggle-${index + 1}`;
     const bodyId = `case-study-panel-${index + 1}`;
-    title.dataset.detail = mediaCount > 0
-      ? `${mediaCount} gameplay ${mediaCount === 1 ? 'capture' : 'captures'} · design intent & trade-offs`
-      : 'Design reasoning · production constraints';
+    title.dataset.detail = accordion.dataset.detail;
     button.id = buttonId;
     button.setAttribute('aria-controls', bodyId);
     arrow.setAttribute('aria-hidden', 'true');

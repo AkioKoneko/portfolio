@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alexandr Detushev — Game Design Portfolio</title>
-  <meta name="description" content="Game Design Portfolio of Alexandr Detushev — Lead Game Designer at Warspear Online. 6+ years of class design, endgame systems, long-term progression, and live economy." />
-  <meta property="og:title" content="Alexandr Detushev — Game Design Portfolio" />
+  <title>Aleksandr Detushev — Game Design Portfolio</title>
+  <meta name="description" content="Game Design Portfolio of Aleksandr Detushev — Lead Game Designer at Warspear Online. 8+ years across live-service systems, content, balance, tools, and team leadership." />
+  <meta property="og:title" content="Aleksandr Detushev — Game Design Portfolio" />
   <meta property="og:description" content="Lead Game Designer on Warspear Online. Case studies and deep dives on playable classes, competitive guild raids, talent systems, and more." />
   <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#141515" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f3efe7" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e57b4c'/%3E%3Cpath d='M18 48 31 15h3l13 33h-7l-3-8H27l-3 8h-6Zm11-14h6l-3-9-3 9Z' fill='white'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://i.ytimg.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
   <script>
     (function () {
       const THEME_KEY = 'portfolio_theme';
@@ -105,40 +109,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Width handle ─────────────────────────────────── */
-    #width-handle {
-      position: fixed;
-      top: var(--nav-height);
-      left: 0;
-      right: 0;
-      height: 8px;
-      cursor: ew-resize;
-      z-index: 999;
-      background: transparent;
-      transition: background 0.2s;
-    }
-    #width-handle:hover,
-    #width-handle.dragging { background: var(--accent-soft-bg); }
-
-    #width-tooltip {
-      position: fixed;
-      top: calc(var(--nav-height) + 12px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--bg-tertiary);
-      color: var(--accent);
-      border: 1px solid var(--border-soft);
-      border-radius: 6px;
-      padding: 3px 10px;
-      font-size: 12px;
-      font-weight: 600;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.15s;
-      z-index: 1000;
-    }
-    #width-tooltip.visible { opacity: 1; }
-
     /* ── Navbar ───────────────────────────────────────── */
     #navbar {
       position: fixed;
@@ -149,13 +119,11 @@
       justify-content: space-between;
       padding: 0 2rem;
       z-index: 100;
-      background: transparent;
-      transition: background 0.3s, border-bottom 0.3s;
+      background: var(--nav-scrolled-bg);
+      border-bottom: 1px solid var(--border-soft);
     }
     #navbar.scrolled {
       background: var(--nav-scrolled-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-soft);
     }
 
@@ -191,34 +159,27 @@
     .nav-links a:hover { color: var(--accent); }
 
     .theme-toggle {
-      display: inline-flex;
-      align-items: center;
+      min-width: 2.4rem;
+      min-height: 2.4rem;
       border: 1px solid var(--border-soft);
       border-radius: 999px;
-      background: var(--surface-muted);
-      padding: 2px;
-      gap: 2px;
-      box-shadow: var(--surface-inset);
-    }
-    .theme-option {
-      border: none;
       background: transparent;
-      color: var(--text-secondary);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      padding: 0.26rem 0.65rem;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .theme-option[aria-pressed="true"] {
-      background: var(--surface-elevated);
       color: var(--heading-color);
-      box-shadow: var(--surface-shadow-soft);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition:
+        border-color 180ms var(--ease-out),
+        background-color 180ms var(--ease-out),
+        color 180ms var(--ease-out);
     }
-    .theme-option:hover {
-      color: var(--accent);
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
     }
 
     .hamburger {
@@ -296,18 +257,11 @@
       margin-bottom: 0.45rem;
     }
     .mobile-theme .theme-toggle {
-      width: 100%;
-      justify-content: space-between;
-    }
-    .mobile-theme .theme-option {
-      flex: 1;
-      text-align: center;
-      padding: 0.34rem 0.2rem;
+      min-width: 4.5rem;
     }
 
     @media (max-width: 640px) {
       #navbar { display: none; }
-      #width-handle, #width-tooltip { display: none; }
       .content-wrapper { padding-top: 2.5rem; }
       .mobile-menu-toggle { display: inline-flex; }
     }
@@ -377,7 +331,16 @@
       text-align: center;
       color: var(--text-secondary);
       font-size: 0.85rem;
-      margin-top: 2.5rem;
+      margin: 0;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      margin-top: -2rem;
+      padding: 0 1.5rem 2.5rem;
+      text-align: center;
     }
 
     /* ── Section divider header ───────────────────────── */
@@ -535,29 +498,6 @@
       font-size: 0.95rem;
     }
 
-    /* ── Video links ──────────────────────────────────── */
-    .video-link {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      background: var(--surface-muted);
-      border: 1px solid var(--border-soft);
-      border-radius: 10px;
-      margin: 0.5rem 0;
-      text-decoration: none;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s, box-shadow 0.2s;
-    }
-    .video-link:hover {
-      border-color: var(--accent);
-      background: var(--accent-strong-bg);
-      transform: translateY(-1px);
-      box-shadow: var(--surface-shadow-soft);
-      text-decoration: none;
-    }
-    .video-link-icon { font-size: 1.1rem; flex-shrink: 0; }
-    .video-link-text { font-size: 0.875rem; color: var(--text-primary); }
-
     /* ── Dev challenges ───────────────────────────────── */
     .challenge-list { list-style: none; padding: 0; margin: 0.5rem 0; }
     .challenge-list li {
@@ -607,7 +547,6 @@
     }
 
     button,
-    .video-link,
     .toc-child,
     .nav-links a,
     .mobile-menu a {
@@ -620,29 +559,1961 @@
       outline-offset: 2px;
       border-radius: 6px;
     }
+
+    /* ── V2 editorial pass ─────────────────────────────── */
+    :root {
+      color-scheme: dark;
+      --content-width: 1040px;
+      --bg-primary: #141515;
+      --bg-secondary: #1b1d1c;
+      --bg-tertiary: #232622;
+      --surface-elevated: #282b27;
+      --surface-muted: #20221f;
+      --accent: #e57b4c;
+      --accent-secondary: #efae89;
+      --text-primary: #f2eee6;
+      --text-secondary: #aaa89f;
+      --border: #353833;
+      --border-soft: #353833;
+      --heading-color: #fbf7ef;
+      --surface-shadow: none;
+      --surface-shadow-soft: none;
+      --surface-inset: none;
+      --nav-scrolled-bg: rgba(20, 21, 21, 0.94);
+      --floating-surface: rgba(27, 29, 28, 0.98);
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg-primary: #f3efe7;
+      --bg-secondary: #fbf8f2;
+      --bg-tertiary: #eae5dc;
+      --surface-elevated: #ffffff;
+      --surface-muted: #eee9e0;
+      --accent: #bd4e27;
+      --accent-secondary: #9b4d34;
+      --text-primary: #252620;
+      --text-secondary: #686b62;
+      --border: #c9c5ba;
+      --border-soft: #c9c5ba;
+      --heading-color: #20211c;
+      --nav-scrolled-bg: rgba(243, 239, 231, 0.94);
+      --floating-surface: rgba(251, 248, 242, 0.98);
+    }
+
+    body {
+      background: var(--bg-primary);
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.68;
+      letter-spacing: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Newsreader", Georgia, serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    [id] {
+      scroll-margin-top: calc(var(--nav-height) + 1.25rem);
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 400;
+      transform: translateY(-180%);
+      padding: 0.55rem 0.8rem;
+      background: var(--heading-color);
+      color: var(--bg-primary);
+      border-radius: 0.25rem;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    #navbar {
+      padding-inline: max(1.5rem, calc((100vw - var(--content-width)) / 2));
+    }
+
+    .nav-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      gap: 1.25rem;
+    }
+
+    .nav-links li,
+    .mobile-menu li {
+      list-style: none;
+    }
+
+    .content-wrapper {
+      padding-top: calc(var(--nav-height) + 4.5rem);
+      background: none;
+    }
+
+    .portfolio-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(230px, 0.55fr);
+      gap: 2rem clamp(2rem, 7vw, 5.5rem);
+      padding-bottom: 2.25rem;
+    }
+
+    .hero-eyebrow {
+      margin: 0 0 0.75rem;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .portfolio-hero .page-title {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3.15rem, 7.5vw, 6.35rem);
+      font-weight: 600;
+      letter-spacing: -0.052em;
+      line-height: 0.9;
+    }
+
+    .hero-deck {
+      max-width: 750px;
+      margin: 1.4rem 0 0;
+      color: var(--text-secondary);
+      font-size: clamp(1.03rem, 2vw, 1.22rem);
+      line-height: 1.5;
+    }
+
+    .portfolio-hero-side {
+      display: grid;
+      gap: 0.45rem;
+      align-content: end;
+      padding-bottom: 0.35rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .portfolio-hero-side p {
+      margin: 0 0 0.35rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .portfolio-proof {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 0.5rem;
+      border-block: 1px solid var(--border);
+    }
+
+    .portfolio-proof > div {
+      padding: 1.15rem 1rem 1.15rem 0;
+    }
+
+    .portfolio-proof > div + div {
+      padding-left: 1.25rem;
+      border-left: 1px solid var(--border);
+    }
+
+    .portfolio-proof strong {
+      display: block;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .portfolio-proof span {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+
+    .content-wrapper > h1,
+    .content-wrapper > h2 {
+      padding-top: 0.35rem;
+    }
+
+    .content-wrapper > p,
+    .content-wrapper > ul,
+    .content-wrapper > ol,
+    .content-wrapper > h4,
+    .content-wrapper > .callout {
+      max-width: 780px;
+    }
+
+    .accordion {
+      border-radius: 0.35rem;
+      background: transparent;
+    }
+
+    .accordion-header {
+      min-height: 3.5rem;
+      padding: 0.9rem 1.05rem;
+    }
+
+    .accordion-inner {
+      padding: 0 1.05rem 1.1rem;
+    }
+
+    .toc-card {
+      display: block;
+      padding: 1.15rem 1.25rem 1.25rem;
+      border-radius: 0.35rem;
+      background: transparent;
+    }
+
+    .toc-card .toc-title {
+      margin-bottom: 0.9rem;
+    }
+
+    .toc-groups {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .toc-group {
+      min-width: 0;
+      padding: 1rem 1.05rem 1.1rem;
+      background: var(--surface-muted);
+      border-top: 2px solid var(--accent);
+    }
+
+    .toc-group-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .toc-index {
+      flex: 0 0 auto;
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+    }
+
+    .toc-parent {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .toc-level {
+      display: block;
+      margin-top: 0.15rem;
+      color: var(--text-secondary);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .toc-children {
+      margin: 0;
+      padding: 0.65rem 0 0;
+      border-top: 1px solid var(--border-soft);
+      border-left: 0;
+    }
+
+    .toc-child {
+      position: relative;
+      padding: 0.3rem 1.25rem 0.3rem 0;
+    }
+
+    .toc-child::after {
+      content: "↘";
+      position: absolute;
+      top: 0.3rem;
+      right: 0;
+      color: var(--text-secondary);
+      opacity: 0.55;
+      transition: color 0.2s, opacity 0.2s, transform 0.2s;
+    }
+
+    .toc-child:hover::after {
+      color: var(--accent);
+      opacity: 1;
+      transform: translate(2px, 2px);
+    }
+
+    .section-banner {
+      max-height: 310px;
+      object-fit: cover;
+      border-radius: 0.35rem;
+      box-shadow: none;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.35rem;
+      display: block;
+      background: #090a09;
+    }
+
+    video {
+      width: 100%;
+    }
+
+    .column-grid video {
+      width: 100%;
+    }
+
+    .fantasy-line {
+      padding: 0.75rem 0.9rem;
+      border-left: 3px solid var(--accent);
+      background: var(--surface-muted);
+      color: var(--text-secondary);
+    }
+
+    .fantasy-line strong {
+      color: var(--accent-secondary);
+    }
+
+    .callout,
+    .takeaways,
+    .note-box {
+      border-radius: 0.35rem;
+      box-shadow: none;
+    }
+
+    @media (max-width: 720px) {
+      .content-wrapper {
+        padding: 2.5rem 1rem 4rem;
+      }
+
+      .portfolio-hero {
+        grid-template-columns: 1fr;
+        gap: 1.35rem;
+      }
+
+      .portfolio-hero .page-title {
+        font-size: clamp(3rem, 16vw, 5.1rem);
+      }
+
+      .portfolio-proof {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .portfolio-proof > div:nth-child(3) {
+        border-left: 0;
+      }
+
+      .portfolio-proof > div:nth-child(n + 3) {
+        border-top: 1px solid var(--border);
+      }
+
+      .toc-groups {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Systems atlas pass ───────────────────────────── */
+    :root {
+      --atlas-line: rgba(169, 205, 187, 0.16);
+      --atlas-accent: rgba(229, 123, 76, 0.46);
+      --atlas-signal: #a9cdbb;
+      --atlas-x: 0px;
+      --atlas-y: 0px;
+      --atlas-contour-x: 0px;
+      --atlas-contour-y: 0px;
+      --portfolio-progress: 0%;
+      --portfolio-progress-scale: 0;
+      --active-route-index: 0;
+      --ease-out: cubic-bezier(0.22, 0.8, 0.22, 1);
+    }
+
+    :root[data-theme="light"] {
+      --atlas-line: rgba(47, 110, 86, 0.22);
+      --atlas-accent: rgba(189, 78, 39, 0.42);
+      --atlas-signal: #2f6e56;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    body::after {
+      position: fixed;
+      z-index: 260;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.1'/%3E%3C/svg%3E");
+      content: "";
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      opacity: 0.11;
+    }
+
+    button,
+    a,
+    input {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: color-mix(in srgb, var(--accent) 17%, transparent);
+    }
+
+    h1,
+    h2,
+    h3 {
+      text-wrap: balance;
+    }
+
+    p,
+    li {
+      text-wrap: pretty;
+    }
+
+    .portfolio-proof strong,
+    .width-value {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    .portfolio-atlas-grid {
+      position: fixed;
+      z-index: 0;
+      top: calc(var(--nav-height) - 14vh);
+      right: -12vw;
+      bottom: -24vh;
+      left: -12vw;
+      background-image:
+        linear-gradient(var(--atlas-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--atlas-line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image:
+        linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.68) 22%, transparent 43%, transparent 57%, rgba(0, 0, 0, 0.68) 78%, black 100%),
+        linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.64) 64%, transparent 100%);
+      mask-image:
+        linear-gradient(90deg, black 0%, rgba(0, 0, 0, 0.68) 22%, transparent 43%, transparent 57%, rgba(0, 0, 0, 0.68) 78%, black 100%),
+        linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.64) 64%, transparent 100%);
+      opacity: 0.14;
+      pointer-events: none;
+      transform: perspective(1100px) rotateX(63deg) rotateZ(-6deg) scale(1.18);
+      transform-origin: 50% 28%;
+    }
+
+    :root[data-theme="light"] .portfolio-atlas-grid {
+      opacity: 0.22;
+    }
+
+    :root[data-theme="light"] .portfolio-atlas {
+      opacity: 0.78;
+    }
+
+    .portfolio-ambient-field {
+      position: fixed;
+      z-index: 0;
+      inset: var(--nav-height) 0 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.64;
+      transform: translate3d(var(--field-x, 0), var(--field-y, 0), 0);
+      will-change: transform;
+    }
+
+.portfolio-ambient-field::after {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 7% 28%,
+    color-mix(in srgb, var(--accent) 9%, transparent),
+    transparent 23%
+  );
+  content: "";
+}
+
+.portfolio-ambient-field svg {
+  position: absolute;
+      top: 0;
+      left: 50%;
+      width: max(100%, 1700px);
+  height: 100%;
+  overflow: visible;
+  transform: translateX(-50%);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0%,
+    #000 14%,
+    rgb(0 0 0 / 68%) 19%,
+    rgb(0 0 0 / 26%) 25%,
+    transparent 32%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0%,
+    #000 14%,
+    rgb(0 0 0 / 68%) 19%,
+    rgb(0 0 0 / 26%) 25%,
+    transparent 32%
+  );
+}
+
+    .portfolio-field-path,
+    .portfolio-field-path-muted {
+      fill: none;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .portfolio-field-path {
+      stroke: var(--atlas-accent);
+      stroke-width: 1.45;
+    }
+
+    .portfolio-field-path-muted {
+      stroke: var(--atlas-line);
+      stroke-width: 1;
+      stroke-dasharray: 8 12;
+    }
+
+    .portfolio-field-node {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--atlas-signal);
+      border-radius: 50%;
+      background: var(--bg-primary);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--atlas-signal) 6%, transparent);
+    }
+
+.portfolio-field-node:nth-of-type(1) {
+  top: 24%;
+  left: 6%;
+}
+
+.portfolio-field-node:nth-of-type(2) {
+  top: 64%;
+  left: 16%;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--atlas-signal);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--atlas-signal) 5%, transparent);
+  transform: rotate(45deg);
+}
+
+    :root[data-theme="light"] .portfolio-ambient-field {
+      opacity: 0.82;
+    }
+
+    .portfolio-atlas {
+      position: fixed;
+      z-index: 1;
+      top: calc(var(--nav-height) - 2.5rem);
+      right: clamp(-6rem, -3vw, -1rem);
+      width: clamp(680px, 46vw, 980px);
+      height: min(1020px, 108vh);
+      pointer-events: none;
+      opacity: 0.68;
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgb(0 0 0 / 18%) 16%,
+        #000 42%,
+        #000 92%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgb(0 0 0 / 18%) 16%,
+        #000 42%,
+        #000 92%,
+        transparent 100%
+      );
+      transform: translate3d(var(--atlas-x), var(--atlas-y), 0);
+      will-change: transform;
+    }
+
+    .portfolio-atlas::after {
+      position: absolute;
+      z-index: -1;
+      inset: -5%;
+      background: radial-gradient(
+        circle at 62% 44%,
+        color-mix(in srgb, var(--bg-primary) 96%, transparent) 0%,
+        color-mix(in srgb, var(--bg-primary) 82%, transparent) 48%,
+        transparent 76%
+      );
+      content: "";
+    }
+
+    .portfolio-atlas::before {
+      position: absolute;
+      inset: 2rem 0 2rem 4rem;
+      background-image:
+        linear-gradient(var(--atlas-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--atlas-line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      content: "";
+      mask-image: radial-gradient(circle at 56% 40%, black 6%, rgba(0, 0, 0, 0.8) 46%, transparent 74%);
+      transform: perspective(900px) rotateX(62deg) rotateZ(-22deg);
+      transform-origin: 62% 42%;
+    }
+
+    .portfolio-atlas svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .portfolio-map-path,
+    .portfolio-map-muted,
+    .portfolio-map-progress {
+      fill: none;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .portfolio-map-path {
+      stroke: url("#portfolio-route-fade");
+      stroke-width: 1.55;
+    }
+
+    .portfolio-map-muted {
+      stroke: var(--atlas-line);
+      stroke-width: 1;
+      stroke-dasharray: 7 11;
+    }
+
+    .portfolio-map-progress {
+      stroke: url("#portfolio-progress-fade");
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 34%, transparent));
+    }
+
+    .portfolio-contours {
+      position: absolute;
+      top: 2.8rem;
+      right: 0;
+      width: 66%;
+      opacity: 0.24;
+      transform: translate3d(var(--atlas-contour-x), var(--atlas-contour-y), 0);
+      animation: contour-breathe 13s ease-in-out infinite alternate;
+    }
+
+    .portfolio-contours ellipse {
+      fill: none;
+      stroke: var(--atlas-line);
+      stroke-width: 1;
+    }
+
+    .portfolio-contours ellipse:nth-child(2n) {
+      stroke: var(--atlas-accent);
+    }
+
+    @keyframes contour-breathe {
+      from {
+        opacity: 0.72;
+        transform: translate3d(var(--atlas-contour-x), var(--atlas-contour-y), 0) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(var(--atlas-contour-x), var(--atlas-contour-y), 0) scale(1.015);
+      }
+    }
+
+    .portfolio-map-node {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border: 1px solid var(--atlas-signal);
+      border-radius: 50%;
+      background: var(--bg-primary);
+      box-shadow: 0 0 0 7px transparent;
+      transition:
+        border-color 260ms var(--ease-out),
+        box-shadow 260ms var(--ease-out),
+        transform 260ms var(--ease-out);
+    }
+
+    .portfolio-map-node.is-active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 10%, transparent);
+      transform: scale(1.24);
+    }
+
+    .portfolio-map-node:nth-of-type(1) { top: 18%; left: 64%; }
+    .portfolio-map-node:nth-of-type(2) { top: 36%; left: 82%; }
+    .portfolio-map-node:nth-of-type(3) { top: 54%; left: 58%; }
+    .portfolio-map-node:nth-of-type(4) { top: 69%; left: 77%; }
+    .portfolio-map-node:nth-of-type(5) { top: 81%; left: 46%; }
+
+    .portfolio-map-caption {
+      position: absolute;
+      color: color-mix(in srgb, var(--text-secondary) 82%, transparent);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 260ms var(--ease-out);
+    }
+
+    .portfolio-map-caption.is-active {
+      color: var(--accent-secondary);
+    }
+
+    .portfolio-map-caption:nth-of-type(1) { top: 15.5%; left: 66%; }
+    .portfolio-map-caption:nth-of-type(2) { top: 33.5%; left: 84%; }
+    .portfolio-map-caption:nth-of-type(3) { top: 51.5%; left: 60%; }
+    .portfolio-map-caption:nth-of-type(4) { top: 66.5%; left: 79%; }
+    .portfolio-map-caption:nth-of-type(5) { top: 78.5%; left: 48%; }
+
+    .section-portal {
+      position: relative;
+      min-height: 290px;
+      display: grid;
+      align-items: end;
+      margin: 3.25rem 0 2rem;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      background: var(--surface-muted);
+    }
+
+    .section-portal::after {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 10%, rgba(10, 11, 10, 0.82) 100%),
+        linear-gradient(90deg, rgba(10, 11, 10, 0.45), transparent 70%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .section-portal img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      object-fit: cover;
+      filter: saturate(0.84) contrast(1.02);
+    }
+
+    .section-portal-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      color: #f3eee6;
+    }
+
+    .section-portal-copy .section-index {
+      display: block;
+      margin-bottom: 0.55rem;
+      color: #efae89;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-portal-copy h2 {
+      margin: 0;
+      color: #fbf7ef;
+      font-size: clamp(2.4rem, 5vw, 4.7rem);
+      letter-spacing: -0.045em;
+      line-height: 0.92;
+    }
+
+    .section-portal-copy p {
+      max-width: 58ch;
+      margin: 0.85rem 0 0;
+      color: rgba(243, 238, 230, 0.78);
+      font-size: 0.92rem;
+    }
+
+    .project-logo {
+      width: min(336px, 76%);
+    }
+
+    .accordion {
+      border: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      background: color-mix(in srgb, var(--bg-secondary) 42%, transparent);
+      box-shadow: none;
+    }
+
+    .accordion + .accordion {
+      margin-top: 1.45rem;
+    }
+
+    .accordion-header {
+      min-height: 4.8rem;
+      padding: 1.15rem 1.25rem;
+      border-radius: 0;
+    }
+
+    .accordion-header > span {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(1.2rem, 2vw, 1.48rem);
+      letter-spacing: -0.018em;
+      line-height: 1.15;
+    }
+
+    .accordion-header > span::after {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--text-secondary);
+      content: attr(data-detail);
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .accordion-arrow {
+      width: 34px;
+      height: 34px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+    }
+
+    .accordion-inner {
+      padding: 0 1.25rem 1.7rem;
+    }
+
+    .media-proof {
+      position: relative;
+      margin: 1.1rem 0 1.35rem;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      background: #090a09;
+    }
+
+    .column-grid .media-proof {
+      margin: 0;
+    }
+
+    .media-proof video {
+      width: 100%;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .media-proof figcaption {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.55rem 0.7rem 0.55rem 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      background: #111412;
+      color: #aaa89f;
+      font-size: 0.7rem;
+    }
+
+    .media-caption-copy {
+      min-width: 0;
+    }
+
+    .media-caption-copy strong {
+      display: block;
+      overflow: hidden;
+      color: #f2eee6;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .media-caption-copy span {
+      display: block;
+      margin-top: 0.1rem;
+    }
+
+    .media-toggle {
+      min-width: 68px;
+      min-height: 44px;
+      flex: 0 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.2rem;
+      background: transparent;
+      color: #f2eee6;
+      cursor: pointer;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+    }
+
+    .media-toggle:hover {
+      border-color: #e57b4c;
+      background: rgba(229, 123, 76, 0.12);
+    }
+
+    /* ── Wide-layout correction and media shelf ───────── */
+    #navbar {
+      isolation: isolate;
+      transition: none;
+    }
+
+    #navbar::after {
+      position: absolute;
+      z-index: 2;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--atlas-signal));
+      content: "";
+      transform: scaleX(var(--portfolio-progress-scale));
+      transform-origin: left;
+    }
+
+    .nav-tools {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .nav-width-control {
+      display: grid;
+      grid-template-columns: auto 112px 48px;
+      align-items: center;
+      gap: 0.5rem;
+      padding-left: 0.9rem;
+      border-left: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+    }
+
+    .nav-width-label,
+    .nav-width-value {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .nav-width-value {
+      color: var(--accent-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .nav-width-input {
+      width: 112px;
+      height: 28px;
+      appearance: none;
+      background: transparent;
+      cursor: ew-resize;
+    }
+
+    .nav-width-input::-webkit-slider-runnable-track {
+      height: 2px;
+      border-radius: 999px;
+      background: var(--border);
+    }
+
+    .nav-width-input::-webkit-slider-thumb {
+      width: 15px;
+      height: 15px;
+      margin-top: -6.5px;
+      appearance: none;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: var(--bg-primary);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+
+    .nav-links a[aria-current="location"] {
+      color: var(--accent-secondary);
+      opacity: 1;
+    }
+
+    .nav-links a[aria-current="location"]::after {
+      width: 100%;
+    }
+
+    .content-wrapper > hr {
+      display: none;
+    }
+
+    .project-logo {
+      border-radius: 0;
+      background: transparent;
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28));
+    }
+
+    .section-portal--cases img {
+      object-position: center 29%;
+    }
+
+    .section-portal--details img {
+      object-position: center 32%;
+    }
+
+    .case-summary {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.42fr) minmax(0, 1.58fr);
+      gap: 0 2.25rem;
+      margin: 2.8rem 0 3.4rem;
+    }
+
+    .case-summary > h3 {
+      grid-column: 1;
+      grid-row: 1 / span 20;
+      align-self: start;
+      max-width: 11ch;
+      margin: 0;
+      padding-top: 0.15rem;
+      font-size: clamp(1.55rem, 2.4vw, 2.15rem);
+      line-height: 1.05;
+    }
+
+    .case-summary > h3::before {
+      display: block;
+      width: 2.4rem;
+      height: 2px;
+      margin-bottom: 0.9rem;
+      background: var(--accent);
+      content: "";
+    }
+
+    .case-summary > :not(h3) {
+      grid-column: 2;
+      max-width: none;
+    }
+
+    .case-summary > p:first-of-type {
+      margin-top: 0;
+      color: var(--text-primary);
+      font-size: 1.02rem;
+    }
+
+    .case-summary h4 {
+      margin-top: 1.35rem;
+    }
+
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      background: color-mix(in srgb, var(--bg-secondary) 56%, transparent);
+    }
+
+    .class-case {
+      overflow: hidden;
+    }
+
+    .class-case .accordion-header {
+      position: relative;
+      isolation: isolate;
+      min-height: clamp(132px, 17vw, 176px);
+      align-items: flex-start;
+      overflow: hidden;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      background-position: center bottom;
+      background-size: cover;
+      color: #fbf7ef;
+      transition:
+        min-height 520ms var(--ease-out),
+        filter 220ms var(--ease-out);
+    }
+
+    .class-case--templar .accordion-header {
+      background-image:
+        linear-gradient(180deg, rgba(7, 9, 8, 0.08) 0%, rgba(7, 9, 8, 0.9) 100%),
+        url("assets/images/class-previews/templar.jpg");
+    }
+
+    .class-case--chieftain .accordion-header {
+      background-image:
+        linear-gradient(180deg, rgba(7, 9, 8, 0.08) 0%, rgba(7, 9, 8, 0.9) 100%),
+        url("assets/images/class-previews/chieftain.jpg");
+    }
+
+    .class-case--beastmaster .accordion-header {
+      background-image:
+        linear-gradient(180deg, rgba(7, 9, 8, 0.08) 0%, rgba(7, 9, 8, 0.9) 100%),
+        url("assets/images/class-previews/beastmaster.jpg");
+    }
+
+    .class-case--reaper .accordion-header {
+      background-image:
+        linear-gradient(180deg, rgba(7, 9, 8, 0.08) 0%, rgba(7, 9, 8, 0.9) 100%),
+        url("assets/images/class-previews/reaper.jpg");
+    }
+
+    .class-case .accordion-header::before {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      border: 1px solid transparent;
+      background: linear-gradient(110deg, transparent 15%, rgba(255, 255, 255, 0.12) 48%, transparent 70%);
+      content: "";
+      opacity: 0;
+      transform: translateX(-36%);
+      transition: opacity 220ms var(--ease-out), transform 520ms var(--ease-out);
+    }
+
+    .class-case .accordion-header::after {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(6, 8, 7, 0.04) 18%, rgba(6, 8, 7, 0.86) 100%),
+        linear-gradient(90deg, rgba(6, 8, 7, 0.32), transparent 68%);
+      content: "";
+      pointer-events: none;
+      transition: opacity 280ms var(--ease-out);
+    }
+
+    .class-cover-video {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: #070908;
+      filter: saturate(0.76) brightness(0.72);
+      object-fit: cover;
+      object-position: center bottom;
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        filter 360ms var(--ease-out),
+        opacity 260ms var(--ease-out);
+    }
+
+    .class-case--beastmaster .class-cover-video {
+      object-position: center 88%;
+    }
+
+    .class-case .accordion-header:hover::before,
+    .class-case .accordion-header:focus-visible::before {
+      opacity: 1;
+      transform: translateX(36%);
+    }
+
+    .class-case .accordion-header > span {
+      position: absolute;
+      z-index: 3;
+      top: clamp(0.9rem, 2vw, 1.25rem);
+      left: clamp(1rem, 2.5vw, 1.65rem);
+      max-width: calc(100% - 6.5rem);
+      padding: 0.4rem 2.2rem 0.48rem 0.78rem;
+      border-left: 2px solid #efae89;
+      background: linear-gradient(
+        90deg,
+        rgba(6, 8, 7, 0.92) 0%,
+        rgba(6, 8, 7, 0.72) 64%,
+        transparent 100%
+      );
+      color: #fbf7ef;
+      font-size: clamp(1.45rem, 3vw, 2.1rem);
+      font-weight: 600;
+      opacity: 1;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.78);
+    }
+
+    .class-case .accordion-header > span::after {
+      color: rgba(251, 247, 239, 0.86);
+    }
+
+    .class-case .accordion-arrow {
+      position: absolute;
+      z-index: 3;
+      top: clamp(0.95rem, 2vw, 1.3rem);
+      right: clamp(0.9rem, 2vw, 1.35rem);
+      border-color: rgba(255, 255, 255, 0.34);
+      background: rgba(7, 9, 8, 0.48);
+      color: #fbf7ef;
+      backdrop-filter: blur(5px);
+    }
+
+    .class-case[aria-expanded="true"] .accordion-header {
+      min-height: clamp(280px, 34vw, 410px);
+      filter: none;
+    }
+
+    .class-case[aria-expanded="true"] .accordion-header::after {
+      opacity: 0.78;
+    }
+
+    .class-case[aria-expanded="true"] .class-cover-video {
+      filter: saturate(1) brightness(0.96);
+      opacity: 1;
+    }
+
+    .class-case[aria-expanded="true"] .accordion-header > span {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .media-shelf,
+    .column-grid:has(.media-proof) {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.6rem, 1.2vw, 1rem);
+      margin: 1.75rem 0 2.35rem;
+      padding: 0.55rem 0.45rem 0.8rem;
+      overflow: visible;
+    }
+
+    .media-shelf::before,
+    .column-grid:has(.media-proof)::before {
+      position: absolute;
+      z-index: -1;
+      top: -1.15rem;
+      right: -2.2rem;
+      bottom: -1rem;
+      left: -2.4rem;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 54%, transparent);
+      border-left: 1px solid color-mix(in srgb, var(--atlas-signal) 42%, transparent);
+      border-radius: 44% 10% 8% 37%;
+      content: "";
+      opacity: 0.72;
+      transform: rotate(-0.8deg);
+      pointer-events: none;
+    }
+
+    .media-shelf::after,
+    .column-grid:has(.media-proof)::after {
+      position: absolute;
+      z-index: 2;
+      top: -1.42rem;
+      right: clamp(1rem, 12%, 6rem);
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: var(--bg-primary);
+      box-shadow:
+        0 0 0 6px color-mix(in srgb, var(--accent) 8%, transparent),
+        -42px 26px 0 -4px color-mix(in srgb, var(--atlas-signal) 52%, transparent);
+      content: "";
+      pointer-events: none;
+    }
+
+    .media-shelf.media-count-2,
+    .column-grid.media-count-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .media-shelf.media-count-1 {
+      grid-template-columns: minmax(0, 0.62fr);
+    }
+
+    .class-intro-route {
+      position: relative;
+      width: clamp(210px, 34%, 360px);
+      height: 24px;
+      margin: -0.55rem 1.2rem 1.3rem auto;
+      pointer-events: none;
+    }
+
+    .class-intro-route::before {
+      position: absolute;
+      top: 11px;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--atlas-signal) 62%, transparent) 19%,
+        color-mix(in srgb, var(--accent) 72%, transparent) 69%,
+        transparent
+      );
+      content: "";
+      transform: rotate(-1.6deg);
+    }
+
+    .class-intro-route::after {
+      position: absolute;
+      top: 7px;
+      right: 28%;
+      width: 7px;
+      height: 7px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      background: var(--bg-primary);
+      box-shadow: 34px -5px 0 -3px var(--atlas-signal);
+      content: "";
+    }
+
+    .class-case--templar .column-grid::before {
+      top: -0.95rem;
+      right: 8%;
+      bottom: auto;
+      left: -0.8rem;
+      height: 1px;
+      border: 0;
+      border-radius: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--accent) 66%, transparent) 17%,
+        color-mix(in srgb, var(--atlas-signal) 48%, transparent) 73%,
+        transparent
+      );
+      transform: rotate(-0.7deg);
+    }
+
+    .class-case--templar .column-grid::after {
+      top: -1.2rem;
+      right: 22%;
+      width: 8px;
+      height: 8px;
+      box-shadow: 26px 9px 0 -3px color-mix(in srgb, var(--atlas-signal) 64%, transparent);
+    }
+
+    .class-case--chieftain .column-grid::before {
+      top: 12%;
+      right: -1.6rem;
+      bottom: 4%;
+      left: 34%;
+      height: auto;
+      border: 0;
+      border-right: 1px solid color-mix(in srgb, var(--accent) 58%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--atlas-signal) 38%, transparent);
+      border-radius: 0 0 54% 0;
+      background: none;
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000 24%, #000 76%, transparent);
+      mask-image: linear-gradient(180deg, transparent, #000 24%, #000 76%, transparent);
+      transform: rotate(0.8deg);
+    }
+
+    .class-case--chieftain .column-grid::after {
+      top: auto;
+      right: -1.78rem;
+      bottom: 27%;
+      width: 6px;
+      height: 6px;
+      border-radius: 1px;
+      background: var(--atlas-signal);
+      box-shadow: none;
+      transform: rotate(45deg);
+    }
+
+    .class-case--beastmaster .media-shelf::before {
+      top: -0.4rem;
+      right: -8%;
+      bottom: auto;
+      left: 20%;
+      height: 1px;
+      border: 0;
+      border-radius: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--atlas-signal) 55%, transparent) 22%,
+        color-mix(in srgb, var(--accent) 68%, transparent) 61%,
+        transparent
+      );
+      transform: rotate(2.4deg);
+    }
+
+    .class-case--beastmaster .media-shelf::after {
+      top: -0.1rem;
+      right: 16%;
+      width: 4px;
+      height: 4px;
+      border: 0;
+      background: var(--accent);
+      box-shadow:
+        -22px -5px 0 -1px color-mix(in srgb, var(--atlas-signal) 76%, transparent),
+        17px 7px 0 -1px color-mix(in srgb, var(--accent) 62%, transparent);
+    }
+
+    .class-case--reaper .media-shelf.media-count-1 {
+      grid-template-columns: minmax(360px, 0.66fr);
+      justify-content: end;
+      margin-top: -1.15rem;
+      padding-right: clamp(0.35rem, 4vw, 2.8rem);
+    }
+
+    .class-case--reaper .media-shelf::before {
+      top: -0.15rem;
+      right: 5%;
+      bottom: auto;
+      left: 29%;
+      height: 1.2rem;
+      border: 0;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 66%, transparent);
+      border-radius: 50% 42% 0 0;
+      background: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+      transform: rotate(-1.1deg);
+    }
+
+    .class-case--reaper .media-shelf::after {
+      top: -0.32rem;
+      right: 15%;
+      width: 9px;
+      height: 9px;
+      background: var(--bg-secondary);
+      box-shadow:
+        0 0 0 5px color-mix(in srgb, var(--accent) 7%, transparent),
+        -54px 13px 0 -4px color-mix(in srgb, var(--atlas-signal) 68%, transparent);
+    }
+
+    .class-case--reaper .media-shelf .media-proof {
+      transform: translate(5px, 3px) rotate(1.35deg);
+      transform-origin: 64% 30%;
+    }
+
+    .media-shelf .media-proof,
+    .column-grid .media-proof {
+      aspect-ratio: 4 / 3;
+      margin: 0;
+    }
+
+    .media-shelf .media-proof:nth-child(3n + 1),
+    .column-grid .media-proof:nth-child(3n + 1) {
+      transform: translate(-5px, 7px) rotate(-1.8deg);
+    }
+
+    .media-shelf .media-proof:nth-child(3n + 2),
+    .column-grid .media-proof:nth-child(3n + 2) {
+      transform: translate(5px, -4px) rotate(1.45deg);
+    }
+
+    .media-shelf .media-proof:nth-child(3n),
+    .column-grid .media-proof:nth-child(3n) {
+      transform: translate(-2px, 4px) rotate(-1deg);
+    }
+
+    .media-proof {
+      position: relative;
+      isolation: isolate;
+      min-width: 0;
+      overflow: hidden;
+      border: 0;
+      background: #070908;
+      box-shadow: 0 24px 52px color-mix(in srgb, var(--bg-primary) 64%, rgba(0, 0, 0, 0.36));
+      cursor: pointer;
+      transform-origin: 50% 70%;
+      transition: box-shadow 220ms var(--ease-out);
+    }
+
+    .media-proof:hover,
+    .media-proof:focus-within {
+      box-shadow: 0 30px 64px color-mix(in srgb, var(--bg-primary) 55%, rgba(0, 0, 0, 0.42));
+    }
+
+    .media-proof video:focus-visible,
+    .media-toggle:focus-visible,
+    .nav-width-input:focus-visible {
+      outline: 2px solid var(--accent-secondary);
+      outline-offset: 3px;
+    }
+
+    .media-proof video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #070908;
+      cursor: pointer;
+      transition: filter 180ms var(--ease-out);
+    }
+
+    .media-proof:hover video,
+    .media-proof:focus-within video {
+      filter: brightness(1.04) saturate(1.03);
+    }
+
+    .media-proof figcaption {
+      position: absolute;
+      z-index: 2;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      min-height: 74px;
+      align-items: flex-end;
+      padding: 2.25rem 4.2rem 0.72rem 0.85rem;
+      border: 0;
+      background: linear-gradient(180deg, transparent, rgba(5, 7, 6, 0.9));
+      pointer-events: none;
+    }
+
+    .media-caption-copy strong {
+      color: #fbf7ef;
+      font-size: 0.76rem;
+    }
+
+    .media-caption-copy span {
+      display: none;
+    }
+
+    .media-toggle {
+      position: absolute;
+      right: 0.72rem;
+      bottom: 0.68rem;
+      width: 42px;
+      min-width: 42px;
+      height: 42px;
+      min-height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(9, 12, 10, 0.72);
+      font-size: 0.9rem;
+      line-height: 1;
+      pointer-events: auto;
+      text-transform: none;
+    }
+
+    .media-toggle:hover {
+      background: rgba(229, 123, 76, 0.24);
+    }
+
+    .video-example-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.65rem, 1.2vw, 1rem);
+      margin: 0.35rem 0 0.8rem;
+    }
+
+    .video-example-card {
+      position: relative;
+      min-width: 0;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0.35rem;
+      background: color-mix(in srgb, var(--bg-secondary) 72%, transparent);
+      color: var(--text-primary);
+      text-decoration: none;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+      transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+    }
+
+    .video-example-card:nth-child(3n + 1) {
+      transform: translateY(4px) rotate(-1.15deg);
+    }
+
+    .video-example-card:nth-child(3n + 2) {
+      transform: translateY(-3px) rotate(0.85deg);
+    }
+
+    .video-example-card:nth-child(3n) {
+      transform: translateY(5px) rotate(-0.55deg);
+    }
+
+    .video-example-card:hover,
+    .video-example-card:focus-visible {
+      opacity: 1;
+      text-decoration: none;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.18);
+    }
+
+    .video-example-preview {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #070908;
+    }
+
+    .video-example-preview img {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      object-fit: cover;
+      transition: transform 260ms var(--ease-out);
+    }
+
+    .video-example-card:hover .video-example-preview img {
+      transform: scale(1.025);
+    }
+
+    .video-example-play {
+      position: absolute;
+      right: 0.75rem;
+      top: 0.75rem;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 50%;
+      background: rgba(7, 9, 8, 0.78);
+      color: #fbf7ef;
+      font-size: 0.9rem;
+    }
+
+    .video-example-copy {
+      position: absolute;
+      z-index: 2;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: grid;
+      gap: 0.35rem;
+      padding: 3.2rem 0.9rem 0.9rem;
+      background: linear-gradient(180deg, transparent, rgba(5, 7, 6, 0.92));
+    }
+
+    .video-example-copy span {
+      color: #efae89;
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .video-example-copy strong {
+      color: #fbf7ef;
+      font-size: 0.84rem;
+      line-height: 1.4;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.64);
+    }
+
+    .ambient-gallery {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      overflow: clip;
+      pointer-events: none;
+    }
+
+    .ambient-frame {
+      position: absolute;
+      width: clamp(184px, 16vw, 286px);
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--border) 70%, var(--accent) 30%);
+      border-radius: 0.35rem;
+      background: var(--bg-secondary);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+      opacity: 0.28;
+      transform: rotate(var(--frame-tilt));
+    }
+
+    .ambient-frame::after {
+      position: absolute;
+      inset: 0;
+      border: 8px solid color-mix(in srgb, var(--bg-primary) 70%, transparent);
+      content: "";
+    }
+
+    .ambient-frame img {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      object-fit: cover;
+      filter: saturate(0.7) contrast(0.95);
+    }
+
+    .ambient-frame--dragon {
+      top: 1420px;
+      left: -3.4rem;
+      aspect-ratio: 4 / 3;
+      --frame-tilt: -2.2deg;
+    }
+
+    .ambient-frame--cavern {
+      top: 4040px;
+      right: -3.6rem;
+      aspect-ratio: 4 / 3;
+      --frame-tilt: 2.1deg;
+    }
+
+    .ambient-frame--factions {
+      top: 6680px;
+      left: -4.2rem;
+      aspect-ratio: 4 / 3;
+      --frame-tilt: 1.8deg;
+    }
+
+    .ambient-frame--classes {
+      top: 9480px;
+      right: -4rem;
+      aspect-ratio: 4 / 3;
+      --frame-tilt: -1.6deg;
+    }
+
+    :root[data-theme="light"] .ambient-frame {
+      border-color: color-mix(in srgb, var(--border) 55%, var(--accent) 45%);
+      box-shadow: 0 24px 70px rgba(92, 65, 47, 0.16);
+      opacity: 0.34;
+    }
+
+    :root[data-theme="light"] .ambient-frame img {
+      filter: saturate(0.78) contrast(0.96);
+    }
+
+    @media (min-width: 1240px) {
+      .ambient-gallery {
+        display: block;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .nav-width-control {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .portfolio-atlas {
+        right: -10rem;
+        opacity: 0.5;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .portfolio-atlas-grid {
+        opacity: 0.18;
+      }
+
+      .portfolio-atlas {
+        top: 4rem;
+        right: -92vw;
+        width: 160vw;
+        height: 68vh;
+        opacity: 0.32;
+      }
+
+      .case-summary {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        margin-block: 2.4rem 3rem;
+      }
+
+      .case-summary > h3,
+      .case-summary > :not(h3) {
+        grid-column: 1;
+        grid-row: auto;
+        max-width: none;
+      }
+
+      .media-shelf,
+      .media-shelf.media-count-1,
+      .media-shelf.media-count-2,
+      .column-grid:has(.media-proof),
+      .column-grid.media-count-2 {
+        grid-auto-columns: minmax(78vw, 1fr);
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        overflow-x: auto;
+        padding: 0.2rem 0.2rem 0.8rem;
+        scroll-snap-type: x mandatory;
+      }
+
+      .media-shelf .media-proof,
+      .column-grid .media-proof {
+        scroll-snap-align: start;
+      }
+
+      .video-example-grid {
+        grid-auto-columns: minmax(78vw, 1fr);
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        overflow-x: auto;
+        padding: 0.2rem 0.2rem 0.8rem;
+        scroll-snap-type: x mandatory;
+      }
+
+      .video-example-card {
+        scroll-snap-align: start;
+      }
+
+      .section-portal {
+        min-height: 240px;
+      }
+
+      .section-portal-copy {
+        padding: 1.35rem;
+      }
+
+      .accordion-header {
+        min-height: 4.4rem;
+        padding-inline: 0.9rem;
+      }
+
+      .accordion-inner {
+        padding-inline: 0.9rem;
+      }
+
+      .class-case .accordion-header {
+        min-height: 124px;
+        padding: 1rem;
+      }
+
+      .class-case .accordion-header > span {
+        top: 0.8rem;
+        left: 0.85rem;
+        max-width: calc(100% - 5.2rem);
+        padding-right: 1.35rem;
+        font-size: clamp(1.25rem, 7vw, 1.65rem);
+      }
+
+      .class-case .accordion-arrow {
+        top: 0.85rem;
+        right: 0.75rem;
+      }
+
+      .class-intro-route {
+        width: min(72%, 300px);
+        margin-right: 0.25rem;
+      }
+
+      .class-case--reaper .media-shelf.media-count-1 {
+        grid-auto-columns: minmax(78vw, 1fr);
+        grid-template-columns: none;
+        justify-content: normal;
+        padding-right: 0.2rem;
+      }
+
+      .media-proof figcaption {
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
 
+<a class="skip-link" href="#portfolio-main">Skip to portfolio</a>
+
+<div class="portfolio-atlas-grid" aria-hidden="true"></div>
+<div class="portfolio-ambient-field" aria-hidden="true">
+  <svg viewBox="0 0 2200 900" preserveAspectRatio="xMidYMid slice">
+    <path class="portfolio-field-path" d="M-80 580 C 112 382 272 462 438 284 S 692 146 864 238" />
+    <path class="portfolio-field-path-muted" d="M-28 170 C 166 244 324 92 548 188 S 732 382 914 330" />
+    <path class="portfolio-field-path-muted" d="M40 760 C 262 584 448 716 650 506 S 792 356 962 430" />
+  </svg>
+  <i class="portfolio-field-node"></i>
+  <i class="portfolio-field-node"></i>
+</div>
+<div class="portfolio-atlas" aria-hidden="true">
+  <svg viewBox="0 0 820 820">
+    <defs>
+      <linearGradient id="portfolio-route-fade" gradientUnits="userSpaceOnUse" x1="0" y1="90" x2="0" y2="766">
+        <stop offset="0" stop-color="var(--atlas-accent)" stop-opacity="0.9" />
+        <stop offset="0.7" stop-color="var(--atlas-accent)" stop-opacity="1" />
+        <stop offset="1" stop-color="var(--atlas-accent)" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient id="portfolio-progress-fade" gradientUnits="userSpaceOnUse" x1="0" y1="90" x2="0" y2="766">
+        <stop offset="0" stop-color="var(--accent)" stop-opacity="0.95" />
+        <stop offset="0.72" stop-color="var(--accent)" stop-opacity="1" />
+        <stop offset="1" stop-color="var(--accent)" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path class="portfolio-map-path" d="M82 134 C 214 210 258 82 412 170 S 618 298 744 232 S 714 508 548 486 S 352 590 620 706 S 692 756 392 766" />
+    <path class="portfolio-map-muted" d="M128 608 C 224 514 332 548 414 432 S 610 322 774 398" />
+    <path class="portfolio-map-muted" d="M168 272 C 280 314 306 210 458 256 S 626 452 772 538" />
+    <path class="portfolio-map-progress" d="M82 134 C 214 210 258 82 412 170 S 618 298 744 232 S 714 508 548 486 S 352 590 620 706 S 692 756 392 766" />
+  </svg>
+  <svg class="portfolio-contours" viewBox="0 0 570 570">
+    <ellipse cx="318" cy="270" rx="244" ry="170" transform="rotate(-19 318 270)" />
+    <ellipse cx="318" cy="270" rx="215" ry="146" transform="rotate(-19 318 270)" />
+    <ellipse cx="318" cy="270" rx="184" ry="124" transform="rotate(-19 318 270)" />
+    <ellipse cx="318" cy="270" rx="150" ry="96" transform="rotate(-19 318 270)" />
+    <ellipse cx="318" cy="270" rx="116" ry="70" transform="rotate(-19 318 270)" />
+    <ellipse cx="318" cy="270" rx="78" ry="43" transform="rotate(-19 318 270)" />
+  </svg>
+  <i class="portfolio-map-node is-active"></i>
+  <i class="portfolio-map-node"></i>
+  <i class="portfolio-map-node"></i>
+  <i class="portfolio-map-node"></i>
+  <i class="portfolio-map-node"></i>
+  <span class="portfolio-map-caption is-active">Intro</span>
+  <span class="portfolio-map-caption">Profile</span>
+  <span class="portfolio-map-caption">Overview</span>
+  <span class="portfolio-map-caption">Cases</span>
+  <span class="portfolio-map-caption">Deep dives</span>
+</div>
+
+<div class="ambient-gallery" aria-hidden="true">
+  <figure class="ambient-frame ambient-frame--dragon">
+    <img src="assets/images/ambient/official_dragon_2026.png" alt="" width="1065" height="562" loading="lazy" decoding="async" />
+  </figure>
+  <figure class="ambient-frame ambient-frame--cavern">
+    <img src="assets/images/ambient/official_cavern.jpg" alt="" width="1920" height="890" loading="lazy" decoding="async" />
+  </figure>
+  <figure class="ambient-frame ambient-frame--factions">
+    <img src="assets/images/banner_deep_dives.png" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+  </figure>
+  <figure class="ambient-frame ambient-frame--classes">
+    <img src="assets/images/banner_case_studies.png" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+  </figure>
+</div>
+
 <!-- ── Navbar ──────────────────────────────────────────── -->
 <nav id="navbar">
-  <span class="nav-name"><a class="nav-name-link" href="#top">Alexandr Detushev</a></span>
-  <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#case-studies">Case Studies</a></li>
-    <li><a href="#deep-dives">Deep Dives</a></li>
-    <li>
-      <div class="theme-toggle" role="group" aria-label="Theme switcher">
-        <button class="theme-option" type="button" data-theme-value="light" aria-pressed="false">Light</button>
-        <button class="theme-option" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
-      </div>
-    </li>
-  </ul>
+  <span class="nav-name"><a class="nav-name-link" href="#top">Aleksandr Detushev</a></span>
+  <div class="nav-tools">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#case-studies">Case Studies</a></li>
+      <li><a href="#deep-dives">Deep Dives</a></li>
+      <li>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+      </li>
+    </ul>
+    <div class="nav-width-control">
+      <label class="nav-width-label" for="portfolio-width">Width</label>
+      <input class="nav-width-input" id="portfolio-width" name="portfolio-width" type="range" min="860" max="1180" step="20" value="1040" />
+      <output class="nav-width-value" id="portfolio-width-value" for="portfolio-width" aria-live="polite">1040</output>
+    </div>
+  </div>
 </nav>
 
-<button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">☰</button>
+<button class="mobile-menu-toggle" id="mobile-menu-toggle" type="button" aria-label="Open mobile menu" aria-controls="mobile-menu" aria-expanded="false">☰</button>
 <ul class="mobile-menu" id="mobile-menu">
   <li><a href="#top">Top</a></li>
   <li><a href="#about">About</a></li>
@@ -651,58 +2522,63 @@
   <li><a href="#deep-dives">Deep Dives</a></li>
   <li class="mobile-theme">
     <span class="mobile-theme-label">Theme</span>
-    <div class="theme-toggle" role="group" aria-label="Mobile theme switcher">
-      <button class="theme-option" type="button" data-theme-value="light" aria-pressed="false">Light</button>
-      <button class="theme-option" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
-    </div>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
   </li>
 </ul>
 
-<!-- ── Width handle ────────────────────────────────────── -->
-<div id="width-handle" title="Drag to resize content width"></div>
-<div id="width-tooltip"></div>
-
 <!-- ── Content ─────────────────────────────────────────── -->
-<div class="content-wrapper" id="top">
-
-  <!-- Page title -->
-  <h1 class="page-title">Game Design Portfolio – Alexandr Detushev</h1>
-  <p class="contact-line">
-    <a href="tel:+382-68-541-158">+382-68-541-158</a> ·
-    <a href="mailto:Sashadetush@gmail.com">Sashadetush@gmail.com</a> ·
-    <a href="https://www.linkedin.com/in/aleksandr-detushev-aa2945234" target="_blank" rel="noopener">LinkedIn</a> ·
-    <a href="https://akiokoneko.github.io/resume/" target="_blank" rel="noopener">Resume</a>
-  </p>
-  <p class="contact-line">
-    Project:
-    <a href="https://warspear-online.com/en/" target="_blank" rel="noopener">Warspear Online ↗</a> ·
-    <a href="https://play.google.com/store/apps/details?id=com.aigrind.warspear" target="_blank" rel="noopener">Google Play ↗</a> ·
-    <a href="https://apps.apple.com/app/warspear-online-mmorpg/id444772528" target="_blank" rel="noopener">App Store ↗</a>
-  </p>
-
-  <hr />
+<main class="content-wrapper" id="portfolio-main">
+  <header class="portfolio-hero" id="top">
+    <div class="portfolio-hero-copy">
+      <p class="hero-eyebrow">Lead Game Designer · Warspear Online</p>
+      <h1 class="page-title">Game systems, live content, and how I make them work.</h1>
+      <p class="hero-deck">
+        Selected work from eight years on a long-running MMORPG: playable classes, progression,
+        guild competition, PvPvE, balance, design tools, and the reasoning behind the decisions.
+      </p>
+    </div>
+    <div class="portfolio-hero-side">
+      <p>Podgorica, Montenegro<br />Open to relocation</p>
+      <a href="mailto:Sashadetush@gmail.com">Sashadetush@gmail.com</a>
+      <a href="tel:+38268541158">+382 68 541 158</a>
+      <a href="https://www.linkedin.com/in/aleksandr-detushev-aa2945234" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://akiokoneko.github.io/resume/" target="_blank" rel="noopener">Resume</a>
+    </div>
+    <div class="portfolio-proof" aria-label="Career highlights">
+      <div><strong>8+</strong><span>years in live development</span></div>
+      <div><strong>4</strong><span>playable classes shipped</span></div>
+      <div><strong>20</strong><span>classes in the live roster</span></div>
+      <div><strong>3</strong><span>designers led and mentored</span></div>
+    </div>
+  </header>
 
   <!-- ── About ──────────────────────────────────────── -->
-  <h1 id="about">🔥 About me</h1>
+  <h2 id="about">About me</h2>
 
-  <p>Lead Game Designer with 6 years of experience on Warspear Online, where I own class design, endgame systems, talent progression, and live balance across a 20-class roster. My work sits at the intersection of combat systems, long-term progression, and player economy — in a game where players invest heavily and design decisions carry real weight.</p>
+  <p>Lead Game Designer with 8+ years of experience on Warspear Online. I work across systems, progression, economy, PvE and PvP, encounters, live content, design tools, and balance across a 20-class roster. My work sits at the intersection of player experience, practical production, and a live economy where design decisions carry real weight.</p>
 
   <p>I lead a small design team of 3 while staying hands-on with systems design, encounter design, and feature delivery. My background also includes shipping new playable classes, rebuilding the talent system, and designing seasonal content, which gives me a strong mix of leadership, live-service thinking, and hands-on design execution.</p>
 
+  <p>This portfolio focuses on a few systems that are easiest to explain as case studies. The wider body of work also includes arena and GvG features, world bosses, events, dungeons, editors, telemetry requirements, UX specifications, and production support across disciplines.</p>
+
   <!-- Accordion: What is Warspear Online? -->
   <div class="accordion" aria-expanded="true">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>What is Warspear Online?</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/warspear_logo.png" alt="Warspear Online logo" class="img-center" style="max-width:336px;" />
+        <img src="assets/images/warspear_logo.png" alt="Warspear Online logo" class="img-center project-logo" width="840" height="314" decoding="async" />
         <div class="column-grid">
-          <img src="assets/images/warspear_gameplay_1.gif" alt="Warspear Online gameplay" />
-          <img src="assets/images/warspear_gameplay_2.gif" alt="Warspear Online gameplay" />
+          <video data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Warspear Online open-world gameplay">
+            <source src="assets/videos/warspear_gameplay_1.mp4" type="video/mp4" />
+          </video>
+          <video data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Warspear Online combat gameplay">
+            <source src="assets/videos/warspear_gameplay_2.mp4" type="video/mp4" />
+          </video>
         </div>
-        <p>Warspear Online is a cross-platform live-service MMORPG that has been running for over 15 years, making it one of the earliest mobile MMOs with a long-term active player base.</p>
+        <p>Warspear Online is a cross-platform live-service MMORPG that has been running for 18 years, making it one of the earliest mobile MMOs with a long-term active player base.</p>
         <p>The game features:</p>
         <ul>
           <li>Four factions and two opposing alliances with large-scale PvP</li>
@@ -719,10 +2595,10 @@
   <hr />
 
   <!-- ── Quick Overview ─────────────────────────────── -->
-  <h1 id="overview">Quick Overview</h1>
+  <h2 id="overview">Quick Overview</h2>
 
   <h4>At a Glance</h4>
-  <p>Lead Game Designer on Warspear Online with 6+ years in live MMORPG development. I lead systems design across class ecosystems, endgame content, and long-term progression in a game where balance changes directly affect player investment.</p>
+  <p>Lead Game Designer on Warspear Online with 8+ years in live MMORPG development. I work across class ecosystems, endgame content, progression, PvE/PvP, live balance, tools, and team direction in a game where changes directly affect player investment.</p>
 
   <h4>Core Work</h4>
   <ul>
@@ -747,23 +2623,41 @@
   <div class="toc-card">
     <div class="toc-title">On this page</div>
 
-    <div class="toc-parent"><a href="#case-studies">Case Studies (Summary)</a></div>
-    <div class="toc-children">
-      <a href="#playable-classes-summary" class="toc-child">Playable Classes</a>
-      <a href="#guild-raids-summary" class="toc-child">Competitive Guild Raids</a>
-      <a href="#talents-summary" class="toc-child">Talents and Long-term Progression</a>
-      <a href="#non-combat-guilds-summary" class="toc-child">Non-Combat Guilds</a>
-      <a href="#live-balance" class="toc-child">Live Balance Approach</a>
-      <a href="#catacombs-summary" class="toc-child">Catacombs</a>
-    </div>
+    <div class="toc-groups">
+      <section class="toc-group" aria-labelledby="toc-summary-title">
+        <div class="toc-group-heading">
+          <span class="toc-index">01</span>
+          <div class="toc-parent" id="toc-summary-title">
+            <a href="#case-studies">Case Studies</a>
+            <span class="toc-level">Summary</span>
+          </div>
+        </div>
+        <nav class="toc-children" aria-label="Case study summaries">
+          <a href="#playable-classes-summary" class="toc-child">Playable Classes</a>
+          <a href="#guild-raids-summary" class="toc-child">Competitive Guild Raids</a>
+          <a href="#talents-summary" class="toc-child">Talents and Long-term Progression</a>
+          <a href="#non-combat-guilds-summary" class="toc-child">Non-Combat Guilds</a>
+          <a href="#live-balance" class="toc-child">Live Balance Approach</a>
+          <a href="#catacombs-summary" class="toc-child">Catacombs</a>
+        </nav>
+      </section>
 
-    <div class="toc-parent" style="margin-top:1rem;"><a href="#deep-dives">Deep Dives (Details)</a></div>
-    <div class="toc-children">
-      <a href="#playable-classes-detail" class="toc-child">Playable Classes</a>
-      <a href="#guild-raids-detail" class="toc-child">Competitive Guild Raids</a>
-      <a href="#talents-detail" class="toc-child">Talents and Long-term Progression</a>
-      <a href="#non-combat-guilds-detail" class="toc-child">Non-Combat Guilds</a>
-      <a href="#catacombs-detail" class="toc-child">Catacombs</a>
+      <section class="toc-group" aria-labelledby="toc-details-title">
+        <div class="toc-group-heading">
+          <span class="toc-index">02</span>
+          <div class="toc-parent" id="toc-details-title">
+            <a href="#deep-dives">Deep Dives</a>
+            <span class="toc-level">Details</span>
+          </div>
+        </div>
+        <nav class="toc-children" aria-label="Detailed case studies">
+          <a href="#playable-classes-detail" class="toc-child">Playable Classes</a>
+          <a href="#guild-raids-detail" class="toc-child">Competitive Guild Raids</a>
+          <a href="#talents-detail" class="toc-child">Talents and Long-term Progression</a>
+          <a href="#non-combat-guilds-detail" class="toc-child">Non-Combat Guilds</a>
+          <a href="#catacombs-detail" class="toc-child">Catacombs</a>
+        </nav>
+      </section>
     </div>
   </div>
 
@@ -772,10 +2666,17 @@
   <!-- ════════════════════════════════════════════════ -->
   <!-- CASE STUDIES (SUMMARY)                          -->
   <!-- ════════════════════════════════════════════════ -->
-  <h2 id="case-studies">Case Studies (Summary)</h2>
-  <img src="assets/images/banner_case_studies.png" alt="Case Studies banner" class="section-banner" />
+  <section class="section-portal section-portal--cases" aria-labelledby="case-studies">
+    <img src="assets/images/banner_case_studies.png" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    <div class="section-portal-copy">
+      <span class="section-index">01 / Fast read</span>
+      <h2 id="case-studies">Case studies</h2>
+      <p>Responsibilities, design intent, and impact in a compact format for a first portfolio pass.</p>
+    </div>
+  </section>
 
   <!-- Playable Classes Summary -->
+  <article class="case-summary">
   <h3 id="playable-classes-summary">Playable Classes</h3>
   <p>I designed and shipped four new playable classes for Warspear Online. Each class was built to fill a missing archetype, open new itemization paths, and create new reasons for both new and existing players to invest in additional characters.</p>
 
@@ -784,14 +2685,16 @@
   <h4>Quick overview</h4>
   <ul>
     <li><strong>Templar</strong> — a hybrid tank/support with strong control tools, built to close a gap in the Sentinels' faction toolkit. High skill ceiling with strong value in coordinated endgame content.</li>
-    <li><strong>Chieftain</strong> — a fast, solo-friendly class with strong QoL and high accessibility. One of the most popular classes in the game. Uses dual one-handed magical maces, driving demand for that weapon path.</li>
+    <li><strong>Chieftain</strong> — a fast, solo-friendly class with strong QoL and high accessibility. The official 2023 annual report placed it among the two most-played Mountain Clan classes across RU-Amber, RU-Ruby, and RU-Topaz. Uses dual one-handed magical maces, driving demand for that weapon path.</li>
     <li><strong>Beastmaster</strong> — a solo-friendly class built around a permanent combat companion. One of the most accessible entry points for new players. Uses a two-handed spear, creating clear upgrade pressure and a distinct gear identity.</li>
     <li><strong>Reaper</strong> — a transformation-based class where abilities change behavior in form. Strong PvP identity built around timing, power windows, and resource management. Required dedicated UI support for readability.</li>
   </ul>
+  </article>
 
   <!-- Competitive Guild Raids Summary -->
+  <article class="case-summary">
   <h3 id="guild-raids-summary">Competitive Guild Raids</h3>
-  <p>I designed the Competitive Guild Raids system as a core endgame pillar for high-level guilds. The goal was to create a repeatable PvE structure that also functions as a long-term competitive system with strong seasonal momentum.</p>
+  <p>I conceived Competitive Guild Raids as a core endgame pillar for high-level guilds and defined the system's competitive format, progression, and encounter direction. Another designer managed the technical task split during the original implementation so we could share the production load. Since the initial release, the raids and their iterations have been designed and delivered by me or by designers on my team.</p>
 
   <h4>Key points</h4>
   <ul>
@@ -802,7 +2705,7 @@
   </ul>
 
   <h4>My role</h4>
-  <p>Owned the design of the raid system, including all encounters, difficulty scaling, and reward structure. Another designer handled raid scheduling and entry UI.</p>
+  <p>Created the original concept and system design, owned encounter design, and continue to lead raid iterations and delivery personally or through my team.</p>
 
   <h4>Why it matters</h4>
   <ul>
@@ -810,8 +2713,10 @@
     <li>Acts as a strong economy sink through consumable and preparation item demand</li>
     <li>Drives cross-system engagement by linking raid participation with other progression systems</li>
   </ul>
+  </article>
 
   <!-- Talents Summary -->
+  <article class="case-summary">
   <h3 id="talents-summary">Talents and Long-term Progression</h3>
   <p>I rebuilt the talent system to establish a core long-term progression layer and enable meaningful build diversity. The goal was to move beyond obvious optimal builds and create a system that connects multiple gameplay loops.</p>
 
@@ -832,8 +2737,10 @@
     <li>Improved daily engagement by removing a single optimal grind path</li>
     <li>Turned talent trees into a connective layer between seasonal content, guild systems, and core class progression</li>
   </ul>
+  </article>
 
   <!-- Non-Combat Guilds Summary -->
+  <article class="case-summary">
   <h3 id="non-combat-guilds-summary">Non-Combat Guilds</h3>
   <p>Non-Combat Guilds are daily progression systems that extend buildcrafting through guild talent trees. Each guild has its own activity loop and thematic identity, but all follow the same principle: daily caps create regular return reasons, and guild talents add long-term character value that connects to class builds.</p>
 
@@ -850,8 +2757,10 @@
     <li>Adds a second buildcrafting layer with class-specific effects</li>
     <li>Encourages social interaction by allowing players to benefit from other guild paths</li>
   </ul>
+  </article>
 
   <!-- Live Balance Approach -->
+  <article class="case-summary">
   <h3 id="live-balance">Live Balance Approach</h3>
   <p>In Warspear Online, balance is not only a gameplay problem — it is a trust problem. Players invest heavily into characters over time, so major changes can feel like lost value. My goal is to keep the meta evolving without making players feel punished for past investment.</p>
 
@@ -869,8 +2778,10 @@
     <li>Class activity and popularity trends</li>
     <li>Monetization patterns, especially around new classes and major reworks</li>
   </ul>
+  </article>
 
   <!-- Catacombs Summary -->
+  <article class="case-summary">
   <h3 id="catacombs-summary">Catacombs</h3>
   <p>I designed Catacombs as a timed group PvPvE dungeon built around extraction-style reward logic. The goal was to introduce a session-based risk-reward system into a classic MMORPG structure.</p>
   <p>Players earn loot through PvE objectives, but that loot is not safe — dying drops part of it for others to claim. To secure rewards, players must successfully extract before the timer ends.</p>
@@ -882,14 +2793,21 @@
     <li>Creates tension through loot loss, contested space, and extraction decisions</li>
     <li>Introduces a modern session-based gameplay format into a traditional MMORPG framework</li>
   </ul>
+  </article>
 
   <hr />
 
   <!-- ════════════════════════════════════════════════ -->
   <!-- DEEP DIVES (DETAILS)                            -->
   <!-- ════════════════════════════════════════════════ -->
-  <h2 id="deep-dives">Deep Dives (Details)</h2>
-  <img src="assets/images/banner_deep_dives.png" alt="Deep Dives banner" class="section-banner" />
+  <section class="section-portal section-portal--details" aria-labelledby="deep-dives">
+    <img src="assets/images/banner_deep_dives.png" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    <div class="section-portal-copy">
+      <span class="section-index">02 / Evidence</span>
+      <h2 id="deep-dives">Deep dives</h2>
+      <p>Design decisions, production constraints, playable evidence, and the trade-offs behind the final systems.</p>
+    </div>
+  </section>
   <p class="section-intro">This section focuses on design decisions, development challenges, and why specific choices mattered in practice.</p>
   <p class="section-intro">The Summary section above is meant for a fast read. The blocks below are for deeper exploration of class design, endgame systems, long-term progression, and the supporting gameplay loops behind them.</p>
 
@@ -897,24 +2815,32 @@
   <h3 id="playable-classes-detail">Playable Classes</h3>
   <p class="section-intro">I designed these four classes to fill missing archetypes, expand itemization paths, and create new long-term character choices.</p>
   <p class="section-intro">In the deep dives below, I focus on design intent, key decisions and trade-offs, the hardest development problems, and the impact on player behaviour, economy, and role coverage.</p>
+  <div class="class-intro-route" aria-hidden="true"></div>
 
   <!-- Templar -->
-  <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+  <div class="accordion class-case class-case--templar" aria-expanded="false">
+    <button class="accordion-header" type="button">
+      <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/templar.jpg" width="1378" height="418" aria-hidden="true" tabindex="-1">
+        <source src="assets/videos/templar_skill.mp4" type="video/mp4" />
+      </video>
       <span>Templar (Sentinels)</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/templar_skill.gif" alt="Templar skill animation" class="img-full" />
-
         <p>Templar was designed to close a missing control gap for the Sentinels. The concept was a monk-knight hybrid that supports allies and controls enemies. The main goal was to help Sentinels catch up with Legion in control tools while creating a class that rewards mastery and tactical play.</p>
+
+        <p class="fantasy-line"><strong>Player fantasy:</strong> a disciplined monk-knight who protects allies by controlling the space around them.</p>
 
         <p>Templar is a hybrid tank/support with a high skill ceiling. The kit rewards timing and positioning, making it particularly effective in coordinated group play and endgame content, rather than as a beginner-friendly option.</p>
 
         <div class="column-grid">
-          <img src="assets/images/templar_skill_2.gif" alt="Templar skill" />
-          <img src="assets/images/templar_skill_3.gif" alt="Templar skill" />
+          <video data-looping-video muted loop playsinline preload="none" width="690" height="388" aria-label="Templar crowd-control skill">
+            <source src="assets/videos/templar_skill_2.mp4" type="video/mp4" />
+          </video>
+          <video data-looping-video muted loop playsinline preload="none" width="690" height="388" aria-label="Templar support skill">
+            <source src="assets/videos/templar_skill_3.mp4" type="video/mp4" />
+          </video>
         </div>
 
         <p>A key design decision was to allow flexibility without losing class identity. Templar can wear heavy armor or cloth, and use either mace + shield or a staff. This was intended to support both a frontline controller build and a more support-oriented caster style while preserving a consistent core fantasy.</p>
@@ -940,29 +2866,35 @@
   </div>
 
   <!-- Chieftain -->
-  <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+  <div class="accordion class-case class-case--chieftain" aria-expanded="false">
+    <button class="accordion-header" type="button">
+      <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/chieftain.jpg" width="1378" height="418" aria-hidden="true" tabindex="-1">
+        <source src="assets/videos/chieftain_banner_fix.mp4" type="video/mp4" />
+      </video>
       <span>Chieftain (Legion)</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/chieftain_banner_fix.gif" alt="Chieftain banner" class="img-full" />
-
         <p>Chieftain was designed as a mobility-first class focused on smooth solo play and high accessibility. The goal was to create a fast, responsive character with strong quality of life — clear tools for single target and AoE, reliable self-healing, and easy-to-read abilities. This combination made the class both beginner-friendly and highly effective in solo progression.</p>
 
+        <p class="fantasy-line"><strong>Player fantasy:</strong> stay in motion, survive on your own, and overwhelm groups as a spirit-warrior who feels powerful without a long setup.</p>
 
         <p>Chieftain uses one-handed magical maces and can wield two at once. I chose this weapon setup to create a clear and scalable gear path, increasing demand for that weapon category and giving players a fresh reason to invest even on established accounts.</p>
 
         <div class="column-grid">
-          <img src="assets/images/chieftain_skill_1.gif" alt="Chieftain skill" />
-          <img src="assets/images/chieftain_skill_2.gif" alt="Chieftain skill" />
+          <video data-looping-video muted loop playsinline preload="none" width="596" height="436" aria-label="Chieftain mobility skill">
+            <source src="assets/videos/chieftain_skill_1.mp4" type="video/mp4" />
+          </video>
+          <video data-looping-video muted loop playsinline preload="none" width="848" height="384" aria-label="Chieftain area skill">
+            <source src="assets/videos/chieftain_skill_2.mp4" type="video/mp4" />
+          </video>
         </div>
 
 
         <h4>Impact</h4>
         <ul>
-          <li>Became one of the most popular classes in the game, especially for solo play</li>
+          <li>Ranked among the two most-played Mountain Clan classes across all three major RU servers in the official 2023 annual report; it also led dungeon participation on RU-Amber and arena participation on RU-Ruby</li>
           <li>Introduced a new itemization path through dual magical maces, increasing demand for that weapon category</li>
           <li>Improved onboarding experience by providing a smooth and accessible class with strong early-to-mid game performance</li>
         </ul>
@@ -978,27 +2910,32 @@
   </div>
 
   <!-- Beastmaster -->
-  <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+  <div class="accordion class-case class-case--beastmaster" aria-expanded="false">
+    <button class="accordion-header" type="button">
+      <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/beastmaster.jpg" width="1378" height="518" aria-hidden="true" tabindex="-1">
+        <source src="assets/videos/beastmaster_skill_1.mp4" type="video/mp4" />
+      </video>
       <span>Beastmaster (Sentinels)</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/beastmaster_skill_1.gif" alt="Beastmaster skill" />
-
         <p>Beastmaster was designed as a solo-friendly class built around a permanent combat companion. The goal was to create a strong onboarding option for new players while preserving depth for long-term play. The companion is not timed — it stays active until it dies, and resummoning it acts as a failure state. This creates a forgiving baseline for solo play while still introducing meaningful consequences for mistakes.</p>
+
+        <p class="fantasy-line"><strong>Player fantasy:</strong> fight as a true two-body unit. The companion is not a temporary effect; keeping it alive and playing around it is the class.</p>
 
         <p>Beastmaster uses a two-handed spear as its primary weapon. I chose this to establish a clear gear identity and create long-term upgrade pressure, encouraging investment into spear progression, sharpening, and upgrades. It also opened a fresh equipment path for established accounts.</p>
 
         <p>The class can function as a damage dealer or support in group play, ensuring long-term relevance beyond early progression. This allows the class to transition smoothly from onboarding into mid- and endgame content.</p>
 
-        <img src="assets/images/beastmaster_skill_2.gif" alt="Beastmaster skill" />
+        <video data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Beastmaster combat companion">
+          <source src="assets/videos/beastmaster_skill_2.mp4" type="video/mp4" />
+        </video>
 
         <h4>Impact</h4>
         <ul>
           <li>Became one of the most accessible entry points for new players</li>
-          <li>Supported early retention by providing a forgiving but engaging solo experience</li>
+          <li>84,861 Beastmasters were created in 2022, including 16,287 on launch day, according to the official annual report</li>
           <li>Created a distinct itemization path through spear-based progression</li>
           <li>Maintained long-term viability through dual-role functionality in group content</li>
         </ul>
@@ -1015,16 +2952,19 @@
   </div>
 
   <!-- Reaper -->
-  <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+  <div class="accordion class-case class-case--reaper" aria-expanded="false">
+    <button class="accordion-header" type="button">
+      <video class="class-cover-video" data-class-cover-video data-looping-video muted loop playsinline preload="none" poster="assets/images/class-previews/reaper.jpg" width="1378" height="418" aria-hidden="true" tabindex="-1">
+        <source src="assets/videos/reaper_skill_1.mp4" type="video/mp4" />
+      </video>
       <span>Reaper (Legion)</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/reaper_skill_1.gif" alt="Reaper skill" class="img-full" />
-
         <p>Reaper was built around one core idea: transformation as a real gameplay state. The goal was to make transformation a meaningful decision that changes player behavior, not just a temporary power boost. Your decisions change your entire toolkit, not just numbers. Abilities gain additional properties in form, and transformation costs a dedicated resource with a cooldown. This creates a natural rhythm: build up, choose the moment, transform, then play a stronger window.</p>
+
+        <p class="fantasy-line"><strong>Player fantasy:</strong> hold back, build Hate, then commit to a demon form that changes how the whole kit plays.</p>
 
         <p>Because the class relies on state switching and an extra resource, I designed dedicated UI elements to ensure clarity and readability. The player must always understand their current form, resource level, and available options at a glance.</p>
 
@@ -1033,6 +2973,7 @@
         <h4>Impact</h4>
         <ul>
           <li>Introduced transformation as a core gameplay mechanic with real decision weight</li>
+          <li>147,776 Reapers were created in 2022, including 17,027 on launch day, according to the official annual report</li>
           <li>Added a high-skill PvP class focused on timing, resource management, and power windows</li>
           <li>Expanded build and gameplay variety through state-based ability changes</li>
           <li>Required and validated new UI solutions for readability in complex state-driven gameplay</li>
@@ -1046,7 +2987,9 @@
           <li>Skills changing behavior in form without complexity overload</li>
         </ul>
 
-        <img src="assets/images/reaper_skill_2.gif" alt="Reaper skill" class="img-full" style="margin-top:1rem;" />
+        <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Reaper transformed combat">
+          <source src="assets/videos/reaper_skill_2.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
   </div>
@@ -1057,11 +3000,13 @@
   <h3 id="guild-raids-detail">Competitive Guild Raids</h3>
   <p class="section-intro">After expanding the class roster, the next major focus was organized endgame. Competitive Guild Raids became a core system for top guilds, combining repeatable PvE with a long-term competitive structure.</p>
 
-  <img src="assets/images/guild_raid_1.gif" alt="Guild Raid gameplay" class="img-full" />
+  <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Competitive Guild Raid gameplay">
+    <source src="assets/videos/guild_raid_1.mp4" type="video/mp4" />
+  </video>
 
   <!-- Guild Raids - System -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Competitive Guild Raids — System</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
@@ -1076,7 +3021,7 @@
         <p>Raid seasons create a strong sink for consumables and entry resources. The reward structure offers rare power rewards and large gold payouts that matter to top guilds, while preparation needs drive engagement across other game systems.</p>
 
         <h4>My role</h4>
-        <p>I owned the design of the raid system, including all encounters, difficulty scaling, and reward structure. Another designer handled the raid scheduling and entry UI.</p>
+        <p>I created the original concept and system design, including the competitive format, progression structure, and encounter direction. Another designer managed the technical task split during the first implementation so we could share the production load. Since release, I have led raid design, iteration, and delivery personally or through designers on my team.</p>
 
         <h4>Impact</h4>
         <ul>
@@ -1099,15 +3044,17 @@
 
   <!-- Guild Raids - Encounters -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Competitive Guild Raids — Encounters</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/guild_raid_2.gif" alt="Guild Raid encounter" class="img-full" />
+        <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Competitive Guild Raid encounter">
+          <source src="assets/videos/guild_raid_2.mp4" type="video/mp4" />
+        </video>
 
-        <p>I owned full encounter design for all raids. The goal was to create fights that feel like true guild content — with coordination checks, role pressure, and decision points that scale with difficulty.</p>
+        <p>I led encounter design across the raid line, and since the original release the raids have been designed by me or by designers I lead. The goal was to create fights that feel like true guild content — with coordination checks, role pressure, and decision points that scale with difficulty.</p>
 
         <p>A core design principle was staged complexity. Lower difficulties teach the fight and establish patterns. After key thresholds, the raid introduces new mechanics or stronger versions of existing ones. This ensures that progression remains meaningful and continuously introduces new challenges instead of repeating solved patterns.</p>
 
@@ -1136,24 +3083,44 @@
 
   <!-- Video Examples -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Video Examples</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <a href="https://www.youtube.com/watch?v=apL5wsF-szQ" target="_blank" rel="noopener" class="video-link">
-          <span class="video-link-icon">📽️</span>
-          <span class="video-link-text">How to complete raids and what to expect? — A full guide on raid mechanics.</span>
-        </a>
-        <a href="https://www.youtube.com/watch?v=Op4EHwoDB8o" target="_blank" rel="noopener" class="video-link">
-          <span class="video-link-icon">📽️</span>
-          <span class="video-link-text">First attempt at the new raid system — Testing the mechanics on a new server.</span>
-        </a>
-        <a href="https://www.youtube.com/watch?v=5DY6Ld-WTTI" target="_blank" rel="noopener" class="video-link">
-          <span class="video-link-icon">📽️</span>
-          <span class="video-link-text">World record time: 15th raid of the third season! — A record-breaking run.</span>
-        </a>
+        <div class="video-example-grid">
+          <a href="https://www.youtube.com/watch?v=apL5wsF-szQ" target="_blank" rel="noopener" class="video-example-card">
+            <span class="video-example-preview">
+              <img src="https://i.ytimg.com/vi/apL5wsF-szQ/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+              <span class="video-example-play" aria-hidden="true">▶</span>
+            </span>
+            <span class="video-example-copy">
+              <span>Raid guide</span>
+              <strong>How to complete raids and what to expect?</strong>
+            </span>
+          </a>
+          <a href="https://www.youtube.com/watch?v=Op4EHwoDB8o" target="_blank" rel="noopener" class="video-example-card">
+            <span class="video-example-preview">
+              <img src="https://i.ytimg.com/vi/Op4EHwoDB8o/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+              <span class="video-example-play" aria-hidden="true">▶</span>
+            </span>
+            <span class="video-example-copy">
+              <span>First attempt</span>
+              <strong>Testing the new raid mechanics on a fresh server</strong>
+            </span>
+          </a>
+          <a href="https://www.youtube.com/watch?v=5DY6Ld-WTTI" target="_blank" rel="noopener" class="video-example-card">
+            <span class="video-example-preview">
+              <img src="https://i.ytimg.com/vi/5DY6Ld-WTTI/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+              <span class="video-example-play" aria-hidden="true">▶</span>
+            </span>
+            <span class="video-example-copy">
+              <span>Record run</span>
+              <strong>World-record time in the third-season raid</strong>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -1162,12 +3129,14 @@
 
   <!-- ── Talents – Deep Dives ───────────────────── -->
   <h3 id="talents-detail">Talents and Long-term Progression</h3>
-  <img src="assets/images/talents_1.gif" alt="Talent system" class="img-full" />
+  <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Talent system progression">
+    <source src="assets/videos/talents_1.mp4" type="video/mp4" />
+  </video>
   <p class="section-intro">This section focuses on how the Talent system supports build diversity, daily engagement, and long-term progression. The goal was to create a system that adds meaningful build identity and connects progression across multiple gameplay loops, rather than simply increasing player power through stats.</p>
 
   <!-- Talent System -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Talent System</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
@@ -1175,7 +3144,7 @@
       <div class="accordion-inner">
         <p>When I started working on the project, the talent system felt too shallow and lacked long-term goals. I rebuilt it almost from scratch to establish a core progression layer that supports build diversity, daily engagement, and a sustainable live economy.</p>
 
-        <img src="assets/images/talent_tree_1.png" alt="Talent tree" class="img-full" />
+        <img src="assets/images/talent_tree_1.png" alt="Class talent tree with branching progression choices" class="img-full" width="1292" height="1303" loading="lazy" decoding="async" />
 
         <p>Talents are tied to each character and class, with separate guild-related trees. This makes them a meaningful build layer rather than a passive bonus system.</p>
 
@@ -1204,7 +3173,7 @@
           <li>Introduced a sustainable resource sink through build switching and progression scaling</li>
         </ul>
 
-        <img src="assets/images/talent_tree_2.png" alt="Talent tree" class="img-full" />
+        <img src="assets/images/talent_tree_2.png" alt="Expanded talent tree showing class-specific upgrades" class="img-full" width="1307" height="914" loading="lazy" decoding="async" />
 
         <h4>Development challenges</h4>
         <ul class="challenge-list">
@@ -1225,13 +3194,15 @@
 
   <!-- Non-Combat Guilds System -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Non-Combat Guilds — System</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/guild_noncombat_1.gif" alt="Non-Combat Guild" class="img-full" />
+        <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Non-combat guild progression">
+          <source src="assets/videos/guild_noncombat_1.mp4" type="video/mp4" />
+        </video>
 
         <p>Non-Combat Guilds were designed as daily engagement systems with long-term value. Each guild has its own theme and gameplay loop, but all serve two broader goals: reliable recurring activities and extended buildcrafting through guild talent progression.</p>
 
@@ -1263,13 +3234,15 @@
 
   <!-- Adventurers -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Adventurers</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/guild_adventurers_1.gif" alt="Adventurers guild" class="img-full" />
+        <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Adventurers Guild activity">
+          <source src="assets/videos/guild_adventurers_1.mp4" type="video/mp4" />
+        </video>
 
         <p>Adventurers are the PvE-focused guild path, but the core loop goes beyond a standard dungeon run. Players search the desert for the correct entrance among several marked locations, activate a hidden object, and open a temporary mini-dungeon for their group. This was designed to shift the experience from a queue-based activity to exploration and discovery.</p>
 
@@ -1294,13 +3267,15 @@
 
   <!-- Assassins -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Assassins</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/guild_assassins_1.gif" alt="Assassins guild" class="img-full" />
+        <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Assassins Guild activity">
+          <source src="assets/videos/guild_assassins_1.mp4" type="video/mp4" />
+        </video>
 
         <p>Assassins are the PvP-focused guild path, built around a risk-reward loop with real player-to-player tension. The goal was to make PvP progression feel productive, not just adversarial. After unlocking the mechanic through the guild talent tree, players gain a progress bar that appears on the guild's territory.</p>
 
@@ -1331,13 +3306,15 @@
 
   <!-- Mages -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Mages</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
     <div class="accordion-body">
       <div class="accordion-inner">
-        <img src="assets/images/guild_mages_1.gif" alt="Mages guild" class="img-full" />
+        <video class="img-full" data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Mages Guild activity">
+          <source src="assets/videos/guild_mages_1.mp4" type="video/mp4" />
+        </video>
 
         <p>Mages were designed as the most system-heavy of the three guild paths. The goal was to create a multi-phase gameplay loop that combines several types of player activity into a single cohesive experience. The loop starts in the open world, where the player locates and activates a magical object, summons a bound creature, and then follows it across the desert while clearing hostile spawns that appear along the route. When the escort reaches the destination, the player activates the entrance and moves into a separate tower encounter with wave-based PvE combat.</p>
 
@@ -1369,15 +3346,19 @@
   <h3 id="catacombs-detail">Catacombs</h3>
   <p class="section-intro">This section covers a session-based PvPvE dungeon built around loot risk, extraction timing, and group-based hostility. The goal was to create a mode where reward value depends not only on what players earn, but on whether they successfully extract with it.</p>
   <div class="column-grid">
-    <img src="assets/images/catacombs-boss-fight.gif" alt="Catacombs boss encounter" />
-    <img src="assets/images/catacombs-chest-reward.gif" alt="Catacombs reward chest encounter" />
+    <video data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Catacombs boss encounter">
+      <source src="assets/videos/catacombs-boss-fight.mp4" type="video/mp4" />
+    </video>
+    <video data-looping-video muted loop playsinline preload="none" width="660" height="440" aria-label="Catacombs reward chest encounter">
+      <source src="assets/videos/catacombs-chest-reward.mp4" type="video/mp4" />
+    </video>
   </div>
   <h4 style="margin-top:1rem;">Session Flow</h4>
   <p class="section-intro" style="margin-top:0.25rem;">Lobby registration → timed PvPvE run → pressure from monsters and hostile groups → extraction choice → secured rewards through Catacomb Storage.</p>
 
   <!-- Catacombs accordion -->
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>Catacombs</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
@@ -1415,7 +3396,7 @@
   <hr />
 
   <div class="accordion" aria-expanded="false">
-    <button class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+    <button class="accordion-header" type="button">
       <span>References &amp; Links</span>
       <svg class="accordion-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
     </button>
@@ -1427,6 +3408,8 @@
           <li><a href="https://forum.warspear-online.com/index.php?/topic/204623-20200924-update-warspear-online-90-heroes-of-the-new-era-release/" target="_blank" rel="noopener">Update 9.0 Release</a></li>
           <li><a href="https://forum.warspear-online.com/index.php?/topic/353775-20220830-update-warspear-online-110-new-legends-preview/" target="_blank" rel="noopener">Update 11.0 Preview — Beastmaster &amp; Reaper</a></li>
           <li><a href="https://forum.warspear-online.com/index.php?/topic/356083-20220908-update-warspear-online-110-new-legends-release/" target="_blank" rel="noopener">Update 11.0 Release</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/390959-20221229-%D0%B8%D1%82%D0%BE%D0%B3%D0%B8-2022-%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B2-%D0%B8%D0%BD%D1%84%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B5/" target="_blank" rel="noopener">2022 Annual Infographic — Beastmaster &amp; Reaper creation counts</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/452899-20240119-%D0%B8%D1%82%D0%BE%D0%B3%D0%B8-2023-%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B2-%D0%B8%D0%BD%D1%84%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B5/" target="_blank" rel="noopener">2023 Annual Infographic — Chieftain class participation</a></li>
         </ul>
 
         <p class="links-group-title">Competitive Guild Raids</p>
@@ -1461,23 +3444,33 @@
     </div>
   </div>
 
-  <p class="footer-text">© 2026 Aleksandr Detushev</p>
+</main><!-- /content-wrapper -->
 
-</div><!-- /content-wrapper -->
+<footer class="site-footer">
+  <p class="footer-text">© 2026 Aleksandr Detushev</p>
+</footer>
 
 <!-- ── JavaScript ───────────────────────────────────── -->
 <script>
   const THEME_STORAGE_KEY = 'portfolio_theme';
   const prefersLightQuery = window.matchMedia('(prefers-color-scheme: light)');
-  const themeOptionButtons = document.querySelectorAll('.theme-option[data-theme-value]');
+  const themeToggleButtons = document.querySelectorAll('[data-theme-toggle]');
   const hasSavedThemePreference = localStorage.getItem(THEME_STORAGE_KEY) !== null;
+
+  function updateThemeButtons(theme) {
+    themeToggleButtons.forEach((button) => {
+      button.textContent = theme === 'dark' ? 'Light' : 'Dark';
+      button.setAttribute('aria-pressed', String(theme === 'light'));
+      button.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
+      );
+    });
+  }
 
   function setTheme(theme, persist = true) {
     document.documentElement.setAttribute('data-theme', theme);
-    themeOptionButtons.forEach((button) => {
-      const isActive = button.dataset.themeValue === theme;
-      button.setAttribute('aria-pressed', String(isActive));
-    });
+    updateThemeButtons(theme);
     if (persist) localStorage.setItem(THEME_STORAGE_KEY, theme);
   }
 
@@ -1490,120 +3483,333 @@
     });
   }
 
-  themeOptionButtons.forEach((button) => {
+  themeToggleButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      setTheme(button.dataset.themeValue, true);
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTheme(current === 'dark' ? 'light' : 'dark', true);
     });
   });
 
   // ── Accordion ────────────────────────────────────
-  function toggleAccordion(el) {
-    const isOpen = el.getAttribute('aria-expanded') === 'true';
+  const accordions = [...document.querySelectorAll('.accordion')];
+
+  function setAccordionState(el, open, animate = true) {
+    const button = el.querySelector('.accordion-header');
     const body = el.querySelector('.accordion-body');
-    if (isOpen) {
-      body.style.maxHeight = body.scrollHeight + 'px';
-      requestAnimationFrame(() => {
-        body.style.maxHeight = '0px';
-        el.setAttribute('aria-expanded', 'false');
+    el.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-expanded', String(open));
+
+    if (!animate) {
+      delete el.dataset.transitioning;
+      body.style.maxHeight = open ? 'none' : '0px';
+      return;
+    }
+
+    if (open) {
+      el.dataset.transitioning = 'open';
+      el.querySelectorAll('[data-class-cover-video]').forEach((video) => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        ensureVideoReady(video);
+        video.play().catch(() => {});
+      });
+      body.style.maxHeight = '0px';
+      window.requestAnimationFrame(() => {
+        body.style.maxHeight = body.scrollHeight + 'px';
+      });
+      body.addEventListener('transitionend', function onOpenTransition(event) {
+        if (event.propertyName !== 'max-height') return;
+        if (el.getAttribute('aria-expanded') === 'true') {
+          body.style.maxHeight = 'none';
+          delete el.dataset.transitioning;
+          window.requestAnimationFrame(() => {
+            playNearbyLoopingVideos(el);
+            requestPortfolioProgressUpdate();
+          });
+        }
+        body.removeEventListener('transitionend', onOpenTransition);
       });
     } else {
-      el.setAttribute('aria-expanded', 'true');
+      el.dataset.transitioning = 'close';
       body.style.maxHeight = body.scrollHeight + 'px';
-      body.addEventListener('transitionend', function once() {
-        if (el.getAttribute('aria-expanded') === 'true') body.style.maxHeight = 'none';
-        body.removeEventListener('transitionend', once);
+      window.requestAnimationFrame(() => {
+        body.style.maxHeight = '0px';
+      });
+      body.addEventListener('transitionend', function onCloseTransition(event) {
+        if (event.propertyName !== 'max-height') return;
+        el.querySelectorAll('[data-looping-video]').forEach((video) => video.pause());
+        delete el.dataset.transitioning;
+        requestPortfolioProgressUpdate();
+        body.removeEventListener('transitionend', onCloseTransition);
       });
     }
   }
 
-  // Init all open accordions with explicit maxHeight
-  document.querySelectorAll('.accordion[aria-expanded="true"] .accordion-body').forEach(body => {
-    body.style.maxHeight = 'none';
-  });
-
-  // ── Navbar scroll ─────────────────────────────────
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-  }, { passive: true });
-
-  // ── Width handle ──────────────────────────────────
-  const handle = document.getElementById('width-handle');
-  const tooltip = document.getElementById('width-tooltip');
-  const root = document.documentElement;
-
-  const MIN_WIDTH = 600;
-  const MAX_WIDTH = 1400;
-
-  function applyWidth(w) {
-    w = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, w));
-    root.style.setProperty('--content-width', w + 'px');
-    return w;
+  function toggleAccordion(el) {
+    const isOpen = el.getAttribute('aria-expanded') === 'true';
+    setAccordionState(el, !isOpen);
   }
 
-  // Restore saved width
-  const savedWidth = localStorage.getItem('portfolio_width');
-  if (savedWidth) applyWidth(parseInt(savedWidth));
-
-  let dragging = false;
-  let startX = 0;
-  let startWidth = 0;
-
-  handle.addEventListener('mousedown', e => {
-    dragging = true;
-    startX = e.clientX;
-    startWidth = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
-    handle.classList.add('dragging');
-    tooltip.classList.add('visible');
-    document.body.style.userSelect = 'none';
-    document.body.style.cursor = 'ew-resize';
-    e.preventDefault();
+  accordions.forEach((accordion, index) => {
+    const button = accordion.querySelector('.accordion-header');
+    const title = button.querySelector('span');
+    const arrow = button.querySelector('.accordion-arrow');
+    const body = accordion.querySelector('.accordion-body');
+    const mediaCount = accordion.querySelectorAll('[data-looping-video]').length;
+    const buttonId = `case-study-toggle-${index + 1}`;
+    const bodyId = `case-study-panel-${index + 1}`;
+    title.dataset.detail = mediaCount > 0
+      ? `${mediaCount} gameplay ${mediaCount === 1 ? 'capture' : 'captures'} · design intent & trade-offs`
+      : 'Design reasoning · production constraints';
+    button.id = buttonId;
+    button.setAttribute('aria-controls', bodyId);
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.setAttribute('focusable', 'false');
+    body.id = bodyId;
+    body.setAttribute('role', 'region');
+    body.setAttribute('aria-labelledby', buttonId);
+    button.addEventListener('click', () => toggleAccordion(accordion));
+    setAccordionState(accordion, accordion.getAttribute('aria-expanded') === 'true', false);
   });
 
-  document.addEventListener('mousemove', e => {
-    if (!dragging) return;
-    const delta = (e.clientX - startX) * 2;
-    const newW = applyWidth(startWidth + delta);
-    tooltip.textContent = newW + 'px';
-  });
+  // ── Stable navbar ─────────────────────────────────
+  const navbar = document.getElementById('navbar');
 
-  document.addEventListener('mouseup', () => {
-    if (!dragging) return;
-    dragging = false;
-    handle.classList.remove('dragging');
-    tooltip.classList.remove('visible');
-    document.body.style.userSelect = '';
-    document.body.style.cursor = '';
-    const current = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
-    localStorage.setItem('portfolio_width', current);
-  });
+  // ── Systems atlas, true section tracking, and width ─
+  const root = document.documentElement;
+  const routeTargetIds = ['top', 'about', 'overview', 'case-studies', 'deep-dives'];
+  const routeTargets = routeTargetIds.map((id) => document.getElementById(id));
+  const navSectionLinks = [...document.querySelectorAll('#navbar .nav-links a[href^="#"]')];
+  const mapNodes = [...document.querySelectorAll('.portfolio-map-node')];
+  const mapCaptions = [...document.querySelectorAll('.portfolio-map-caption')];
+  const mapProgress = document.querySelector('.portfolio-map-progress');
+  const mapPathLength = mapProgress.getTotalLength();
+  const widthInput = document.getElementById('portfolio-width');
+  const widthValue = document.getElementById('portfolio-width-value');
+  const widthStorageKey = 'portfolio_content_width';
+  const finePointer = window.matchMedia('(pointer: fine)');
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let atlasFrame = 0;
+  let scrollFrame = 0;
 
-  // Touch support
-  handle.addEventListener('touchstart', e => {
-    const t = e.touches[0];
-    dragging = true;
-    startX = t.clientX;
-    startWidth = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
-    handle.classList.add('dragging');
-    tooltip.classList.add('visible');
+  mapProgress.style.strokeDasharray = String(mapPathLength);
+  mapProgress.style.strokeDashoffset = String(mapPathLength);
+
+  function setActiveRoute(index) {
+    root.style.setProperty('--active-route-index', index);
+    navSectionLinks.forEach((link) => {
+      const linkIndex = routeTargetIds.indexOf(link.hash.slice(1));
+      if (linkIndex === index) {
+        link.setAttribute('aria-current', 'location');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+    mapNodes.forEach((node, nodeIndex) => node.classList.toggle('is-active', nodeIndex === index));
+    mapCaptions.forEach((caption, captionIndex) => caption.classList.toggle('is-active', captionIndex === index));
+  }
+
+  function updatePortfolioProgress() {
+    const available = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = available > 0 ? Math.min(1, Math.max(0, window.scrollY / available)) : 0;
+    root.style.setProperty('--portfolio-progress', `${progress * 100}%`);
+    root.style.setProperty('--portfolio-progress-scale', progress);
+    mapProgress.style.strokeDashoffset = String(mapPathLength * (1 - progress));
+
+    const probe = window.scrollY + navbar.offsetHeight + window.innerHeight * 0.2;
+    let activeIndex = 0;
+    routeTargets.forEach((target, index) => {
+      if (target.offsetTop <= probe) activeIndex = index;
+    });
+    setActiveRoute(activeIndex);
+  }
+
+  function requestPortfolioProgressUpdate() {
+    window.cancelAnimationFrame(scrollFrame);
+    scrollFrame = window.requestAnimationFrame(updatePortfolioProgress);
+  }
+
+  window.addEventListener('scroll', requestPortfolioProgressUpdate, { passive: true });
+  window.addEventListener('resize', requestPortfolioProgressUpdate, { passive: true });
+  updatePortfolioProgress();
+
+  window.addEventListener('pointermove', (event) => {
+    if (!finePointer.matches || reducedMotionQuery.matches) return;
+    window.cancelAnimationFrame(atlasFrame);
+    atlasFrame = window.requestAnimationFrame(() => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 22;
+      const y = (event.clientY / window.innerHeight - 0.5) * 14;
+      root.style.setProperty('--atlas-x', `${x}px`);
+      root.style.setProperty('--atlas-y', `${y}px`);
+      root.style.setProperty('--atlas-contour-x', `${x * -0.45}px`);
+      root.style.setProperty('--atlas-contour-y', `${y * -0.45}px`);
+      root.style.setProperty('--field-x', `${x * -0.32}px`);
+      root.style.setProperty('--field-y', `${y * -0.24}px`);
+    });
   }, { passive: true });
 
-  document.addEventListener('touchmove', e => {
-    if (!dragging) return;
-    const t = e.touches[0];
-    const delta = (t.clientX - startX) * 2;
-    const newW = applyWidth(startWidth + delta);
-    tooltip.textContent = newW + 'px';
-  }, { passive: true });
+  function updateReadingWidthValue() {
+    const width = Number(widthInput.value);
+    widthValue.value = String(width);
+    widthValue.textContent = String(width);
+  }
 
-  document.addEventListener('touchend', () => {
-    if (!dragging) return;
-    dragging = false;
-    handle.classList.remove('dragging');
-    tooltip.classList.remove('visible');
-    const current = parseInt(getComputedStyle(root).getPropertyValue('--content-width')) || 860;
-    localStorage.setItem('portfolio_width', current);
+  function commitReadingWidth(persist = true) {
+    updateReadingWidthValue();
+    root.style.setProperty('--content-width', `${Number(widthInput.value)}px`);
+    if (persist) localStorage.setItem(widthStorageKey, widthInput.value);
+    requestPortfolioProgressUpdate();
+  }
+
+  const savedReadingWidth = Number(localStorage.getItem(widthStorageKey));
+  if (savedReadingWidth >= 860 && savedReadingWidth <= 1180) {
+    widthInput.value = String(savedReadingWidth);
+  }
+  widthInput.addEventListener('input', updateReadingWidthValue);
+  widthInput.addEventListener('change', () => commitReadingWidth(true));
+  commitReadingWidth(false);
+
+  // ── Lightweight looping videos ────────────────────
+  function enhanceVideo(video, index) {
+    if (video.matches('[data-class-cover-video]') || video.closest('.media-proof')) return;
+
+    const label = video.getAttribute('aria-label') || `Gameplay capture ${index + 1}`;
+    const figure = document.createElement('figure');
+    const caption = document.createElement('figcaption');
+    const captionCopy = document.createElement('span');
+    const captionTitle = document.createElement('strong');
+    const captionNote = document.createElement('span');
+    const toggle = document.createElement('button');
+
+    figure.className = 'media-proof';
+    captionCopy.className = 'media-caption-copy';
+    captionTitle.textContent = label;
+    captionNote.textContent = 'Gameplay capture · silent loop';
+    toggle.className = 'media-toggle';
+    toggle.type = 'button';
+    toggle.textContent = '▶';
+    toggle.setAttribute('aria-label', `Play ${label}`);
+
+    video.before(figure);
+    figure.append(video, caption);
+    video.tabIndex = 0;
+    captionCopy.append(captionTitle, captionNote);
+    caption.append(captionCopy, toggle);
+
+    function updateMediaControl() {
+      const playing = !video.paused;
+      toggle.textContent = playing ? 'Ⅱ' : '▶';
+      toggle.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${label}`);
+    }
+
+    function togglePlayback() {
+      if (video.paused) {
+        video.dataset.userPaused = 'false';
+        ensureVideoReady(video);
+        video.play().catch(() => {});
+      } else {
+        video.dataset.userPaused = 'true';
+        video.pause();
+      }
+    }
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      togglePlayback();
+    });
+
+    video.addEventListener('click', () => {
+      togglePlayback();
+    });
+
+    video.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      togglePlayback();
+    });
+
+    video.addEventListener('play', updateMediaControl);
+    video.addEventListener('pause', updateMediaControl);
+    updateMediaControl();
+  }
+
+  const loopingVideos = [...document.querySelectorAll('[data-looping-video]')];
+  loopingVideos.forEach(enhanceVideo);
+
+  document.querySelectorAll('.class-case .accordion-inner').forEach((inner) => {
+    const figures = [...inner.querySelectorAll('.media-proof')];
+    if (figures.length === 0) return;
+
+    const ungroupedSecondary = figures.filter((figure) => !figure.closest('.column-grid'));
+    if (ungroupedSecondary.length > 0) {
+      const shelf = document.createElement('div');
+      shelf.className = `media-shelf media-count-${Math.min(ungroupedSecondary.length, 3)}`;
+      ungroupedSecondary[0].before(shelf);
+      ungroupedSecondary.forEach((figure) => shelf.append(figure));
+    }
   });
+
+  document.querySelectorAll('.column-grid').forEach((grid) => {
+    const mediaCount = grid.querySelectorAll('.media-proof').length;
+    if (mediaCount > 0) grid.classList.add(`media-count-${Math.min(mediaCount, 3)}`);
+  });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ensureVideoReady(video) {
+    if (video.dataset.ready === 'true') return;
+    video.preload = 'metadata';
+    video.load();
+    video.dataset.ready = 'true';
+  }
+
+  function playNearbyLoopingVideos(scope = document) {
+    if (prefersReducedMotion) return;
+    scope.querySelectorAll('[data-looping-video]').forEach((video) => {
+      const rect = video.getBoundingClientRect();
+      const accordion = video.closest('.accordion');
+      const expanded = !accordion || accordion.getAttribute('aria-expanded') === 'true';
+      if (
+        expanded
+        &&
+        video.dataset.userPaused !== 'true'
+        && rect.width > 0
+        && rect.height > 0
+        && rect.bottom >= -320
+        && rect.top <= window.innerHeight + 320
+      ) {
+        ensureVideoReady(video);
+        video.play().catch(() => {});
+      }
+    });
+  }
+
+  if (prefersReducedMotion) {
+    loopingVideos.forEach((video) => {
+      video.controls = true;
+    });
+  } else if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        const accordion = video.closest('.accordion');
+        const expanded = !accordion || accordion.getAttribute('aria-expanded') === 'true';
+        const opening = accordion?.dataset.transitioning === 'open';
+        if (entry.isIntersecting && expanded) {
+          ensureVideoReady(video);
+          if (video.dataset.userPaused !== 'true') video.play().catch(() => {});
+        } else if (!opening) {
+          video.pause();
+        }
+      });
+    }, { rootMargin: '320px 0px' });
+
+    loopingVideos.forEach((video) => videoObserver.observe(video));
+  } else {
+    loopingVideos.forEach((video) => {
+      ensureVideoReady(video);
+      video.play().catch(() => {});
+    });
+  }
 
   // ── Mobile nav menu ───────────────────────────────
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -1612,12 +3818,17 @@
   function closeMobileMenu() {
     mobileMenu.classList.remove('open');
     mobileMenuToggle.setAttribute('aria-expanded', 'false');
+    mobileMenuToggle.setAttribute('aria-label', 'Open mobile menu');
+    mobileMenuToggle.textContent = '☰';
   }
 
   mobileMenuToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     const open = mobileMenu.classList.toggle('open');
     mobileMenuToggle.setAttribute('aria-expanded', String(open));
+    mobileMenuToggle.setAttribute('aria-label', open ? 'Close mobile menu' : 'Open mobile menu');
+    mobileMenuToggle.textContent = open ? '×' : '☰';
+    if (open) mobileMenu.querySelector('a')?.focus();
   });
 
   mobileMenu.addEventListener('click', (e) => {
@@ -1626,6 +3837,13 @@
 
   document.addEventListener('click', () => {
     closeMobileMenu();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMobileMenu();
+      mobileMenuToggle.focus();
+    }
   });
 
   document.querySelectorAll('.mobile-menu a').forEach(a => {

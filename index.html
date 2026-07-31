@@ -878,15 +878,347 @@
       width: 100%;
     }
 
-    .fantasy-line {
-      padding: 0.75rem 0.9rem;
-      border-left: 3px solid var(--accent);
-      background: var(--surface-muted);
-      color: var(--text-secondary);
+    .fantasy-note {
+      --note-angle: -1.2deg;
+      --note-shift: 0px;
+      position: relative;
+      z-index: 1;
+      float: right;
+      width: min(42%, 25rem);
+      margin: 0.55rem 0.2rem 1.15rem 1.7rem;
+      padding: 1.05rem 1.25rem 1.15rem;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 76%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--atlas-signal) 44%, transparent);
+      background:
+        linear-gradient(132deg, color-mix(in srgb, var(--surface-muted) 94%, var(--accent) 6%), var(--surface-muted));
+      color: var(--text-primary);
+      box-shadow:
+        0 16px 34px color-mix(in srgb, var(--bg-primary) 72%, rgba(0, 0, 0, 0.22)),
+        inset 0 1px rgba(255, 255, 255, 0.05);
+      transform: translateY(var(--note-shift)) rotate(var(--note-angle));
+      transform-origin: 50% 50%;
     }
 
-    .fantasy-line strong {
+    .fantasy-note::before {
+      position: absolute;
+      top: 0.42rem;
+      right: 0.58rem;
+      color: color-mix(in srgb, var(--accent) 70%, var(--text-secondary));
+      content: attr(data-folio);
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .fantasy-note::after {
+      position: absolute;
+      right: -0.7rem;
+      bottom: 0.72rem;
+      width: 2.25rem;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      content: "";
+      transform: rotate(-7deg);
+      transform-origin: left center;
+    }
+
+    .fantasy-note-kicker {
+      display: block;
+      margin-bottom: 0.45rem;
       color: var(--accent-secondary);
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .fantasy-note-copy {
+      display: block;
+      max-width: 23ch;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(1.12rem, 1.8vw, 1.42rem);
+      font-weight: 500;
+      line-height: 1.18;
+      overflow-wrap: anywhere;
+      text-wrap: pretty;
+    }
+
+    .class-case--templar .fantasy-note {
+      --note-angle: -1.45deg;
+      --note-shift: 0.2rem;
+    }
+
+    .class-case--chieftain .fantasy-note {
+      --note-angle: 1.15deg;
+      --note-shift: -0.15rem;
+      float: left;
+      margin-right: 1.75rem;
+      margin-left: 0.15rem;
+    }
+
+    .class-case--chieftain .fantasy-note::after {
+      right: auto;
+      left: -0.68rem;
+      background: linear-gradient(90deg, transparent, var(--accent));
+      transform: rotate(6deg);
+    }
+
+    .class-case--beastmaster .fantasy-note {
+      --note-angle: 0.8deg;
+      --note-shift: 0.25rem;
+      width: min(44%, 26rem);
+    }
+
+    .class-case--beastmaster .fantasy-note::before {
+      top: auto;
+      right: 0.62rem;
+      bottom: 0.48rem;
+    }
+
+    .class-case--reaper .fantasy-note {
+      --note-angle: -0.95deg;
+      --note-shift: -0.1rem;
+      float: left;
+      margin-right: 1.8rem;
+      margin-left: 0.1rem;
+      background:
+        linear-gradient(132deg, color-mix(in srgb, var(--surface-muted) 90%, #6a3440 10%), var(--surface-muted));
+    }
+
+    .class-case--reaper .fantasy-note::after {
+      top: -0.34rem;
+      right: 16%;
+      bottom: auto;
+      width: 2.8rem;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      transform: rotate(3deg);
+    }
+
+    .class-case .accordion-inner {
+      display: flow-root;
+    }
+
+    .class-case .column-grid,
+    .class-case .media-shelf,
+    .class-case .accordion-inner > video,
+    .class-case .accordion-inner > h4 {
+      clear: both;
+    }
+
+    :root[data-theme="light"] .fantasy-note {
+      background:
+        linear-gradient(132deg, color-mix(in srgb, var(--surface-muted) 91%, #fff 9%), var(--surface-muted));
+      box-shadow:
+        0 16px 34px rgba(92, 65, 47, 0.13),
+        inset 0 1px rgba(255, 255, 255, 0.7);
+    }
+
+    .impact-note {
+      --impact-angle: 1.1deg;
+      --impact-shift: 0px;
+      position: relative;
+      z-index: 1;
+      clear: both;
+      float: right;
+      display: grid;
+      grid-template-columns: minmax(6.4rem, auto) 1fr;
+      width: min(62%, 35rem);
+      margin: 1.15rem 0.45rem 1.75rem 1.8rem;
+      padding: 1.05rem 1.3rem 1rem;
+      overflow: visible;
+      background:
+        linear-gradient(
+          142deg,
+          color-mix(in srgb, var(--surface-muted) 76%, var(--atlas-signal) 24%),
+          color-mix(in srgb, var(--surface-muted) 91%, var(--atlas-signal) 9%)
+        );
+      color: var(--text-primary);
+      box-shadow:
+        0 18px 38px color-mix(in srgb, var(--bg-primary) 76%, rgba(0, 0, 0, 0.2)),
+        inset 0 1px color-mix(in srgb, var(--atlas-signal) 22%, transparent);
+      clip-path: polygon(0.8% 3%, 98.7% 0, 100% 94%, 2.2% 100%);
+      transform: translateY(var(--impact-shift)) rotate(var(--impact-angle));
+      transform-origin: 52% 48%;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .impact-note::before {
+      position: absolute;
+      top: -0.34rem;
+      right: 12%;
+      width: 4.4rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--atlas-signal), transparent);
+      content: "";
+      transform: rotate(-4deg);
+    }
+
+    .impact-note::after {
+      position: absolute;
+      right: 0.7rem;
+      bottom: 0.42rem;
+      color: color-mix(in srgb, var(--atlas-signal) 72%, var(--text-secondary));
+      content: attr(data-stamp);
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .impact-note-value {
+      align-self: center;
+      padding-right: 1.05rem;
+      color: var(--atlas-signal);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(2.75rem, 5vw, 4.25rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 0.84;
+      white-space: nowrap;
+    }
+
+    .impact-note-body {
+      align-self: center;
+      min-width: 0;
+      padding-left: 1.05rem;
+      border-left: 1px solid color-mix(in srgb, var(--atlas-signal) 38%, transparent);
+    }
+
+    .impact-note-kicker {
+      display: block;
+      margin-bottom: 0.32rem;
+      color: color-mix(in srgb, var(--atlas-signal) 84%, var(--text-primary));
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .impact-note-copy {
+      display: block;
+      max-width: 31ch;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(1.02rem, 1.55vw, 1.22rem);
+      font-weight: 500;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+      text-wrap: pretty;
+    }
+
+    .impact-note-detail,
+    .impact-note-source {
+      display: block;
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .impact-note-detail {
+      margin-top: 0.45rem;
+      color: var(--text-secondary);
+      font-size: 0.71rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .impact-note-source {
+      margin-top: 0.6rem;
+      color: color-mix(in srgb, var(--text-secondary) 78%, transparent);
+      font-size: 0.56rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .class-case--templar .impact-note {
+      --impact-angle: 1.25deg;
+      float: left;
+      margin-right: 1.85rem;
+      margin-left: 0.35rem;
+    }
+
+    .class-case--chieftain .impact-note {
+      --impact-angle: -1deg;
+      --impact-shift: -0.15rem;
+    }
+
+    .class-case--beastmaster .impact-note {
+      --impact-angle: -1.3deg;
+      float: left;
+      margin-right: 1.9rem;
+      margin-left: 0.3rem;
+    }
+
+    .class-case--reaper .impact-note {
+      --impact-angle: 0.85deg;
+      --impact-shift: 0.15rem;
+    }
+
+    .impact-note--spread {
+      --impact-angle: -0.72deg;
+      float: none;
+      grid-template-columns: 1fr;
+      width: min(88%, 52rem);
+      margin: 1.8rem auto 2.15rem;
+      padding: 1.2rem 1.45rem 1.3rem;
+    }
+
+    .impact-note-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .impact-note-stat {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      align-items: center;
+      min-width: 0;
+      padding: 0.2rem 1.2rem 0.65rem 0;
+    }
+
+    .impact-note-stat + .impact-note-stat {
+      padding-right: 0;
+      padding-left: 1.2rem;
+      border-left: 1px solid color-mix(in srgb, var(--atlas-signal) 38%, transparent);
+    }
+
+    .impact-note-stat .impact-note-value {
+      padding-right: 0;
+      font-size: clamp(2.45rem, 4.8vw, 3.8rem);
+    }
+
+    .impact-note-stat .impact-note-copy {
+      font-size: clamp(0.98rem, 1.4vw, 1.14rem);
+    }
+
+    .impact-note-evolution {
+      display: block;
+      margin-top: 0.65rem;
+      padding: 0.75rem 0.8rem 0.1rem;
+      border-top: 1px solid color-mix(in srgb, var(--atlas-signal) 34%, transparent);
+      color: var(--text-secondary);
+      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      text-wrap: pretty;
+    }
+
+    .impact-note-evolution strong {
+      color: var(--atlas-signal);
+    }
+
+    :root[data-theme="light"] .impact-note {
+      background:
+        linear-gradient(
+          142deg,
+          color-mix(in srgb, var(--surface-muted) 64%, #c7ddd1 36%),
+          color-mix(in srgb, var(--surface-muted) 86%, #e4eee8 14%)
+        );
+      box-shadow:
+        0 18px 38px rgba(62, 93, 77, 0.14),
+        inset 0 1px rgba(255, 255, 255, 0.72);
     }
 
     .callout,
@@ -925,6 +1257,61 @@
       .toc-groups {
         grid-template-columns: 1fr;
       }
+
+      .fantasy-note,
+      .class-case--chieftain .fantasy-note,
+      .class-case--reaper .fantasy-note {
+        float: none;
+        width: calc(100% - 0.7rem);
+        margin: 1.15rem auto 1.35rem;
+        transform: rotate(var(--note-angle));
+      }
+
+      .fantasy-note-copy {
+        max-width: 31ch;
+      }
+
+      .impact-note,
+      .class-case--templar .impact-note,
+      .class-case--beastmaster .impact-note,
+      .impact-note--spread {
+        float: none;
+        grid-template-columns: minmax(5.2rem, auto) 1fr;
+        width: calc(100% - 0.55rem);
+        margin: 1.35rem auto 1.65rem;
+        padding: 0.95rem 1rem 1.05rem;
+      }
+
+      .impact-note-value {
+        padding-right: 0.7rem;
+        font-size: clamp(2.4rem, 13vw, 3.25rem);
+      }
+
+      .impact-note-body {
+        padding-left: 0.75rem;
+      }
+
+      .impact-note-grid {
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr;
+      }
+
+      .impact-note-stat,
+      .impact-note-stat + .impact-note-stat {
+        grid-template-columns: minmax(5.2rem, auto) 1fr;
+        padding: 0.45rem 0.2rem 0.7rem;
+        border-left: 0;
+      }
+
+      .impact-note-stat + .impact-note-stat {
+        border-top: 1px solid color-mix(in srgb, var(--atlas-signal) 34%, transparent);
+      }
+
+      .impact-note-evolution {
+        grid-column: 1 / -1;
+        margin-top: 0.25rem;
+        padding-inline: 0.2rem;
+      }
     }
 
     /* ── Systems atlas pass ───────────────────────────── */
@@ -948,6 +1335,7 @@
       --atlas-signal: #2f6e56;
     }
 
+    html,
     body {
       overflow-x: hidden;
     }
@@ -2850,7 +3238,10 @@
       <div class="accordion-inner">
         <p>Templar was designed to close a missing control gap for the Sentinels. The concept was a monk-knight hybrid that supports allies and controls enemies. The main goal was to help Sentinels catch up with Legion in control tools while creating a class that rewards mastery and tactical play.</p>
 
-        <p class="fantasy-line"><strong>Player fantasy:</strong> a disciplined monk-knight who protects allies by controlling the space around them.</p>
+        <aside class="fantasy-note" data-folio="01 / TEMPLAR" aria-label="Player fantasy">
+          <span class="fantasy-note-kicker">Player fantasy</span>
+          <span class="fantasy-note-copy">A disciplined monk-knight who protects allies by controlling the space around them.</span>
+        </aside>
 
         <p>Templar is a hybrid tank/support with a high skill ceiling. The kit rewards timing and positioning, making it particularly effective in coordinated group play and endgame content, rather than as a beginner-friendly option.</p>
 
@@ -2862,6 +3253,16 @@
             <source src="assets/videos/templar_skill_3.mp4" type="video/mp4" />
           </video>
         </div>
+
+        <aside class="impact-note" data-stamp="First 30 days" aria-label="Launch impact: approximately 12 percent of all characters created during the first 30 days after launch, second across the full roster">
+          <strong class="impact-note-value">≈12%</strong>
+          <span class="impact-note-body">
+            <span class="impact-note-kicker">Launch signal</span>
+            <span class="impact-note-copy">of all characters created during the first 30 days</span>
+            <span class="impact-note-detail">#2 across the full class roster</span>
+            <span class="impact-note-source">Update 9.0 launch data · all levels · rounded</span>
+          </span>
+        </aside>
 
         <p>A key design decision was to allow flexibility without losing class identity. Templar can wear heavy armor or cloth, and use either mace + shield or a staff. This was intended to support both a frontline controller build and a more support-oriented caster style while preserving a consistent core fantasy.</p>
 
@@ -2898,7 +3299,10 @@
       <div class="accordion-inner">
         <p>Chieftain was designed as a mobility-first class focused on smooth solo play and high accessibility. The goal was to create a fast, responsive character with strong quality of life — clear tools for single target and AoE, reliable self-healing, and easy-to-read abilities. This combination made the class both beginner-friendly and highly effective in solo progression.</p>
 
-        <p class="fantasy-line"><strong>Player fantasy:</strong> stay in motion, survive on your own, and overwhelm groups as a spirit-warrior who feels powerful without a long setup.</p>
+        <aside class="fantasy-note" data-folio="02 / CHIEFTAIN" aria-label="Player fantasy">
+          <span class="fantasy-note-kicker">Player fantasy</span>
+          <span class="fantasy-note-copy">Stay in motion, survive on your own, and overwhelm groups as a spirit-warrior who feels powerful without a long setup.</span>
+        </aside>
 
         <p>Chieftain uses one-handed magical maces and can wield two at once. I chose this weapon setup to create a clear and scalable gear path, increasing demand for that weapon category and giving players a fresh reason to invest even on established accounts.</p>
 
@@ -2911,10 +3315,21 @@
           </video>
         </div>
 
+        <aside class="impact-note" data-stamp="First 30 days" aria-label="Launch impact: approximately 21 percent of all characters created during the first 30 days after launch, first across the full roster">
+          <strong class="impact-note-value">≈21%</strong>
+          <span class="impact-note-body">
+            <span class="impact-note-kicker">Launch signal</span>
+            <span class="impact-note-copy">of all characters created during the first 30 days</span>
+            <span class="impact-note-detail">#1 across the full class roster</span>
+            <span class="impact-note-source">Update 9.0 launch data · all levels · rounded</span>
+          </span>
+        </aside>
+
+        <p>The response matched the accessibility goal: the class attracted immediate interest at launch and remained widely played years later.</p>
 
         <h4>Impact</h4>
         <ul>
-          <li>Ranked among the two most-played Mountain Clan classes across all three major RU servers in the official 2023 annual report; it also led dungeon participation on RU-Amber and arena participation on RU-Ruby</li>
+          <li>Ranked among the two most-played Mountain Clan classes across all three major RU servers in the official 2023 annual report, then remained top-three in Dungeons, Arena and GvG across those servers in 2024</li>
           <li>Introduced a new itemization path through dual magical maces, increasing demand for that weapon category</li>
           <li>Improved onboarding experience by providing a smooth and accessible class with strong early-to-mid game performance</li>
         </ul>
@@ -2942,9 +3357,22 @@
       <div class="accordion-inner">
         <p>Beastmaster was designed as a solo-friendly class built around a permanent combat companion. The goal was to create a strong onboarding option for new players while preserving depth for long-term play. The companion is not timed — it stays active until it dies, and resummoning it acts as a failure state. This creates a forgiving baseline for solo play while still introducing meaningful consequences for mistakes.</p>
 
-        <p class="fantasy-line"><strong>Player fantasy:</strong> fight as a true two-body unit. The companion is not a temporary effect; keeping it alive and playing around it is the class.</p>
+        <aside class="fantasy-note" data-folio="03 / BEASTMASTER" aria-label="Player fantasy">
+          <span class="fantasy-note-kicker">Player fantasy</span>
+          <span class="fantasy-note-copy">Fight as a true two-body unit. The companion is not a temporary effect; keeping it alive and playing around it is the class.</span>
+        </aside>
 
         <p>Beastmaster uses a two-handed spear as its primary weapon. I chose this to establish a clear gear identity and create long-term upgrade pressure, encouraging investment into spear progression, sharpening, and upgrades. It also opened a fresh equipment path for established accounts.</p>
+
+        <aside class="impact-note" data-stamp="First 30 days" aria-label="Launch impact: approximately 20 percent of all characters created during the first 30 days after launch, second across the full roster">
+          <strong class="impact-note-value">≈20%</strong>
+          <span class="impact-note-body">
+            <span class="impact-note-kicker">Launch signal</span>
+            <span class="impact-note-copy">of all characters created during the first 30 days</span>
+            <span class="impact-note-detail">#2 across the full class roster</span>
+            <span class="impact-note-source">Update 11.0 launch data · all levels · rounded</span>
+          </span>
+        </aside>
 
         <p>The class can function as a damage dealer or support in group play, ensuring long-term relevance beyond early progression. This allows the class to transition smoothly from onboarding into mid- and endgame content.</p>
 
@@ -2984,9 +3412,22 @@
       <div class="accordion-inner">
         <p>Reaper was built around one core idea: transformation as a real gameplay state. The goal was to make transformation a meaningful decision that changes player behavior, not just a temporary power boost. Your decisions change your entire toolkit, not just numbers. Abilities gain additional properties in form, and transformation costs a dedicated resource with a cooldown. This creates a natural rhythm: build up, choose the moment, transform, then play a stronger window.</p>
 
-        <p class="fantasy-line"><strong>Player fantasy:</strong> hold back, build Hate, then commit to a demon form that changes how the whole kit plays.</p>
+        <aside class="fantasy-note" data-folio="04 / REAPER" aria-label="Player fantasy">
+          <span class="fantasy-note-kicker">Player fantasy</span>
+          <span class="fantasy-note-copy">Hold back, build Hate, then commit to a demon form that changes how the whole kit plays.</span>
+        </aside>
 
         <p>Because the class relies on state switching and an extra resource, I designed dedicated UI elements to ensure clarity and readability. The player must always understand their current form, resource level, and available options at a glance.</p>
+
+        <aside class="impact-note" data-stamp="First 30 days" aria-label="Launch impact: approximately 27 percent of all characters created during the first 30 days after launch, first across the full roster">
+          <strong class="impact-note-value">≈27%</strong>
+          <span class="impact-note-body">
+            <span class="impact-note-kicker">Launch signal</span>
+            <span class="impact-note-copy">of all characters created during the first 30 days</span>
+            <span class="impact-note-detail">#1 across the full class roster</span>
+            <span class="impact-note-source">Update 11.0 launch data · all levels · rounded</span>
+          </span>
+        </aside>
 
         <p>Reaper is a strong PvP class built around timing and commitment. The transformation window creates pressure and timing advantages — commit at the wrong moment and you get punished, manage your cooldowns correctly and you dominate the fight. This creates a high-risk, high-reward playstyle with strong player expression.</p>
 
@@ -3175,6 +3616,22 @@
         <p>Event talent trees refresh multiple times per year, while class trees evolve over longer cycles and receive regular balance updates. This keeps the system active and prevents meta stagnation.</p>
 
         <p>Over time, talents moved beyond raw stat bonuses and began modifying skill behavior directly, making build choices more visible and impactful in gameplay, instead of leaving them as passive efficiency upgrades that only mattered on paper.</p>
+
+        <aside class="impact-note impact-note--spread" data-stamp="Progression signal" aria-label="Talent adoption: 60 percent of the eligible audience started the first new branch; approximately 4 thousand upgrades per day two months after role talents launched">
+          <span class="impact-note-kicker">Progression at scale</span>
+          <span class="impact-note-grid">
+            <span class="impact-note-stat">
+              <strong class="impact-note-value">60%</strong>
+              <span class="impact-note-copy">of the eligible audience started the first new branch</span>
+            </span>
+            <span class="impact-note-stat">
+              <strong class="impact-note-value">≈4K/day</strong>
+              <span class="impact-note-copy">talent upgrades still made 2 months after role talents launched</span>
+            </span>
+          </span>
+          <span class="impact-note-evolution"><strong>Truth Enlightenment:</strong> an underpicked personal timing modifier was rebuilt into group support — and became a more frequent choice.</span>
+          <span class="impact-note-source">Update 9.4 + role talent reports · rounded</span>
+        </aside>
 
         <h4>Examples of talent-driven gameplay changes</h4>
         <ul>
@@ -3430,6 +3887,7 @@
           <li><a href="https://forum.warspear-online.com/index.php?/topic/356083-20220908-update-warspear-online-110-new-legends-release/" target="_blank" rel="noopener">Update 11.0 Release</a></li>
           <li><a href="https://forum.warspear-online.com/index.php?/topic/390959-20221229-%D0%B8%D1%82%D0%BE%D0%B3%D0%B8-2022-%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B2-%D0%B8%D0%BD%D1%84%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B5/" target="_blank" rel="noopener">2022 Annual Infographic — Beastmaster &amp; Reaper creation counts</a></li>
           <li><a href="https://forum.warspear-online.com/index.php?/topic/452899-20240119-%D0%B8%D1%82%D0%BE%D0%B3%D0%B8-2023-%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B2-%D0%B8%D0%BD%D1%84%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B5/" target="_blank" rel="noopener">2023 Annual Infographic — Chieftain class participation</a></li>
+          <li><a href="https://forum.warspear-online.com/index.php?/topic/471448-20250218-%D0%B8%D1%82%D0%BE%D0%B3%D0%B8-2024-%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B2-%D0%B8%D0%BD%D1%84%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B5/" target="_blank" rel="noopener">2024 Annual Infographic — sustained Chieftain participation</a></li>
         </ul>
 
         <p class="links-group-title">Competitive Guild Raids</p>

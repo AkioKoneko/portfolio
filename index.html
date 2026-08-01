@@ -39,6 +39,9 @@
       --border:           #42362e;
       --border-soft:      #54453a;
       --heading-color:    #fff8f2;
+      --font-display:     "Newsreader", Georgia, serif;
+      --font-body:        "DM Sans", ui-sans-serif, system-ui, sans-serif;
+      --font-mono:        ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;
       --content-width:    860px;
       --nav-height:       60px;
       --surface-shadow:   0 16px 36px rgba(0, 0, 0, 0.32);
@@ -388,6 +391,7 @@
       margin: 1.1rem 0;
       background: var(--bg-secondary);
       overflow: hidden;
+      overflow-anchor: none;
       box-shadow: var(--surface-inset), var(--surface-shadow-soft);
     }
 
@@ -581,6 +585,8 @@
       --surface-inset: none;
       --nav-scrolled-bg: rgba(20, 21, 21, 0.94);
       --floating-surface: rgba(27, 29, 28, 0.98);
+      --ambient-crossfade: 2400ms;
+      --ambient-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     :root[data-theme="light"] {
@@ -606,6 +612,7 @@
       font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
       line-height: 1.68;
       letter-spacing: 0;
+      position: relative;
     }
 
     h1,
@@ -1319,10 +1326,6 @@
       --atlas-line: rgba(169, 205, 187, 0.16);
       --atlas-accent: rgba(229, 123, 76, 0.46);
       --atlas-signal: #a9cdbb;
-      --atlas-x: 0px;
-      --atlas-y: 0px;
-      --atlas-contour-x: 0px;
-      --atlas-contour-y: 0px;
       --portfolio-progress: 0%;
       --portfolio-progress-scale: 0;
       --active-route-index: 0;
@@ -1398,16 +1401,13 @@
         linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.64) 64%, transparent 100%);
       opacity: 0.14;
       pointer-events: none;
-      transform: perspective(1100px) rotateX(63deg) rotateZ(-6deg) scale(1.18);
+      transform: translate3d(var(--grid-x, 0px), var(--grid-y, 0px), 0) perspective(1100px) rotateX(63deg) rotateZ(-6deg) scale(1.18);
       transform-origin: 50% 28%;
+      will-change: transform;
     }
 
     :root[data-theme="light"] .portfolio-atlas-grid {
       opacity: 0.22;
-    }
-
-    :root[data-theme="light"] .portfolio-atlas {
-      opacity: 0.78;
     }
 
     .portfolio-ambient-field {
@@ -1511,170 +1511,23 @@
       opacity: 0.28;
     }
 
-    .portfolio-atlas {
-      position: fixed;
-      z-index: 1;
-      top: calc(var(--nav-height) - 2.5rem);
-      right: clamp(-6rem, -3vw, -1rem);
-      width: clamp(680px, 46vw, 980px);
-      height: min(1020px, 108vh);
-      pointer-events: none;
-      opacity: 0.68;
-      -webkit-mask-image: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgb(0 0 0 / 18%) 16%,
-        #000 42%,
-        #000 92%,
-        transparent 100%
-      );
-      mask-image: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgb(0 0 0 / 18%) 16%,
-        #000 42%,
-        #000 92%,
-        transparent 100%
-      );
-      transform: translate3d(var(--atlas-x), var(--atlas-y), 0);
-      will-change: transform;
-    }
-
-    .portfolio-atlas::after {
-      position: absolute;
-      z-index: -1;
-      inset: -5%;
-      background: radial-gradient(
-        circle at 62% 44%,
-        color-mix(in srgb, var(--bg-primary) 96%, transparent) 0%,
-        color-mix(in srgb, var(--bg-primary) 82%, transparent) 48%,
-        transparent 76%
-      );
-      content: "";
-    }
-
-    .portfolio-atlas::before {
-      position: absolute;
-      inset: 2rem 0 2rem 4rem;
-      background-image:
-        linear-gradient(var(--atlas-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--atlas-line) 1px, transparent 1px);
-      background-size: 56px 56px;
-      content: "";
-      mask-image: radial-gradient(circle at 56% 40%, black 6%, rgba(0, 0, 0, 0.8) 46%, transparent 74%);
-      transform: perspective(900px) rotateX(62deg) rotateZ(-22deg);
-      transform-origin: 62% 42%;
-    }
-
-    .portfolio-atlas svg {
-      position: absolute;
-      inset: 0;
+    .about-copy {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.25rem clamp(2rem, 4vw, 3.25rem);
       width: 100%;
-      height: 100%;
-      overflow: visible;
+      margin-bottom: 0.75rem;
     }
 
-    .portfolio-map-path,
-    .portfolio-map-muted,
-    .portfolio-map-progress {
-      fill: none;
-      vector-effect: non-scaling-stroke;
+    .about-copy > p {
+      max-width: none;
+      margin: 0.45rem 0 0.9rem;
     }
 
-    .portfolio-map-path {
-      stroke: url("#portfolio-route-fade");
-      stroke-width: 1.55;
+    .about-copy > p:last-child {
+      grid-column: 1 / -1;
+      color: var(--text-secondary);
     }
-
-    .portfolio-map-muted {
-      stroke: var(--atlas-line);
-      stroke-width: 1;
-      stroke-dasharray: 7 11;
-    }
-
-    .portfolio-map-progress {
-      stroke: url("#portfolio-progress-fade");
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 34%, transparent));
-    }
-
-    .portfolio-contours {
-      position: absolute;
-      top: 2.8rem;
-      right: 0;
-      width: 66%;
-      opacity: 0.24;
-      transform: translate3d(var(--atlas-contour-x), var(--atlas-contour-y), 0);
-      animation: contour-breathe 13s ease-in-out infinite alternate;
-    }
-
-    .portfolio-contours ellipse {
-      fill: none;
-      stroke: var(--atlas-line);
-      stroke-width: 1;
-    }
-
-    .portfolio-contours ellipse:nth-child(2n) {
-      stroke: var(--atlas-accent);
-    }
-
-    @keyframes contour-breathe {
-      from {
-        opacity: 0.72;
-        transform: translate3d(var(--atlas-contour-x), var(--atlas-contour-y), 0) scale(0.985);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(var(--atlas-contour-x), var(--atlas-contour-y), 0) scale(1.015);
-      }
-    }
-
-    .portfolio-map-node {
-      position: absolute;
-      width: 9px;
-      height: 9px;
-      border: 1px solid var(--atlas-signal);
-      border-radius: 50%;
-      background: var(--bg-primary);
-      box-shadow: 0 0 0 7px transparent;
-      transition:
-        border-color 260ms var(--ease-out),
-        box-shadow 260ms var(--ease-out),
-        transform 260ms var(--ease-out);
-    }
-
-    .portfolio-map-node.is-active {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 10%, transparent);
-      transform: scale(1.24);
-    }
-
-    .portfolio-map-node:nth-of-type(1) { top: 18%; left: 64%; }
-    .portfolio-map-node:nth-of-type(2) { top: 36%; left: 82%; }
-    .portfolio-map-node:nth-of-type(3) { top: 54%; left: 58%; }
-    .portfolio-map-node:nth-of-type(4) { top: 69%; left: 77%; }
-    .portfolio-map-node:nth-of-type(5) { top: 81%; left: 46%; }
-
-    .portfolio-map-caption {
-      position: absolute;
-      color: color-mix(in srgb, var(--text-secondary) 82%, transparent);
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: color 260ms var(--ease-out);
-    }
-
-    .portfolio-map-caption.is-active {
-      color: var(--accent-secondary);
-    }
-
-    .portfolio-map-caption:nth-of-type(1) { top: 15.5%; left: 66%; }
-    .portfolio-map-caption:nth-of-type(2) { top: 33.5%; left: 84%; }
-    .portfolio-map-caption:nth-of-type(3) { top: 51.5%; left: 60%; }
-    .portfolio-map-caption:nth-of-type(4) { top: 66.5%; left: 79%; }
-    .portfolio-map-caption:nth-of-type(5) { top: 78.5%; left: 48%; }
 
     .section-portal {
       position: relative;
@@ -2596,89 +2449,644 @@
       text-shadow: 0 2px 14px rgba(0, 0, 0, 0.64);
     }
 
-    .ambient-gallery {
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: none;
-      overflow: clip;
-      pointer-events: none;
+    .player-proof {
+      --proof-tilt: -1.1deg;
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: minmax(210px, 0.9fr) minmax(230px, 1.1fr);
+      width: min(720px, 94%);
+      min-height: 168px;
+      margin: 2rem 0 2.45rem;
+      padding: 0.52rem;
+      overflow: visible;
+      background: color-mix(in srgb, var(--bg-secondary) 90%, var(--accent) 10%);
+      color: var(--text-primary);
+      text-decoration: none;
+      box-shadow:
+        0 22px 52px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px color-mix(in srgb, var(--border) 72%, transparent);
+      clip-path: polygon(0.8% 2%, 99.3% 0, 100% 96.5%, 1.2% 100%);
+      transform: rotate(var(--proof-tilt));
+      transition:
+        box-shadow 220ms var(--ease-out),
+        transform 220ms var(--ease-out);
     }
 
-    .ambient-frame {
-      position: absolute;
-      width: clamp(184px, 16vw, 286px);
-      margin: 0;
-      overflow: hidden;
-      border: 1px solid color-mix(in srgb, var(--border) 70%, var(--accent) 30%);
-      border-radius: 0.35rem;
-      background: var(--bg-secondary);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
-      opacity: 0.28;
-      transform: rotate(var(--frame-tilt));
+    .player-proof--right {
+      margin-right: -0.8rem;
+      margin-left: auto;
     }
 
-    .ambient-frame::after {
+    .player-proof--left {
+      margin-right: auto;
+      margin-left: -0.55rem;
+    }
+
+    .player-proof::before {
       position: absolute;
-      inset: 0;
-      border: 8px solid color-mix(in srgb, var(--bg-primary) 70%, transparent);
+      z-index: 4;
+      top: -0.72rem;
+      left: clamp(1rem, 8%, 3.4rem);
+      padding: 0.28rem 0.7rem;
+      background: color-mix(in srgb, var(--accent) 82%, #d5a17e 18%);
+      color: #191512;
+      content: attr(data-proof-mark);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transform: rotate(-1.7deg);
+    }
+
+    .player-proof::after {
+      position: absolute;
+      z-index: -1;
+      right: -1.1rem;
+      bottom: -0.85rem;
+      width: 54%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--atlas-signal) 34%, var(--accent) 78%, transparent);
       content: "";
+      transform: rotate(2.2deg);
     }
 
-    .ambient-frame img {
+    .player-proof:hover,
+    .player-proof:focus-visible {
+      color: var(--text-primary);
+      text-decoration: none;
+      box-shadow:
+        0 29px 64px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px color-mix(in srgb, var(--accent) 46%, transparent);
+      transform: translateY(-4px) rotate(var(--proof-tilt));
+    }
+
+    .player-proof-media {
+      position: relative;
+      min-height: 156px;
+      overflow: hidden;
+      background: #070908;
+      clip-path: polygon(0 1.5%, 100% 0, 98.8% 100%, 0.8% 97.5%);
+    }
+
+    .player-proof-media img {
+      display: block;
       width: 100%;
       height: 100%;
       margin: 0;
       border: 0;
       border-radius: 0;
       object-fit: cover;
-      filter: saturate(0.7) contrast(0.95);
+      filter: saturate(0.88) contrast(1.05) brightness(0.82);
+      transition: filter 240ms var(--ease-out), transform 420ms var(--ease-out);
     }
 
-    .ambient-frame--dragon {
-      top: 1420px;
-      left: -3.4rem;
-      aspect-ratio: 4 / 3;
-      --frame-tilt: -2.2deg;
+    .player-proof:hover .player-proof-media img,
+    .player-proof:focus-visible .player-proof-media img {
+      filter: saturate(1) contrast(1.04) brightness(0.94);
+      transform: scale(1.025);
     }
 
-    .ambient-frame--cavern {
-      top: 4040px;
-      right: -3.6rem;
-      aspect-ratio: 4 / 3;
-      --frame-tilt: 2.1deg;
+    .player-proof-play {
+      position: absolute;
+      right: 0.75rem;
+      bottom: 0.7rem;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 50%;
+      background: rgba(7, 9, 8, 0.76);
+      color: #fbf7ef;
+      font-size: 0.86rem;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(5px);
     }
 
-    .ambient-frame--factions {
-      top: 6680px;
-      left: -4.2rem;
-      aspect-ratio: 4 / 3;
-      --frame-tilt: 1.8deg;
+    .player-proof-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.48rem;
+      padding: 1.15rem 1.25rem 1rem 1.35rem;
     }
 
-    .ambient-frame--classes {
-      top: 9480px;
-      right: -4rem;
-      aspect-ratio: 4 / 3;
-      --frame-tilt: -1.6deg;
+    .player-proof-kicker {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
     }
 
-    :root[data-theme="light"] .ambient-frame {
-      border-color: color-mix(in srgb, var(--border) 55%, var(--accent) 45%);
-      box-shadow: 0 24px 70px rgba(92, 65, 47, 0.16);
-      opacity: 0.34;
+    .player-proof-copy strong {
+      color: var(--heading-color);
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
     }
 
-    :root[data-theme="light"] .ambient-frame img {
-      filter: saturate(0.78) contrast(0.96);
+    .player-proof-copy > span:last-child {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      text-wrap: pretty;
     }
 
-    @media (min-width: 1240px) {
-      .ambient-gallery {
-        display: block;
+    :root[data-theme="light"] .player-proof {
+      background: color-mix(in srgb, #f3eadf 92%, var(--accent) 8%);
+      box-shadow:
+        0 22px 52px rgba(91, 58, 39, 0.15),
+        inset 0 0 0 1px color-mix(in srgb, var(--border) 78%, transparent);
+    }
+
+    .ambient-collage {
+      --ambient-side: max(0px, calc((100vw - var(--content-width)) / 2));
+      --ambient-left-center: calc(var(--ambient-side) * 0.46);
+      --ambient-right-center: calc(100vw - (var(--ambient-side) * 0.55));
+      --ambient-piece-width: clamp(270px, calc(var(--ambient-side) * 1.34), 720px);
+      --ambient-trace-width: clamp(340px, calc(var(--ambient-side) * 1.28), 700px);
+      position: absolute;
+      z-index: 1;
+      top: var(--nav-height);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow: clip;
+      pointer-events: none;
+    }
+
+    .ambient-scene {
+      display: contents;
+    }
+
+    .ambient-piece {
+      --piece-opacity: 0.56;
+      --piece-tilt: 0deg;
+      --piece-mask-x: 50%;
+      --piece-mask-y: 50%;
+      --piece-mask-rx: 66%;
+      --piece-mask-ry: 70%;
+      --piece-scale: 1;
+      --piece-aspect: 1.42;
+      --piece-lobe-a-x: 24%;
+      --piece-lobe-a-y: 30%;
+      --piece-lobe-b-x: 78%;
+      --piece-lobe-b-y: 68%;
+      --piece-x-shift: 0px;
+      --piece-y-shift: 0px;
+      position: absolute;
+      width: var(--ambient-piece-width);
+      aspect-ratio: var(--piece-aspect);
+      overflow: hidden;
+      margin: 0;
+      opacity: var(--piece-opacity);
+      background-image: var(--piece-image);
+      background-position: var(--piece-position, 50% 50%);
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 0;
+      -webkit-mask-image:
+        radial-gradient(ellipse var(--piece-mask-rx) var(--piece-mask-ry) at var(--piece-mask-x) var(--piece-mask-y), #000 0 22%, rgb(0 0 0 / 90%) 30%, rgb(0 0 0 / 56%) 40%, rgb(0 0 0 / 25%) 49%, rgb(0 0 0 / 8%) 56%, rgb(0 0 0 / 2%) 61%, transparent 65%),
+        radial-gradient(ellipse 30% 27% at var(--piece-lobe-a-x) var(--piece-lobe-a-y), rgb(0 0 0 / 36%) 0 12%, rgb(0 0 0 / 12%) 28%, transparent 48%),
+        radial-gradient(ellipse 28% 30% at var(--piece-lobe-b-x) var(--piece-lobe-b-y), rgb(0 0 0 / 30%) 0 10%, rgb(0 0 0 / 9%) 26%, transparent 46%);
+      mask-image:
+        radial-gradient(ellipse var(--piece-mask-rx) var(--piece-mask-ry) at var(--piece-mask-x) var(--piece-mask-y), #000 0 22%, rgb(0 0 0 / 90%) 30%, rgb(0 0 0 / 56%) 40%, rgb(0 0 0 / 25%) 49%, rgb(0 0 0 / 8%) 56%, rgb(0 0 0 / 2%) 61%, transparent 65%),
+        radial-gradient(ellipse 30% 27% at var(--piece-lobe-a-x) var(--piece-lobe-a-y), rgb(0 0 0 / 36%) 0 12%, rgb(0 0 0 / 12%) 28%, transparent 48%),
+        radial-gradient(ellipse 28% 30% at var(--piece-lobe-b-x) var(--piece-lobe-b-y), rgb(0 0 0 / 30%) 0 10%, rgb(0 0 0 / 9%) 26%, transparent 46%);
+      transform:
+        translateX(-50%)
+        translate3d(
+          calc(var(--piece-x-shift) + var(--piece-parallax-x, 0px)),
+          calc(var(--piece-y-shift) + var(--piece-parallax-y, 0px)),
+          0
+        )
+        rotate(var(--piece-tilt))
+        scale(var(--piece-scale));
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .ambient-piece::after {
+      content: none;
+    }
+
+    .ambient-piece img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      object-fit: cover;
+      object-position: var(--piece-position, 50% 50%);
+      filter: none;
+      opacity: 0;
+      transform: scale(var(--piece-zoom, 1.12));
+    }
+
+    .ambient-piece--left {
+      left: var(--ambient-left-center);
+      --piece-parallax-x: var(--ambient-left-x, 0px);
+      --piece-parallax-y: var(--ambient-left-y, 0px);
+    }
+
+    .ambient-piece--right {
+      left: var(--ambient-right-center);
+      --piece-parallax-x: var(--ambient-right-x, 0px);
+      --piece-parallax-y: var(--ambient-right-y, 0px);
+      --piece-lobe-a-x: 76%;
+      --piece-lobe-a-y: 28%;
+      --piece-lobe-b-x: 22%;
+      --piece-lobe-b-y: 70%;
+    }
+
+    .ambient-piece--intro-dragon {
+      --piece-image: url("assets/images/ambient/official_dragon_2026.png");
+      top: 1.5rem;
+      --piece-opacity: 0.68;
+      --piece-tilt: -3deg;
+      --piece-position: 48% 48%;
+      --piece-mask-x: 50%;
+      --piece-mask-y: 48%;
+      --piece-zoom: 1.2;
+    }
+
+    .ambient-piece--intro-cavern {
+      --piece-image: url("assets/images/ambient/official_cavern.jpg");
+      bottom: 1rem;
+      --piece-opacity: 0.46;
+      --piece-tilt: 3deg;
+      --piece-position: 38% 54%;
+      --piece-mask-x: 50%;
+      --piece-mask-y: 52%;
+      --piece-zoom: 1.15;
+    }
+
+    .ambient-piece--profile-lamp {
+      --piece-image: url("assets/images/ambient/collage/almahad-2023.webp");
+      top: 18%;
+      --piece-opacity: 0.62;
+      --piece-tilt: -4deg;
+      --piece-position: 20% 62%;
+      --piece-mask-x: 49%;
+      --piece-mask-y: 52%;
+      --piece-zoom: 1.22;
+    }
+
+    .ambient-piece--profile-portal {
+      --piece-image: url("assets/images/ambient/collage/mage-trials-2025.webp");
+      bottom: 5%;
+      --piece-opacity: 0.58;
+      --piece-tilt: 4deg;
+      --piece-position: 53% 48%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 50%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--overview-old {
+      --piece-image: url("assets/images/ambient/collage/classes-2020.webp");
+      top: 16%;
+      --piece-opacity: 0.61;
+      --piece-tilt: -4deg;
+      --piece-position: 22% 50%;
+      --piece-mask-x: 49%;
+      --piece-zoom: 1.22;
+    }
+
+    .ambient-piece--overview-new {
+      --piece-image: url("assets/images/ambient/collage/classes-2022.webp");
+      top: 19%;
+      --piece-opacity: 0.62;
+      --piece-tilt: 4deg;
+      --piece-position: 80% 52%;
+      --piece-mask-x: 51%;
+      --piece-zoom: 1.22;
+    }
+
+    .ambient-piece--cases-snorlar {
+      --piece-image: url("assets/images/ambient/collage/snorlar-2025.webp");
+      bottom: 10%;
+      --piece-opacity: 0.62;
+      --piece-tilt: -4deg;
+      --piece-position: 48% 50%;
+      --piece-mask-x: 49%;
+      --piece-zoom: 1.2;
+    }
+
+    .ambient-piece--cases-halloween {
+      --piece-image: url("assets/images/ambient/collage/halloween-2024.webp");
+      top: 12%;
+      --piece-opacity: 0.61;
+      --piece-tilt: 4deg;
+      --piece-position: 60% 48%;
+      --piece-mask-x: 51%;
+      --piece-zoom: 1.19;
+    }
+
+    .ambient-piece--deep-catacombs {
+      --piece-image: url("assets/images/ambient/collage/catacombs-2025.webp");
+      top: 15%;
+      --piece-opacity: 0.64;
+      --piece-tilt: -4deg;
+      --piece-position: 18% 53%;
+      --piece-mask-x: 49%;
+      --piece-zoom: 1.22;
+    }
+
+    .ambient-piece--deep-feastwood {
+      --piece-image: url("assets/images/ambient/collage/feastwood-2025.webp");
+      bottom: 8%;
+      --piece-opacity: 0.62;
+      --piece-tilt: 4deg;
+      --piece-position: 58% 52%;
+      --piece-mask-x: 51%;
+      --piece-zoom: 1.2;
+    }
+
+    .ambient-piece--tales-desert {
+      --piece-image: url("assets/images/ambient/collage/tales-desert-2025.webp");
+      bottom: 6%;
+      --piece-opacity: 0.6;
+      --piece-tilt: -4.5deg;
+      --piece-position: 42% 52%;
+      --piece-mask-x: 49%;
+      --piece-mask-y: 52%;
+      --piece-zoom: 1.2;
+    }
+
+    .ambient-piece--intro-mirror {
+      --piece-image: url("assets/images/ambient/collage/mirror-world-2024.webp");
+      top: 5%;
+      --piece-opacity: 0.64;
+      --piece-tilt: 3.2deg;
+      --piece-position: 48% 50%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 49%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--legends-book {
+      --piece-image: url("assets/images/ambient/collage/legends-world-2026.webp");
+      bottom: 3%;
+      --piece-opacity: 0.6;
+      --piece-tilt: -3.4deg;
+      --piece-position: 52% 48%;
+      --piece-mask-x: 49%;
+      --piece-mask-y: 51%;
+      --piece-zoom: 1.16;
+    }
+
+    .ambient-piece--age-triumph {
+      --piece-image: url("assets/images/ambient/collage/age-triumph-2024.webp");
+      top: 8%;
+      --piece-opacity: 0.62;
+      --piece-tilt: -3.7deg;
+      --piece-position: 48% 50%;
+      --piece-mask-x: 49%;
+      --piece-mask-y: 49%;
+      --piece-zoom: 1.2;
+    }
+
+    .ambient-piece--heroic-era {
+      --piece-image: url("assets/images/ambient/collage/heroic-era-2026.webp");
+      bottom: 5%;
+      --piece-opacity: 0.62;
+      --piece-tilt: 3.6deg;
+      --piece-position: 35% 50%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 52%;
+      --piece-zoom: 1.2;
+    }
+
+    .ambient-piece--arena {
+      --piece-image: url("assets/images/ambient/collage/arena-2026.webp");
+      bottom: 5%;
+      --piece-opacity: 0.61;
+      --piece-tilt: 3.2deg;
+      --piece-position: 52% 48%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 52%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--almahad-treasures {
+      --piece-image: url("assets/images/ambient/collage/almahad-treasures-2024.webp");
+      top: 10%;
+      --piece-opacity: 0.63;
+      --piece-tilt: -3.8deg;
+      --piece-position: 58% 50%;
+      --piece-mask-x: 49%;
+      --piece-mask-y: 49%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--nightmare-town {
+      --piece-image: url("assets/images/ambient/collage/nightmare-town-2025.webp");
+      bottom: 4%;
+      --piece-opacity: 0.63;
+      --piece-tilt: 3.7deg;
+      --piece-position: 56% 48%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 51%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--class-chronicle {
+      --piece-image: url("assets/images/ambient/collage/class-chronicle-2026.webp");
+      top: 8%;
+      --piece-opacity: 0.61;
+      --piece-tilt: 3.4deg;
+      --piece-position: 52% 48%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 49%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--star-north {
+      --piece-image: url("assets/images/ambient/collage/star-north-2024.webp");
+      top: 7%;
+      --piece-opacity: 0.62;
+      --piece-tilt: -3.5deg;
+      --piece-position: 54% 50%;
+      --piece-mask-x: 49%;
+      --piece-mask-y: 49%;
+      --piece-zoom: 1.18;
+    }
+
+    .ambient-piece--star-rifts {
+      --piece-image: url("assets/images/ambient/collage/star-rifts-2026.webp");
+      bottom: 3%;
+      --piece-opacity: 0.63;
+      --piece-tilt: 3.5deg;
+      --piece-position: 50% 50%;
+      --piece-mask-x: 51%;
+      --piece-mask-y: 52%;
+      --piece-zoom: 1.18;
+    }
+
+    [data-ambient-scene="intro"] .ambient-piece--left { --piece-aspect: 1.42; --piece-scale: 1.08; --piece-x-shift: -1.2rem; --piece-mask-rx: 68%; --piece-mask-ry: 70%; }
+    [data-ambient-scene="intro"] .ambient-piece--right { --piece-aspect: 1.08; --piece-scale: 0.94; --piece-x-shift: 0.8rem; --piece-y-shift: -1rem; --piece-mask-rx: 64%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="world-legends"] .ambient-piece--left { --piece-aspect: 1.28; --piece-scale: 0.98; --piece-x-shift: 1rem; --piece-mask-rx: 65%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="world-legends"] .ambient-piece--right { --piece-aspect: 1.58; --piece-scale: 1.05; --piece-x-shift: -0.8rem; --piece-y-shift: 1.2rem; --piece-mask-rx: 69%; --piece-mask-ry: 67%; }
+    [data-ambient-scene="profile"] .ambient-piece--left { --piece-aspect: 1.46; --piece-scale: 1.04; --piece-x-shift: -0.8rem; --piece-mask-rx: 68%; --piece-mask-ry: 68%; }
+    [data-ambient-scene="profile"] .ambient-piece--right { --piece-aspect: 1.16; --piece-scale: 0.98; --piece-x-shift: 0.9rem; --piece-mask-rx: 64%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="age-triumph"] .ambient-piece--left { --piece-aspect: 1.24; --piece-scale: 0.98; --piece-x-shift: 0.9rem; --piece-y-shift: 1rem; --piece-mask-rx: 65%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="age-triumph"] .ambient-piece--right { --piece-aspect: 1.52; --piece-scale: 1.04; --piece-x-shift: -0.9rem; --piece-mask-rx: 69%; --piece-mask-ry: 67%; }
+    [data-ambient-scene="classes-2020"] .ambient-piece--left { --piece-aspect: 1.54; --piece-scale: 1.05; --piece-x-shift: -1rem; --piece-mask-rx: 69%; --piece-mask-ry: 67%; }
+    [data-ambient-scene="classes-2020"] .ambient-piece--right { --piece-aspect: 1.14; --piece-scale: 0.97; --piece-x-shift: 0.9rem; --piece-y-shift: 0.8rem; --piece-mask-rx: 64%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="classes-2022"] .ambient-piece--left { --piece-aspect: 1.16; --piece-scale: 0.97; --piece-x-shift: 0.9rem; --piece-mask-rx: 64%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="classes-2022"] .ambient-piece--right { --piece-aspect: 1.56; --piece-scale: 1.05; --piece-x-shift: -1rem; --piece-mask-rx: 69%; --piece-mask-ry: 67%; }
+    [data-ambient-scene="nightmare"] .ambient-piece--left { --piece-aspect: 1.44; --piece-scale: 1.03; --piece-x-shift: -0.8rem; --piece-mask-rx: 68%; --piece-mask-ry: 68%; }
+    [data-ambient-scene="nightmare"] .ambient-piece--right { --piece-aspect: 1.18; --piece-scale: 0.98; --piece-x-shift: 0.8rem; --piece-y-shift: -0.8rem; --piece-mask-rx: 64%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="snorlar"] .ambient-piece--left { --piece-aspect: 1.2; --piece-scale: 0.98; --piece-x-shift: 0.9rem; --piece-mask-rx: 65%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="snorlar"] .ambient-piece--right { --piece-aspect: 1.5; --piece-scale: 1.04; --piece-x-shift: -0.9rem; --piece-mask-rx: 69%; --piece-mask-ry: 67%; }
+    [data-ambient-scene="catacombs"] .ambient-piece--left { --piece-aspect: 1.48; --piece-scale: 1.06; --piece-x-shift: 0.4rem; --piece-mask-rx: 69%; --piece-mask-ry: 68%; }
+    [data-ambient-scene="star-fields"] .ambient-piece--left { --piece-aspect: 1.42; --piece-scale: 1.03; --piece-x-shift: -0.8rem; --piece-mask-rx: 68%; --piece-mask-ry: 68%; }
+    [data-ambient-scene="star-fields"] .ambient-piece--right { --piece-aspect: 1.18; --piece-scale: 0.98; --piece-x-shift: 0.9rem; --piece-y-shift: 0.7rem; --piece-mask-rx: 64%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="feastwood"] .ambient-piece--left { --piece-aspect: 1.2; --piece-scale: 0.98; --piece-x-shift: 0.8rem; --piece-mask-rx: 65%; --piece-mask-ry: 72%; }
+    [data-ambient-scene="feastwood"] .ambient-piece--right { --piece-aspect: 1.5; --piece-scale: 1.04; --piece-x-shift: -0.9rem; --piece-mask-rx: 69%; --piece-mask-ry: 67%; }
+
+    /* One permanent art per slot: alternating sides and continuing below the closed-page height. */
+    .ambient-piece {
+      top: var(--piece-document-top) !important;
+      bottom: auto !important;
+    }
+
+    .ambient-piece--intro-dragon { --piece-document-top: 2rem; }
+    .ambient-piece--intro-mirror { --piece-document-top: 105rem; }
+    .ambient-piece--legends-book { --piece-document-top: 208rem; }
+    .ambient-piece--intro-cavern { --piece-document-top: 311rem; }
+    .ambient-piece--profile-lamp { --piece-document-top: 414rem; }
+    .ambient-piece--profile-portal { --piece-document-top: 517rem; }
+    .ambient-piece--age-triumph { --piece-document-top: 620rem; }
+    .ambient-piece--heroic-era { --piece-document-top: 723rem; }
+    .ambient-piece--overview-old { --piece-document-top: 826rem; }
+    .ambient-piece--arena { --piece-document-top: 929rem; }
+    .ambient-piece--almahad-treasures { --piece-document-top: 1032rem; }
+    .ambient-piece--overview-new { --piece-document-top: 1135rem; }
+    .ambient-piece--cases-halloween { --piece-document-top: 1238rem; }
+    .ambient-piece--nightmare-town { --piece-document-top: 1341rem; }
+    .ambient-piece--cases-snorlar { --piece-document-top: 1444rem; }
+    .ambient-piece--class-chronicle { --piece-document-top: 1547rem; }
+    .ambient-piece--deep-catacombs { --piece-document-top: 1650rem; }
+    .ambient-piece--star-rifts { --piece-document-top: 1753rem; }
+    .ambient-piece--star-north { --piece-document-top: 1856rem; }
+    .ambient-piece--deep-feastwood { --piece-document-top: 1959rem; }
+    .ambient-piece--tales-desert { --piece-document-top: 2062rem; }
+
+    .ambient-trace {
+      position: absolute;
+      top: 11%;
+      width: var(--ambient-trace-width);
+      height: clamp(24rem, 39vw, 36rem);
+      overflow: visible;
+      opacity: 0.66;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 72%) 15%, #000 34%, #000 66%, rgb(0 0 0 / 68%) 84%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 72%) 15%, #000 34%, #000 66%, rgb(0 0 0 / 68%) 84%, transparent 100%);
+      transform: translateX(-50%);
+      transform-origin: center;
+    }
+
+    .ambient-trace path {
+      fill: none;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .ambient-trace circle,
+    .ambient-trace rect {
+      fill: var(--bg-primary);
+      stroke: var(--atlas-signal);
+      stroke-width: 1.4;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .ambient-trace--left {
+      left: var(--ambient-left-center);
+    }
+
+    .ambient-trace--right {
+      left: var(--ambient-right-center);
+      opacity: 0.58;
+    }
+
+    .ambient-trace--high {
+      top: 2%;
+    }
+
+    .ambient-trace--low {
+      top: auto;
+      bottom: 0;
+    }
+
+    [data-ambient-scene="intro"] .ambient-trace { width: calc(var(--ambient-trace-width) * 1.08); transform: translateX(-50%) rotate(-5deg); }
+    [data-ambient-scene="world-legends"] .ambient-trace { height: 29rem; transform: translateX(-50%) rotate(4deg) scaleX(0.88); }
+    [data-ambient-scene="world-legends"] .ambient-trace path:nth-of-type(2) { stroke-dasharray: 1 20; stroke-width: 2; }
+    [data-ambient-scene="profile"] .ambient-trace { top: 8rem; height: 32rem; transform: translateX(-50%) rotate(-3deg) scaleX(1.1); }
+    [data-ambient-scene="profile"] .ambient-trace path:nth-of-type(2) { opacity: 0.22; stroke-dasharray: 18 28; }
+    [data-ambient-scene="age-triumph"] .ambient-trace { bottom: 3rem; width: calc(var(--ambient-trace-width) * 0.9); transform: translateX(-50%) rotate(7deg); }
+    [data-ambient-scene="age-triumph"] .ambient-trace circle { display: none; }
+    [data-ambient-scene="classes-2020"] .ambient-trace { bottom: 5rem; height: 27rem; transform: translateX(-50%) rotate(-6deg) scaleX(1.12); }
+    [data-ambient-scene="classes-2020"] .ambient-trace path:nth-of-type(2) { stroke-dasharray: 2 10 16 22; opacity: 0.5; }
+    [data-ambient-scene="classes-2022"] .ambient-trace { top: 5rem; height: 34rem; transform: translateX(-50%) rotate(2deg) scaleX(0.94); }
+    [data-ambient-scene="classes-2022"] .ambient-trace path:first-of-type { stroke-width: 1.9; }
+    [data-ambient-scene="nightmare"] .ambient-trace { bottom: 2rem; width: calc(var(--ambient-trace-width) * 1.12); transform: translateX(-50%) rotate(-8deg) scaleY(0.82); }
+    [data-ambient-scene="nightmare"] .ambient-trace path:nth-of-type(2) { opacity: 0.18; }
+    [data-ambient-scene="snorlar"] .ambient-trace { top: 2rem; height: 30rem; transform: translateX(-50%) rotate(6deg) scaleX(0.84); }
+    [data-ambient-scene="snorlar"] .ambient-trace path:nth-of-type(2) { stroke-dasharray: 1 13; stroke-width: 1.9; }
+    [data-ambient-scene="catacombs"] .ambient-trace { bottom: 6rem; height: 25rem; transform: translateX(-50%) rotate(-2deg) scaleX(1.16); }
+    [data-ambient-scene="catacombs"] .ambient-trace rect { display: none; }
+    [data-ambient-scene="star-fields"] .ambient-trace { bottom: 1rem; width: calc(var(--ambient-trace-width) * 0.86); transform: translateX(-50%) rotate(9deg) scaleY(1.08); }
+    [data-ambient-scene="star-fields"] .ambient-trace path:first-of-type { stroke-width: 1.8; }
+    [data-ambient-scene="star-fields"] .ambient-trace path:nth-of-type(2) { stroke-dasharray: 2 24; }
+    [data-ambient-scene="feastwood"] .ambient-trace { top: 7rem; height: 31rem; transform: translateX(-50%) rotate(-7deg) scaleX(1.08); }
+    [data-ambient-scene="feastwood"] .ambient-trace path:nth-of-type(2) { opacity: 0.28; stroke-dasharray: 14 8 2 20; }
+
+    [data-ambient-scene="intro"] { --trace-document-top: 54rem; }
+    [data-ambient-scene="world-legends"] { --trace-document-top: 260rem; }
+    [data-ambient-scene="profile"] { --trace-document-top: 466rem; }
+    [data-ambient-scene="age-triumph"] { --trace-document-top: 672rem; }
+    [data-ambient-scene="classes-2020"] { --trace-document-top: 878rem; }
+    [data-ambient-scene="classes-2022"] { --trace-document-top: 1084rem; }
+    [data-ambient-scene="nightmare"] { --trace-document-top: 1290rem; }
+    [data-ambient-scene="snorlar"] { --trace-document-top: 1496rem; }
+    [data-ambient-scene="catacombs"] { --trace-document-top: 1702rem; }
+    [data-ambient-scene="star-fields"] { --trace-document-top: 1908rem; }
+    [data-ambient-scene="feastwood"] { --trace-document-top: 2040rem; }
+
+    .ambient-trace {
+      top: var(--trace-document-top) !important;
+      bottom: auto !important;
+    }
+
+    :root[data-theme="light"] .ambient-piece {
+      opacity: calc(var(--piece-opacity) * 0.84);
+    }
+
+    :root[data-theme="light"] .ambient-piece img {
+      filter: saturate(0.86) contrast(1.04) brightness(1.01);
+    }
+
+    :root[data-theme="light"] .ambient-trace {
+      opacity: 0.58;
+    }
+
+    :root[data-theme="light"] .ambient-trace--right {
+      opacity: 0.4;
+    }
+
+    @media (max-width: 1790px) {
+      .ambient-collage {
+        display: none;
       }
     }
 
@@ -2688,14 +3096,23 @@
       }
     }
 
-    @media (max-width: 1100px) {
-      .portfolio-atlas {
-        right: -10rem;
-        opacity: 0.5;
+    @media (max-width: 820px) {
+      .ambient-collage {
+        display: none;
       }
     }
 
     @media (max-width: 720px) {
+
+      .about-copy {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .about-copy > p:last-child {
+        grid-column: auto;
+      }
+
       .portfolio-atlas-grid {
         opacity: 0.18;
       }
@@ -2712,14 +3129,6 @@
 
       :root[data-theme="light"] .portfolio-field-node:nth-of-type(2) {
         opacity: 0.14;
-      }
-
-      .portfolio-atlas {
-        top: 4rem;
-        right: -92vw;
-        width: 160vw;
-        height: 68vh;
-        opacity: 0.32;
       }
 
       .case-summary {
@@ -2764,6 +3173,31 @@
 
       .video-example-card {
         scroll-snap-align: start;
+      }
+
+      .player-proof,
+      .player-proof--left,
+      .player-proof--right {
+        grid-template-columns: 1fr;
+        width: 100%;
+        margin: 1.8rem 0 2.15rem;
+        padding: 0.42rem;
+        clip-path: polygon(0.6% 0.6%, 99.4% 0, 100% 98.4%, 0 100%);
+        transform: rotate(var(--proof-mobile-tilt, -0.45deg));
+      }
+
+      .player-proof:hover,
+      .player-proof:focus-visible {
+        transform: translateY(-2px) rotate(var(--proof-mobile-tilt, -0.45deg));
+      }
+
+      .player-proof-media {
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+      }
+
+      .player-proof-copy {
+        padding: 1rem 0.95rem 1.1rem;
       }
 
       .section-portal {
@@ -2837,67 +3271,169 @@
 <a class="skip-link" href="#portfolio-main">Skip to portfolio</a>
 
 <div class="portfolio-atlas-grid" aria-hidden="true"></div>
-<div class="portfolio-ambient-field" aria-hidden="true">
-  <svg viewBox="0 0 2200 900" preserveAspectRatio="xMidYMid slice">
-    <path class="portfolio-field-path" d="M-80 580 C 112 382 272 462 438 284 S 692 146 864 238" />
-    <path class="portfolio-field-path-muted" d="M-28 170 C 166 244 324 92 548 188 S 732 382 914 330" />
-    <path class="portfolio-field-path-muted" d="M40 760 C 262 584 448 716 650 506 S 792 356 962 430" />
-  </svg>
-  <i class="portfolio-field-node"></i>
-  <i class="portfolio-field-node"></i>
-</div>
-<div class="portfolio-atlas" aria-hidden="true">
-  <svg viewBox="0 0 820 820">
-    <defs>
-      <linearGradient id="portfolio-route-fade" gradientUnits="userSpaceOnUse" x1="0" y1="90" x2="0" y2="766">
-        <stop offset="0" stop-color="var(--atlas-accent)" stop-opacity="0.9" />
-        <stop offset="0.7" stop-color="var(--atlas-accent)" stop-opacity="1" />
-        <stop offset="1" stop-color="var(--atlas-accent)" stop-opacity="0" />
-      </linearGradient>
-      <linearGradient id="portfolio-progress-fade" gradientUnits="userSpaceOnUse" x1="0" y1="90" x2="0" y2="766">
-        <stop offset="0" stop-color="var(--accent)" stop-opacity="0.95" />
-        <stop offset="0.72" stop-color="var(--accent)" stop-opacity="1" />
-        <stop offset="1" stop-color="var(--accent)" stop-opacity="0" />
-      </linearGradient>
-    </defs>
-    <path class="portfolio-map-path" d="M82 134 C 214 210 258 82 412 170 S 618 298 744 232 S 714 508 548 486 S 352 590 620 706 S 692 756 392 766" />
-    <path class="portfolio-map-muted" d="M128 608 C 224 514 332 548 414 432 S 610 322 774 398" />
-    <path class="portfolio-map-muted" d="M168 272 C 280 314 306 210 458 256 S 626 452 772 538" />
-    <path class="portfolio-map-progress" d="M82 134 C 214 210 258 82 412 170 S 618 298 744 232 S 714 508 548 486 S 352 590 620 706 S 692 756 392 766" />
-  </svg>
-  <svg class="portfolio-contours" viewBox="0 0 570 570">
-    <ellipse cx="318" cy="270" rx="244" ry="170" transform="rotate(-19 318 270)" />
-    <ellipse cx="318" cy="270" rx="215" ry="146" transform="rotate(-19 318 270)" />
-    <ellipse cx="318" cy="270" rx="184" ry="124" transform="rotate(-19 318 270)" />
-    <ellipse cx="318" cy="270" rx="150" ry="96" transform="rotate(-19 318 270)" />
-    <ellipse cx="318" cy="270" rx="116" ry="70" transform="rotate(-19 318 270)" />
-    <ellipse cx="318" cy="270" rx="78" ry="43" transform="rotate(-19 318 270)" />
-  </svg>
-  <i class="portfolio-map-node is-active"></i>
-  <i class="portfolio-map-node"></i>
-  <i class="portfolio-map-node"></i>
-  <i class="portfolio-map-node"></i>
-  <i class="portfolio-map-node"></i>
-  <span class="portfolio-map-caption is-active">Intro</span>
-  <span class="portfolio-map-caption">Profile</span>
-  <span class="portfolio-map-caption">Overview</span>
-  <span class="portfolio-map-caption">Cases</span>
-  <span class="portfolio-map-caption">Deep dives</span>
-</div>
 
-<div class="ambient-gallery" aria-hidden="true">
-  <figure class="ambient-frame ambient-frame--dragon">
-    <img src="assets/images/ambient/official_dragon_2026.png" alt="" width="1065" height="562" loading="lazy" decoding="async" />
-  </figure>
-  <figure class="ambient-frame ambient-frame--cavern">
-    <img src="assets/images/ambient/official_cavern.jpg" alt="" width="1920" height="890" loading="lazy" decoding="async" />
-  </figure>
-  <figure class="ambient-frame ambient-frame--factions">
-    <img src="assets/images/banner_deep_dives.png" alt="" width="1200" height="630" loading="lazy" decoding="async" />
-  </figure>
-  <figure class="ambient-frame ambient-frame--classes">
-    <img src="assets/images/banner_case_studies.png" alt="" width="1200" height="630" loading="lazy" decoding="async" />
-  </figure>
+<div class="ambient-collage" aria-hidden="true">
+  <div class="ambient-scene" data-ambient-scene="intro">
+    <svg class="ambient-trace ambient-trace--left ambient-trace--low" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-intro" x1="16" y1="454" x2="724" y2="92" gradientUnits="userSpaceOnUse"><stop stop-color="var(--accent)" stop-opacity="0"/><stop offset="0.22" stop-color="var(--accent)" stop-opacity="0.75"/><stop offset="0.76" stop-color="var(--atlas-signal)" stop-opacity="0.52"/><stop offset="1" stop-color="var(--atlas-signal)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-intro)" d="M16 454 C128 308 246 378 344 238 S592 76 724 132" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="7 14" d="M38 510 C196 414 286 492 420 332 S628 188 746 214" />
+      <circle cx="344" cy="238" r="4"/><circle cx="592" cy="103" r="3"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--intro-dragon">
+      <img src="assets/images/ambient/official_dragon_2026.png" alt="" width="1065" height="562" fetchpriority="high" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--intro-mirror">
+      <img src="assets/images/ambient/collage/mirror-world-2024.webp" alt="" width="1200" height="630" loading="eager" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="world-legends">
+    <svg class="ambient-trace ambient-trace--right ambient-trace--high" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-legends" x1="42" y1="92" x2="726" y2="462" gradientUnits="userSpaceOnUse"><stop stop-color="var(--atlas-signal)" stop-opacity="0"/><stop offset="0.23" stop-color="var(--atlas-signal)" stop-opacity="0.56"/><stop offset="0.71" stop-color="var(--accent)" stop-opacity="0.74"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-legends)" d="M42 92 C160 38 254 180 334 166 S470 342 568 326 S646 440 726 462" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="5 16" d="M18 154 C146 104 272 238 374 222 S518 406 612 388 S692 500 748 520" />
+      <circle cx="334" cy="166" r="4"/><rect x="565" y="323" width="6" height="6" transform="rotate(45 568 326)"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--legends-book">
+      <img src="assets/images/ambient/collage/legends-world-2026.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--intro-cavern">
+      <img src="assets/images/ambient/official_cavern.jpg" alt="" width="1920" height="890" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="profile">
+    <svg class="ambient-trace ambient-trace--right ambient-trace--high" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-profile" x1="48" y1="84" x2="730" y2="474" gradientUnits="userSpaceOnUse"><stop stop-color="var(--atlas-signal)" stop-opacity="0"/><stop offset="0.25" stop-color="var(--atlas-signal)" stop-opacity="0.54"/><stop offset="0.7" stop-color="var(--accent)" stop-opacity="0.78"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-profile)" d="M48 84 C214 20 226 226 388 210 S532 404 730 474" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="3 15" d="M24 142 C188 96 274 286 414 270 S594 452 752 514" />
+      <circle cx="388" cy="210" r="4"/><rect x="579" y="403" width="6" height="6" transform="rotate(45 582 406)"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--profile-lamp">
+      <img src="assets/images/ambient/collage/almahad-2023.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--profile-portal">
+      <img src="assets/images/ambient/collage/mage-trials-2025.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="age-triumph">
+    <svg class="ambient-trace ambient-trace--left ambient-trace--low" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-triumph" x1="26" y1="470" x2="732" y2="108" gradientUnits="userSpaceOnUse"><stop stop-color="var(--accent)" stop-opacity="0"/><stop offset="0.2" stop-color="var(--accent)" stop-opacity="0.7"/><stop offset="0.64" stop-color="var(--atlas-signal)" stop-opacity="0.56"/><stop offset="1" stop-color="var(--atlas-signal)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-triumph)" d="M26 470 C142 350 238 414 316 286 S460 178 542 128 S658 126 732 108" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="10 18" d="M10 522 C156 416 274 474 372 342 S510 244 606 190 S688 186 750 170" />
+      <rect x="313" y="283" width="7" height="7" transform="rotate(45 316.5 286.5)"/><circle cx="542" cy="128" r="3"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--age-triumph">
+      <img src="assets/images/ambient/collage/age-triumph-2024.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--heroic-era">
+      <img src="assets/images/ambient/collage/heroic-era-2026.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="classes-2020">
+    <svg class="ambient-trace ambient-trace--right ambient-trace--low" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-classes-old" x1="28" y1="92" x2="734" y2="468" gradientUnits="userSpaceOnUse"><stop stop-color="var(--atlas-signal)" stop-opacity="0"/><stop offset="0.24" stop-color="var(--atlas-signal)" stop-opacity="0.58"/><stop offset="0.68" stop-color="var(--accent)" stop-opacity="0.76"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-classes-old)" d="M28 92 C168 18 238 214 360 194 S536 436 734 468" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="9 17" d="M18 152 C154 84 274 286 404 258 S590 500 748 526" />
+      <circle cx="360" cy="194" r="4"/><rect x="580" y="439" width="6" height="6" transform="rotate(45 583 442)"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--overview-old">
+      <img src="assets/images/ambient/collage/classes-2020.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--arena">
+      <img src="assets/images/ambient/collage/arena-2026.webp" alt="" width="1200" height="676" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="classes-2022">
+    <svg class="ambient-trace ambient-trace--left ambient-trace--high" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-classes-new" x1="18" y1="452" x2="742" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="var(--accent)" stop-opacity="0"/><stop offset="0.22" stop-color="var(--accent)" stop-opacity="0.72"/><stop offset="0.7" stop-color="var(--atlas-signal)" stop-opacity="0.56"/><stop offset="1" stop-color="var(--atlas-signal)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-classes-new)" d="M18 452 C156 314 260 438 352 282 S578 42 742 86" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="4 14" d="M8 514 C170 384 300 500 420 332 S628 112 756 154" />
+      <rect x="348" y="278" width="7" height="7" transform="rotate(45 351.5 281.5)"/><circle cx="578" cy="91" r="3"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--almahad-treasures">
+      <img src="assets/images/ambient/collage/almahad-treasures-2024.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--overview-new">
+      <img src="assets/images/ambient/collage/classes-2022.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="nightmare">
+    <svg class="ambient-trace ambient-trace--left ambient-trace--low" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-nightmare" x1="20" y1="438" x2="738" y2="116" gradientUnits="userSpaceOnUse"><stop stop-color="var(--accent)" stop-opacity="0"/><stop offset="0.27" stop-color="var(--accent)" stop-opacity="0.78"/><stop offset="0.66" stop-color="var(--atlas-signal)" stop-opacity="0.54"/><stop offset="1" stop-color="var(--atlas-signal)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-nightmare)" d="M20 438 C116 302 286 420 366 254 S598 86 738 116" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="11 19" d="M10 500 C152 374 318 476 430 310 S644 160 752 184" />
+      <rect x="362" y="250" width="7" height="7" transform="rotate(45 365.5 253.5)"/><circle cx="598" cy="112" r="3"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--cases-halloween">
+      <img src="assets/images/ambient/collage/halloween-2024.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--nightmare-town">
+      <img src="assets/images/ambient/collage/nightmare-town-2025.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="snorlar">
+    <svg class="ambient-trace ambient-trace--right ambient-trace--high" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-snorlar" x1="32" y1="112" x2="724" y2="448" gradientUnits="userSpaceOnUse"><stop stop-color="var(--atlas-signal)" stop-opacity="0"/><stop offset="0.19" stop-color="var(--atlas-signal)" stop-opacity="0.55"/><stop offset="0.58" stop-color="var(--accent)" stop-opacity="0.78"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-snorlar)" d="M32 112 C194 38 218 242 388 210 S538 410 724 448" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="6 16" d="M16 178 C178 118 270 308 430 274 S592 472 746 512" />
+      <circle cx="388" cy="210" r="4"/><circle cx="584" cy="393" r="3"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--cases-snorlar">
+      <img src="assets/images/ambient/collage/snorlar-2025.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--class-chronicle">
+      <img src="assets/images/ambient/collage/class-chronicle-2026.webp" alt="" width="1200" height="676" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="catacombs">
+    <svg class="ambient-trace ambient-trace--right ambient-trace--low" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-catacombs" x1="38" y1="88" x2="728" y2="482" gradientUnits="userSpaceOnUse"><stop stop-color="var(--atlas-signal)" stop-opacity="0"/><stop offset="0.24" stop-color="var(--atlas-signal)" stop-opacity="0.6"/><stop offset="0.73" stop-color="var(--accent)" stop-opacity="0.74"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-catacombs)" d="M38 88 C184 24 250 238 382 202 S548 436 728 482" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="3 13" d="M18 156 C154 110 292 300 424 264 S602 492 748 532" />
+      <circle cx="382" cy="202" r="4"/><rect x="559" y="416" width="6" height="6" transform="rotate(45 562 419)"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--deep-catacombs">
+      <img src="assets/images/ambient/collage/catacombs-2025.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="star-fields">
+    <svg class="ambient-trace ambient-trace--right ambient-trace--low" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-rifts" x1="34" y1="94" x2="724" y2="474" gradientUnits="userSpaceOnUse"><stop stop-color="var(--atlas-signal)" stop-opacity="0"/><stop offset="0.18" stop-color="var(--atlas-signal)" stop-opacity="0.58"/><stop offset="0.62" stop-color="var(--accent)" stop-opacity="0.76"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-rifts)" d="M34 94 C184 48 248 224 358 198 S470 350 566 340 S648 446 724 474" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="4 17" d="M16 164 C164 120 276 286 394 260 S520 418 614 406 S690 506 748 532" />
+      <circle cx="358" cy="198" r="4"/><rect x="563" y="337" width="6" height="6" transform="rotate(45 566 340)"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--star-north">
+      <img src="assets/images/ambient/collage/star-north-2024.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--star-rifts">
+      <img src="assets/images/ambient/collage/star-rifts-2026.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+
+  <div class="ambient-scene" data-ambient-scene="feastwood">
+    <svg class="ambient-trace ambient-trace--left ambient-trace--high" viewBox="0 0 760 560" preserveAspectRatio="none">
+      <defs><linearGradient id="trace-feastwood" x1="14" y1="470" x2="746" y2="96" gradientUnits="userSpaceOnUse"><stop stop-color="var(--accent)" stop-opacity="0"/><stop offset="0.2" stop-color="var(--accent)" stop-opacity="0.72"/><stop offset="0.69" stop-color="var(--atlas-signal)" stop-opacity="0.58"/><stop offset="1" stop-color="var(--atlas-signal)" stop-opacity="0"/></linearGradient></defs>
+      <path stroke="url(#trace-feastwood)" d="M14 470 C148 326 252 454 360 280 S594 58 746 96" />
+      <path stroke="var(--atlas-line)" stroke-dasharray="8 18" d="M4 526 C172 396 298 512 430 334 S636 132 756 166" />
+      <circle cx="360" cy="280" r="4"/><circle cx="594" cy="91" r="3"/>
+    </svg>
+    <figure class="ambient-piece ambient-piece--left ambient-piece--tales-desert">
+      <img src="assets/images/ambient/collage/tales-desert-2025.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="ambient-piece ambient-piece--right ambient-piece--deep-feastwood">
+      <img src="assets/images/ambient/collage/feastwood-2025.webp" alt="" width="1200" height="630" loading="lazy" decoding="async" />
+    </figure>
+  </div>
 </div>
 
 <!-- ── Navbar ──────────────────────────────────────────── -->
@@ -2963,11 +3499,13 @@
   <!-- ── About ──────────────────────────────────────── -->
   <h2 id="about">About me</h2>
 
-  <p>Lead Game Designer with 8+ years of experience on Warspear Online. I work across systems, progression, economy, PvE and PvP, encounters, live content, design tools, and balance across a 20-class roster. My work sits at the intersection of player experience, practical production, and a live economy where design decisions carry real weight.</p>
+  <div class="about-copy">
+    <p>Lead Game Designer with 8+ years of experience on Warspear Online. I work across systems, progression, economy, PvE and PvP, encounters, live content, design tools, and balance across a 20-class roster. My work sits at the intersection of player experience, practical production, and a live economy where design decisions carry real weight.</p>
 
-  <p>I lead a small design team of 3 while staying hands-on with systems design, encounter design, and feature delivery. My background also includes shipping new playable classes, rebuilding the talent system, and designing seasonal content, which gives me a strong mix of leadership, live-service thinking, and hands-on design execution.</p>
+    <p>I lead a small design team of 3 while staying hands-on with systems design, encounter design, and feature delivery. My background also includes shipping new playable classes, rebuilding the talent system, and designing seasonal content, which gives me a strong mix of leadership, live-service thinking, and hands-on design execution.</p>
 
-  <p>This portfolio focuses on a few systems that are easiest to explain as case studies. The wider body of work also includes arena and GvG features, world bosses, events, dungeons, editors, telemetry requirements, UX specifications, and production support across disciplines.</p>
+    <p>This portfolio focuses on a few systems that are easiest to explain as case studies. The wider body of work also includes arena and GvG features, world bosses, events, dungeons, editors, telemetry requirements, UX specifications, and production support across disciplines.</p>
+  </div>
 
   <!-- Accordion: What is Warspear Online? -->
   <div class="accordion" data-detail="Live world · systems context" aria-expanded="true">
@@ -3268,6 +3806,18 @@
 
         <p>The control kit was designed around creating windows rather than permanent lockdown. The goal was to provide strong tools that still feel fair and readable. For example, <em>Reverse Flow</em> creates an area that pushes enemies away and can stun them, enabling space control instead of hard CC spam. <em>Touch of Truth</em> creates a short silence window with clear telegraphing, allowing counterplay. <em>Whirlwind of Repentance</em> applies slow and later reduces accuracy, reinforcing positioning and decision-making.</p>
 
+        <a class="player-proof player-proof--right" style="--proof-tilt: 1.15deg; --proof-mobile-tilt: 0.4deg;" data-proof-mark="Player view / control" href="https://www.youtube.com/watch?v=7u1REUvJfqg" target="_blank" rel="noopener">
+          <span class="player-proof-media">
+            <img src="https://i.ytimg.com/vi/7u1REUvJfqg/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="player-proof-play" aria-hidden="true">▶</span>
+          </span>
+          <span class="player-proof-copy">
+            <span class="player-proof-kicker">Independent player footage</span>
+            <strong>Is the Templar one of the strongest classes now?</strong>
+            <span>A player look at how the class performs after its PvE and PvP growth.</span>
+          </span>
+        </a>
+
         <h4>Impact</h4>
         <ul>
           <li>Closed a faction-level gap in control tools for Sentinels</li>
@@ -3327,6 +3877,18 @@
 
         <p>The response matched the accessibility goal: the class attracted immediate interest at launch and remained widely played years later.</p>
 
+        <a class="player-proof player-proof--left" style="--proof-tilt: -1.35deg; --proof-mobile-tilt: -0.45deg;" data-proof-mark="Player view / mobility" href="https://www.youtube.com/watch?v=duPUyjBhCwY" target="_blank" rel="noopener">
+          <span class="player-proof-media">
+            <img src="https://i.ytimg.com/vi/duPUyjBhCwY/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="player-proof-play" aria-hidden="true">▶</span>
+          </span>
+          <span class="player-proof-copy">
+            <span class="player-proof-kicker">Independent player footage</span>
+            <strong>How good is Chieftain after update?</strong>
+            <span>A practical PvE and PvP view of the class after live balance changes.</span>
+          </span>
+        </a>
+
         <h4>Impact</h4>
         <ul>
           <li>Ranked among the two most-played Mountain Clan classes across all three major RU servers in the official 2023 annual report, then remained top-three in Dungeons, Arena and GvG across those servers in 2024</li>
@@ -3380,6 +3942,18 @@
           <source src="assets/videos/beastmaster_skill_2.mp4" type="video/mp4" />
         </video>
 
+        <a class="player-proof player-proof--right" style="--proof-tilt: 1.65deg; --proof-mobile-tilt: 0.5deg;" data-proof-mark="Player view / companion" href="https://www.youtube.com/watch?v=tNWyB-5rV-0" target="_blank" rel="noopener">
+          <span class="player-proof-media">
+            <img src="https://i.ytimg.com/vi/tNWyB-5rV-0/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="player-proof-play" aria-hidden="true">▶</span>
+          </span>
+          <span class="player-proof-copy">
+            <span class="player-proof-kicker">Independent player footage</span>
+            <strong>Beastmaster solo Hard Temple</strong>
+            <span>The permanent companion fantasy shown in a demanding solo run.</span>
+          </span>
+        </a>
+
         <h4>Impact</h4>
         <ul>
           <li>Became one of the most accessible entry points for new players</li>
@@ -3430,6 +4004,18 @@
         </aside>
 
         <p>Reaper is a strong PvP class built around timing and commitment. The transformation window creates pressure and timing advantages — commit at the wrong moment and you get punished, manage your cooldowns correctly and you dominate the fight. This creates a high-risk, high-reward playstyle with strong player expression.</p>
+
+        <a class="player-proof player-proof--left" style="--proof-tilt: -1.75deg; --proof-mobile-tilt: -0.55deg;" data-proof-mark="Player view / PvP window" href="https://www.youtube.com/watch?v=9ybCCrrzkkk" target="_blank" rel="noopener">
+          <span class="player-proof-media">
+            <img src="https://i.ytimg.com/vi/9ybCCrrzkkk/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="player-proof-play" aria-hidden="true">▶</span>
+          </span>
+          <span class="player-proof-copy">
+            <span class="player-proof-kicker">Independent player footage</span>
+            <strong>How strong is Reaper in PvP?</strong>
+            <span>A player showcase of transformation timing, pressure, and punish windows.</span>
+          </span>
+        </a>
 
         <h4>Impact</h4>
         <ul>
@@ -3762,6 +4348,18 @@
 
         <p>This structure creates a much stronger tension curve than a typical daily activity. The progress bar makes PvP feel productive, not just adversarial. The personal entrance adds discovery. The boss dungeon provides PvE payoff. And the risk of losing progress keeps each session unpredictable.</p>
 
+        <a class="player-proof player-proof--right" style="--proof-tilt: 1.25deg; --proof-mobile-tilt: 0.4deg;" data-proof-mark="Player route / outpost" href="https://www.youtube.com/watch?v=1R1jPkbce6M" target="_blank" rel="noopener">
+          <span class="player-proof-media">
+            <img src="https://i.ytimg.com/vi/1R1jPkbce6M/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="player-proof-play" aria-hidden="true">▶</span>
+          </span>
+          <span class="player-proof-copy">
+            <span class="player-proof-kicker">Independent player footage</span>
+            <strong>Assassin Guild Outpost run</strong>
+            <span>The PvP setup and PvE payoff seen from the player's side.</span>
+          </span>
+        </a>
+
         <h4>Impact</h4>
         <ul>
           <li>Created a PvP progression loop where player interaction directly affects rewards</li>
@@ -3846,6 +4444,18 @@
         <p>Inside the mode, players complete PvE objectives, fight over space, and gather virtual rewards such as currency and items. That reward state creates tension because it is not fully safe. If a player dies, part of the earned loot is dropped into the instance as a separate object that can be claimed by others. I introduced this mechanic to turn death into a meaningful risk event and make player encounters high-stakes decisions rather than simple setbacks.</p>
 
         <p>The extraction layer defines the mode's identity. There are different ways to leave: a safe evacuation path and an emergency exit with a penalty. This was designed to create a continuous risk-reward decision: push for more value or secure current gains. That choice is where a large part of the tension comes from.</p>
+
+        <a class="player-proof player-proof--left" style="--proof-tilt: -1.45deg; --proof-mobile-tilt: -0.45deg;" data-proof-mark="Player guide / Catacombs" href="https://www.youtube.com/watch?v=vQNOivSatyo" target="_blank" rel="noopener">
+          <span class="player-proof-media">
+            <img src="https://i.ytimg.com/vi/vQNOivSatyo/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" />
+            <span class="player-proof-play" aria-hidden="true">▶</span>
+          </span>
+          <span class="player-proof-copy">
+            <span class="player-proof-kicker">Independent player footage</span>
+            <strong>How the Catacombs mission works</strong>
+            <span>A compact walkthrough of the mode's objectives, travel, and extraction loop.</span>
+          </span>
+        </a>
 
         <p>From a systems point of view, Catacombs also needed a clear session structure. Access happens through a lobby object, groups register in advance, and the mode starts only when participation reaches the required threshold. Hostility inside the instance is determined by group, which makes team coordination and target recognition especially important.</p>
 
@@ -4049,27 +4659,24 @@
   // ── Stable navbar ─────────────────────────────────
   const navbar = document.getElementById('navbar');
 
-  // ── Systems atlas, true section tracking, and width ─
+  // ── Section tracking and width ─────────────────────
   const root = document.documentElement;
   const routeTargetIds = ['top', 'about', 'overview', 'case-studies', 'deep-dives'];
   const routeTargets = routeTargetIds.map((id) => document.getElementById(id));
   const navSectionLinks = [...document.querySelectorAll('#navbar .nav-links a[href^="#"]')];
-  const mapNodes = [...document.querySelectorAll('.portfolio-map-node')];
-  const mapCaptions = [...document.querySelectorAll('.portfolio-map-caption')];
-  const mapProgress = document.querySelector('.portfolio-map-progress');
-  const mapPathLength = mapProgress.getTotalLength();
   const widthInput = document.getElementById('portfolio-width');
   const widthValue = document.getElementById('portfolio-width-value');
   const widthStorageKey = 'portfolio_content_width';
   const finePointer = window.matchMedia('(pointer: fine)');
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let atlasFrame = 0;
+  let motionFrame = 0;
   let scrollFrame = 0;
+  let activeRouteIndex = 0;
 
-  mapProgress.style.strokeDasharray = String(mapPathLength);
-  mapProgress.style.strokeDashoffset = String(mapPathLength);
+  function setActiveNav(index) {
+    if (index === activeRouteIndex) return;
 
-  function setActiveRoute(index) {
+    activeRouteIndex = index;
     root.style.setProperty('--active-route-index', index);
     navSectionLinks.forEach((link) => {
       const linkIndex = routeTargetIds.indexOf(link.hash.slice(1));
@@ -4079,23 +4686,23 @@
         link.removeAttribute('aria-current');
       }
     });
-    mapNodes.forEach((node, nodeIndex) => node.classList.toggle('is-active', nodeIndex === index));
-    mapCaptions.forEach((caption, captionIndex) => caption.classList.toggle('is-active', captionIndex === index));
   }
 
   function updatePortfolioProgress() {
-    const available = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = available > 0 ? Math.min(1, Math.max(0, window.scrollY / available)) : 0;
+    const probe = window.scrollY + navbar.offsetHeight + window.innerHeight * 0.24;
+    const targetPositions = routeTargets.map((target) => target.getBoundingClientRect().top + window.scrollY);
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    let activeIndex = 0;
+    const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+
+    targetPositions.forEach((targetPosition, index) => {
+      if (targetPosition <= probe) activeIndex = index;
+    });
+
     root.style.setProperty('--portfolio-progress', `${progress * 100}%`);
     root.style.setProperty('--portfolio-progress-scale', progress);
-    mapProgress.style.strokeDashoffset = String(mapPathLength * (1 - progress));
-
-    const probe = window.scrollY + navbar.offsetHeight + window.innerHeight * 0.2;
-    let activeIndex = 0;
-    routeTargets.forEach((target, index) => {
-      if (target.offsetTop <= probe) activeIndex = index;
-    });
-    setActiveRoute(activeIndex);
+    root.style.setProperty('--grid-y', `${progress * -38}px`);
+    setActiveNav(activeIndex);
   }
 
   function requestPortfolioProgressUpdate() {
@@ -4104,21 +4711,27 @@
   }
 
   window.addEventListener('scroll', requestPortfolioProgressUpdate, { passive: true });
-  window.addEventListener('resize', requestPortfolioProgressUpdate, { passive: true });
+  window.addEventListener('resize', () => {
+    requestPortfolioProgressUpdate();
+  }, { passive: true });
+  window.addEventListener('load', () => {
+    requestPortfolioProgressUpdate();
+  }, { once: true });
   updatePortfolioProgress();
 
   window.addEventListener('pointermove', (event) => {
     if (!finePointer.matches || reducedMotionQuery.matches) return;
-    window.cancelAnimationFrame(atlasFrame);
-    atlasFrame = window.requestAnimationFrame(() => {
+    window.cancelAnimationFrame(motionFrame);
+    motionFrame = window.requestAnimationFrame(() => {
       const x = (event.clientX / window.innerWidth - 0.5) * 22;
       const y = (event.clientY / window.innerHeight - 0.5) * 14;
-      root.style.setProperty('--atlas-x', `${x}px`);
-      root.style.setProperty('--atlas-y', `${y}px`);
-      root.style.setProperty('--atlas-contour-x', `${x * -0.45}px`);
-      root.style.setProperty('--atlas-contour-y', `${y * -0.45}px`);
-      root.style.setProperty('--field-x', `${x * -0.32}px`);
-      root.style.setProperty('--field-y', `${y * -0.24}px`);
+      root.style.setProperty('--ambient-left-x', `${x * 0.72}px`);
+      root.style.setProperty('--ambient-left-y', `${y * 0.58}px`);
+      root.style.setProperty('--ambient-right-x', `${x * -0.48}px`);
+      root.style.setProperty('--ambient-right-y', `${y * -0.38}px`);
+      root.style.setProperty('--grid-x', `${x * -0.34}px`);
+      root.style.setProperty('--field-x', `${x * -0.24}px`);
+      root.style.setProperty('--field-y', `${y * -0.18}px`);
     });
   }, { passive: true });
 

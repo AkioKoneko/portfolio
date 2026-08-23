@@ -1167,7 +1167,11 @@
       grid-template-columns: 1fr;
       width: min(88%, 52rem);
       margin: 1.8rem auto 2.15rem;
-      padding: 1.2rem 1.45rem 1.3rem;
+      padding: 1.2rem 1.45rem 1.5rem;
+    }
+
+    .impact-note--spread::after {
+      content: none;
     }
 
     .impact-note-grid {
@@ -1198,22 +1202,6 @@
 
     .impact-note-stat .impact-note-copy {
       font-size: clamp(0.98rem, 1.4vw, 1.14rem);
-    }
-
-    .impact-note-evolution {
-      display: block;
-      margin-top: 0.65rem;
-      padding: 0.75rem 0.8rem 0.1rem;
-      border-top: 1px solid color-mix(in srgb, var(--atlas-signal) 34%, transparent);
-      color: var(--text-secondary);
-      font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-      font-size: 0.78rem;
-      line-height: 1.45;
-      text-wrap: pretty;
-    }
-
-    .impact-note-evolution strong {
-      color: var(--atlas-signal);
     }
 
     :root[data-theme="light"] .impact-note {
@@ -1314,11 +1302,6 @@
         border-top: 1px solid color-mix(in srgb, var(--atlas-signal) 34%, transparent);
       }
 
-      .impact-note-evolution {
-        grid-column: 1 / -1;
-        margin-top: 0.25rem;
-        padding-inline: 0.2rem;
-      }
     }
 
     /* ── Systems atlas pass ───────────────────────────── */
@@ -3084,6 +3067,611 @@
       opacity: 0.4;
     }
 
+    /* ── Editorial production evidence ────────────────── */
+    .debug-new-block {
+      position: relative;
+    }
+
+    body.debug-new-copy .debug-new-block::before {
+      position: absolute;
+      top: 0.65rem;
+      right: calc(100% + 0.8rem);
+      z-index: 8;
+      width: max-content;
+      padding: 0.2rem 0.38rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 72%, transparent);
+      border-radius: 0.16rem;
+      background: color-mix(in srgb, var(--bg-primary) 88%, var(--accent) 12%);
+      color: var(--accent-secondary);
+      content: attr(data-debug-label) "  →";
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      text-transform: uppercase;
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 6%, transparent);
+      pointer-events: none;
+    }
+
+    body.debug-new-copy .accordion-inner .debug-new-block {
+      display: grid;
+      grid-template-columns: 2.65rem minmax(0, 1fr);
+      column-gap: 0.45rem;
+    }
+
+    body.debug-new-copy .accordion-inner .debug-new-block::before {
+      position: static;
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+      justify-self: start;
+      margin-top: 0.65rem;
+      padding: 0.18rem 0.28rem;
+      content: "NEW\A→";
+      font-size: 0.54rem;
+      line-height: 1.35;
+      text-align: center;
+      white-space: pre;
+    }
+
+    body.debug-new-copy .accordion-inner .debug-new-block > * {
+      grid-column: 2;
+    }
+
+    .debug-new-copy-block > p {
+      margin: 0;
+    }
+
+    .editorial-kicker {
+      display: block;
+      margin-bottom: 0.55rem;
+      color: var(--accent-secondary);
+      font-family: var(--font-body);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .delivery-section {
+      position: relative;
+      isolation: isolate;
+      margin: 2.45rem 0 3rem;
+      padding: 0;
+      overflow: visible;
+      border: 0;
+      background: transparent;
+    }
+
+    .delivery-section::before {
+      display: none;
+    }
+
+    .delivery-heading {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.68fr) minmax(0, 1.32fr);
+      gap: clamp(1.35rem, 4vw, 3.2rem);
+      align-items: start;
+    }
+
+    .delivery-heading h2 {
+      max-width: 7ch;
+      margin: 0;
+      font-size: clamp(1.85rem, 4vw, 2.85rem);
+      line-height: 0.98;
+    }
+
+    .delivery-heading p {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+    }
+
+    .delivery-card-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr 1fr;
+      gap: clamp(1.35rem, 3vw, 2.4rem);
+      align-items: start;
+      margin-top: 1.55rem;
+    }
+
+    .delivery-card {
+      position: relative;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .delivery-card + .delivery-card {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .delivery-card h3 {
+      margin: 0 0 0.55rem;
+      color: var(--heading-color);
+      font-size: 1.12rem;
+      line-height: 1.12;
+    }
+
+    .delivery-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .class-production-bridge {
+      position: relative;
+      margin: 2.3rem 0 2.65rem;
+      padding: 1.25rem 1.45rem 1.35rem;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(104deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 44%),
+        color-mix(in srgb, var(--surface-muted) 78%, transparent);
+      clip-path: polygon(0.4% 1%, 99.6% 0, 100% 98.4%, 0 100%);
+      transform: rotate(-0.28deg);
+    }
+
+    .class-production-bridge::after {
+      position: absolute;
+      top: -3rem;
+      right: 12%;
+      width: 12rem;
+      height: 8rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--atlas-signal) 48%, transparent);
+      border-radius: 50%;
+      content: "";
+      transform: rotate(8deg);
+      pointer-events: none;
+    }
+
+    .bridge-heading {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .bridge-edition {
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .bridge-edition:last-child {
+      text-align: right;
+    }
+
+    .bridge-heading h4 {
+      margin: 0;
+      color: var(--heading-color);
+      font-size: clamp(1.45rem, 3vw, 2.05rem);
+      white-space: nowrap;
+    }
+
+    .class-production-bridge > p {
+      max-width: 69ch;
+      margin: 0.95rem auto 1.1rem;
+      color: var(--text-secondary);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .bridge-stages,
+    .production-map-grid,
+    .talent-platform-modules {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.35rem;
+    }
+
+    .bridge-stages span,
+    .production-map-grid span,
+    .talent-platform-modules span {
+      padding: 0.55rem 0.4rem;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 54%, transparent);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.03em;
+      line-height: 1.35;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .evolution-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(190px, 0.65fr);
+      gap: clamp(1.2rem, 3vw, 2rem);
+      margin: 2rem 0 2.25rem;
+      padding: 1.35rem 1.45rem;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(128deg, color-mix(in srgb, var(--surface-muted) 86%, var(--accent) 14%), color-mix(in srgb, var(--surface-muted) 90%, transparent));
+      clip-path: polygon(0.3% 0.7%, 99.8% 0, 99.2% 99.4%, 0 100%);
+      transform: rotate(0.35deg);
+      box-shadow: var(--surface-shadow-soft);
+    }
+
+    .evolution-card h4,
+    .production-map h4,
+    .recovery-case h4,
+    .talent-platform h4,
+    .talent-recovery h4,
+    .workflow-sidebar h3 {
+      margin: 0 0 0.65rem;
+      color: var(--heading-color);
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
+      line-height: 1.05;
+    }
+
+    .evolution-card p,
+    .production-map p,
+    .talent-platform p,
+    .talent-recovery p,
+    .workflow-sidebar p {
+      margin: 0.55rem 0;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.58;
+    }
+
+    .evolution-trajectory {
+      align-self: stretch;
+      display: grid;
+      align-content: center;
+      gap: 0.75rem;
+      padding-left: 1rem;
+      border-left: 1px solid color-mix(in srgb, var(--atlas-signal) 42%, transparent);
+    }
+
+    .evolution-mark {
+      display: grid;
+      grid-template-columns: 0.9rem 1fr;
+      gap: 0.45rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      line-height: 1.45;
+    }
+
+    .evolution-mark::before {
+      color: var(--accent);
+      content: "↗";
+      font-size: 0.8rem;
+    }
+
+    .evolution-mark strong {
+      display: block;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+    }
+
+    .production-map {
+      position: relative;
+      margin: 1.7rem 0 2rem;
+      padding: 1.2rem 1.3rem 1.35rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(90deg, color-mix(in srgb, var(--surface-muted) 76%, transparent), transparent);
+    }
+
+    .talent-platform {
+      position: relative;
+      margin: 1.65rem 0 1.7rem;
+      padding: 1.15rem 0 1.2rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 0;
+      background: transparent;
+    }
+
+    .talent-platform h4 {
+      max-width: 30ch;
+      font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+    }
+
+    .production-map-grid,
+    .talent-platform-modules {
+      margin-top: 1rem;
+    }
+
+    .talent-platform-modules {
+      opacity: 0.86;
+    }
+
+    .talent-platform-modules span {
+      border-top: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+      color: var(--text-secondary);
+    }
+
+    .recovery-case {
+      position: relative;
+      margin: 2rem 0 2.25rem;
+      padding: 1.35rem 1.45rem 1.5rem;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(142deg, color-mix(in srgb, var(--surface-muted) 78%, var(--accent) 22%), color-mix(in srgb, var(--surface-muted) 91%, transparent));
+      clip-path: polygon(0.6% 0, 100% 0.8%, 99.3% 99.6%, 0 98.8%);
+      transform: rotate(-0.32deg);
+      box-shadow: var(--surface-shadow-soft);
+    }
+
+    .recovery-case::after {
+      position: absolute;
+      top: -1.6rem;
+      right: -1.2rem;
+      width: 9rem;
+      height: 9rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 48%, transparent);
+      border-radius: 50%;
+      content: "";
+      -webkit-mask-image: linear-gradient(135deg, #000, transparent 76%);
+      mask-image: linear-gradient(135deg, #000, transparent 76%);
+    }
+
+    .recovery-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.25rem;
+      align-items: end;
+    }
+
+    .recovery-metric {
+      color: var(--accent-secondary);
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 6vw, 4rem);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 0.86;
+      text-align: right;
+    }
+
+    .recovery-metric span {
+      display: block;
+      max-width: 17ch;
+      margin-top: 0.45rem;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .recovery-path {
+      margin: 0.9rem 0 1rem;
+      color: var(--atlas-signal);
+      font-family: var(--font-mono);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .recovery-columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .recovery-column {
+      padding: 0.9rem 1rem 0.95rem 0;
+    }
+
+    .recovery-column + .recovery-column {
+      padding-left: 1rem;
+      border-left: 1px solid var(--border);
+    }
+
+    .recovery-column strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--accent-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .recovery-column p,
+    .recovery-lesson {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      line-height: 1.52;
+    }
+
+    .recovery-lesson {
+      margin-top: 0.85rem;
+    }
+
+    .talent-recovery {
+      margin: 2rem 0.2rem 2.25rem;
+      padding: 1.35rem 1.45rem 1.5rem;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(128deg, color-mix(in srgb, var(--surface-muted) 82%, var(--accent) 18%), color-mix(in srgb, var(--surface-muted) 92%, transparent));
+      clip-path: polygon(0.4% 1%, 99.6% 0, 100% 98.4%, 0 100%);
+      transform: rotate(-0.24deg);
+      box-shadow: var(--surface-shadow-soft);
+    }
+
+    .talent-recovery-metric {
+      display: block;
+      margin: 0.85rem 0 0.4rem;
+      color: var(--accent-secondary);
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.65rem);
+      line-height: 1;
+    }
+
+    .talent-recovery-path {
+      color: var(--atlas-signal);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .workflow-sidebar {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(1.25rem, 4vw, 3rem);
+      margin: 3rem 0 3.5rem;
+      padding: 1.4rem 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(105deg, color-mix(in srgb, var(--surface-muted) 84%, transparent), transparent 88%);
+      transform: rotate(0.22deg);
+    }
+
+    .workflow-caption {
+      align-self: end;
+      padding-top: 1rem;
+      border-top: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+      color: var(--atlas-signal);
+      font-family: var(--font-mono);
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.55;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .delivery-heading,
+      .evolution-card,
+      .workflow-sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .delivery-heading h2 {
+        max-width: none;
+      }
+
+      .delivery-card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .delivery-card:last-child {
+        grid-column: 1 / -1;
+        padding-left: 0;
+        border-left: 0;
+      }
+
+      .bridge-stages,
+      .production-map-grid,
+      .talent-platform-modules {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .evolution-trajectory {
+        padding-top: 1rem;
+        padding-left: 0;
+        border-top: 1px solid color-mix(in srgb, var(--atlas-signal) 42%, transparent);
+        border-left: 0;
+      }
+
+      .recovery-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .recovery-column,
+      .recovery-column + .recovery-column {
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--border);
+        border-left: 0;
+      }
+
+      .recovery-column:first-child {
+        border-top: 0;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body.debug-new-copy .debug-new-block,
+      body.debug-new-copy .accordion-inner .debug-new-block {
+        display: block;
+      }
+
+      body.debug-new-copy .debug-new-block::before,
+      body.debug-new-copy .accordion-inner .debug-new-block::before {
+        position: static;
+        display: inline-block;
+        margin: 0 0 0.65rem;
+        content: attr(data-debug-label) "  →";
+        white-space: normal;
+      }
+
+      .delivery-section {
+        margin-block: 2.5rem 3rem;
+        padding-inline: 0;
+      }
+
+      .delivery-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .delivery-card:last-child {
+        grid-column: auto;
+      }
+
+      .delivery-card,
+      .delivery-card + .delivery-card {
+        padding-right: 0;
+        padding-left: 0;
+        border-left: 0;
+      }
+
+      .bridge-heading {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+        text-align: left;
+      }
+
+      .bridge-edition:last-child,
+      .class-production-bridge > p {
+        text-align: left;
+      }
+
+      .bridge-heading h4 {
+        grid-row: 1;
+        white-space: normal;
+      }
+
+      .bridge-stages,
+      .production-map-grid,
+      .talent-platform-modules {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .recovery-header {
+        grid-template-columns: 1fr;
+      }
+
+      .recovery-metric {
+        text-align: left;
+      }
+
+    }
+
     @media (max-width: 1790px) {
       .ambient-collage {
         display: none;
@@ -3562,6 +4150,32 @@
     <li>Designed three non-combat guild systems combining daily engagement loops with guild-specific buildcrafting</li>
   </ul>
 
+  <div class="debug-new-block" data-debug-label="New · delivery">
+    <section class="delivery-section" aria-labelledby="delivery-title">
+      <div class="delivery-heading">
+        <div>
+          <h2 id="delivery-title">How I ship</h2>
+        </div>
+        <p>I own features from the initial design question through implementation, QA, release, and live iteration. That means aligning disciplines, splitting the work into implementable tracks, staying close to technical decisions, and reviewing the result in game.</p>
+      </div>
+
+      <div class="delivery-card-grid">
+        <article class="delivery-card">
+          <h3>Turn a system into workstreams</h3>
+          <p>For the talent platform, I broke the design into server and editor logic, client protocol, UI and graphics, asset handling, branch switching, and persistence cases. I stayed involved through implementation and QA instead of handing off a finished document.</p>
+        </article>
+        <article class="delivery-card">
+          <h3>Learn fast when the tools are not enough</h3>
+          <p>One of my first live-content tasks used interactive graves to summon different squads of undead. When the deadline exposed gaps in the existing tools, I had one day to keep the full design intact. I worked directly with programmers on a database-backed spawn change, editor support, and client-side interaction sorting, then tested the complete flow in game.</p>
+        </article>
+        <article class="delivery-card">
+          <h3>Lead without leaving the work</h3>
+          <p>I keep design direction and the living specification, delegate coherent task groups to designers, review their decisions and implementation, and track dependencies across server, client, UI, art, content, and QA.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
   <hr />
 
   <!-- ── Table of Contents ──────────────────────────── -->
@@ -3640,7 +4254,9 @@
   <!-- Competitive Guild Raids Summary -->
   <article class="case-summary">
   <h3 id="guild-raids-summary">Competitive Guild Raids</h3>
-  <p>I conceived Competitive Guild Raids as a core endgame pillar for high-level guilds and defined the system's competitive format, progression, and encounter direction. Another designer managed the technical task split during the original implementation so we could share the production load. Since the initial release, the raids and their iterations have been designed and delivered by me or by designers on my team.</p>
+  <div class="debug-new-block debug-new-copy-block" data-debug-label="New · ownership">
+    <p>I conceived and designed Competitive Guild Raids as a core endgame pillar for high-level guilds. I owned the system and encounter direction, coordinated cross-disciplinary delivery, and have led every later raid personally or through designers on my team.</p>
+  </div>
 
   <h4>Key points</h4>
   <ul>
@@ -3818,6 +4434,22 @@
           </span>
         </a>
 
+        <div class="debug-new-block" data-debug-label="New · evolution">
+          <aside class="evolution-card" aria-labelledby="templar-evolution-title">
+            <div>
+              <span class="editorial-kicker">Live design / role growth</span>
+              <h4 id="templar-evolution-title">Evolving the class without losing its identity</h4>
+              <p>Templar launched with a clear control identity and found its strongest early value in PvP. In PvE, however, the class was awkward to level and uncomfortable to play solo. Its single-target damage was viable, but limited AoE, weak sustain, and reliance on setup made routine progression slower and less forgiving than intended.</p>
+              <p>Across later balance passes, I widened its AoE options, made more of the kit scale with the stronger of physical or magical power, strengthened the combat companion, and added reliable self and party healing. The class kept its tactical PvP identity while becoming much more comfortable to level, more self-sufficient in solo PvE, and viable as a support-healer in groups.</p>
+            </div>
+            <div class="evolution-trajectory" aria-label="Templar role evolution">
+              <span class="evolution-mark"><span><strong>Launch</strong>Control-first hybrid</span></span>
+              <span class="evolution-mark"><span><strong>Live signal</strong>Awkward leveling and solo PvE</span></span>
+              <span class="evolution-mark"><span><strong>Evolved role</strong>Comfortable solo progression + PvE support-healer</span></span>
+            </div>
+          </aside>
+        </div>
+
         <h4>Impact</h4>
         <ul>
           <li>Closed a faction-level gap in control tools for Sentinels</li>
@@ -3825,13 +4457,17 @@
           <li>Expanded build diversity through flexible gear and role options without fragmenting class identity</li>
         </ul>
 
-        <h4>Development challenges</h4>
-        <ul class="challenge-list">
-          <li>Keeping control strong without turning fights into permanent lockdown</li>
-          <li>Making the kit viable against both auto-attack and skill-based opponents</li>
-          <li>Supporting multiple builds without creating balance traps</li>
-          <li>Maintaining readability and fairness through clear telegraphing of strong effects</li>
-        </ul>
+        <div class="debug-new-block" data-debug-label="New · challenges">
+          <div>
+            <h4>Development challenges</h4>
+            <ul class="challenge-list">
+              <li>Preserve the class's PvP control identity while fixing PvE leveling and solo comfort</li>
+              <li>Improve AoE, sustain, and setup flow without collapsing physical, magical, and support builds into one answer</li>
+              <li>Make healing and support value visible in moment-to-moment play, not only in passive stats</li>
+              <li>Validate triggers across stuns, summons, resistance, party targets, and solo states</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3904,6 +4540,25 @@
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="debug-new-block" data-debug-label="New · class arc">
+    <aside class="class-production-bridge" aria-labelledby="class-production-title">
+      <div class="bridge-heading">
+        <span class="bridge-edition">Update 9.0 · Templar + Chieftain</span>
+        <h4 id="class-production-title">From concept to launch</h4>
+        <span class="bridge-edition">Update 11.0 · Beastmaster + Reaper</span>
+      </div>
+      <p>After shipping Templar and Chieftain, I carried the same end-to-end ownership into Beastmaster and Reaper. I owned the class concepts and kits, then took them through visual identity, UI requirements, itemization, localization, marketing support, closed and public testing, and release changes. Shipping a class meant coordinating server and client programmers, artists, UI, localization, marketing, and QA while protecting one coherent player fantasy.</p>
+      <div class="bridge-stages" aria-label="Class production stages">
+        <span>Concept &amp; kit</span>
+        <span>Tech &amp; UI</span>
+        <span>Art identity</span>
+        <span>Itemization</span>
+        <span>Test servers</span>
+        <span>Release</span>
+      </div>
+    </aside>
   </div>
 
   <!-- Beastmaster -->
@@ -4068,7 +4723,25 @@
         <p>Raid seasons create a strong sink for consumables and entry resources. The reward structure offers rare power rewards and large gold payouts that matter to top guilds, while preparation needs drive engagement across other game systems.</p>
 
         <h4>My role</h4>
-        <p>I created the original concept and system design, including the competitive format, progression structure, and encounter direction. Another designer managed the technical task split during the first implementation so we could share the production load. Since release, I have led raid design, iteration, and delivery personally or through designers on my team.</p>
+        <div class="debug-new-block debug-new-copy-block" data-debug-label="New · ownership">
+          <p>I conceived and designed Competitive Guild Raids as a core endgame pillar for high-level guilds. I owned the system and encounter direction, coordinated cross-disciplinary delivery, and have led every later raid personally or through designers on my team.</p>
+        </div>
+
+        <div class="debug-new-block" data-debug-label="New · production">
+          <aside class="production-map" aria-labelledby="raid-production-title">
+            <span class="editorial-kicker">One feature / six workstreams</span>
+            <h4 id="raid-production-title">Cross-disciplinary delivery map</h4>
+            <p>The original release crossed all of these workstreams. My job was to keep the competitive rules, encounter behaviour, progression, UI, technical constraints, and live operation of the season aligned as one feature.</p>
+            <div class="production-map-grid" aria-label="Raid production workstreams">
+              <span>System &amp; competition</span>
+              <span>Encounters</span>
+              <span>Server</span>
+              <span>Client &amp; UX</span>
+              <span>Editors &amp; telemetry</span>
+              <span>QA &amp; live operations</span>
+            </div>
+          </aside>
+        </div>
 
         <h4>Impact</h4>
         <ul>
@@ -4078,13 +4751,33 @@
           <li>Encouraged cross-system participation by linking raid preparation to other game activities</li>
         </ul>
 
-        <h4>Development challenges</h4>
-        <ul class="challenge-list">
-          <li>Building competitive PvE that stays fun across repeated runs</li>
-          <li>Designing difficulty scaling through mechanics rather than pure stat inflation</li>
-          <li>Ensuring clear UX for standings, rewards, and seasonal results</li>
-          <li>Balancing economy impact without making the system feel mandatory for all players</li>
-        </ul>
+        <div class="debug-new-block" data-debug-label="New · recovery">
+          <aside class="recovery-case" aria-labelledby="raid-recovery-title">
+            <div class="recovery-header">
+              <div>
+                <span class="editorial-kicker">Live failure / player-fair recovery</span>
+                <h4 id="raid-recovery-title">Same-day live recovery</h4>
+              </div>
+              <strong class="recovery-metric">≈4 hours<span>from incident report to verified production fix</span></strong>
+            </div>
+            <div class="recovery-path">Incident → full-range QA → production verified</div>
+            <div class="recovery-columns">
+              <div class="recovery-column">
+                <strong>Incident</strong>
+                <p>A cooldown configuration bug made the boss use key abilities far less often and affected leaderboard results.</p>
+              </div>
+              <div class="recovery-column">
+                <strong>Decision</strong>
+                <p>I designed the recovery around fairness, not only the technical fix. Legitimate attempts after the correction had to be more achievable than the runs completed with the bug.</p>
+              </div>
+              <div class="recovery-column">
+                <strong>Recovery</strong>
+                <p>We retuned health, damage, mechanic cadence, duration, and readability across the full difficulty range. QA validated every bracket, then I deployed the correction and verified it in production roughly four hours after the issue was filed.</p>
+              </div>
+            </div>
+            <p class="recovery-lesson"><strong>What carried forward:</strong> competitive recovery needs a player-fair target, full-range validation, production verification, and communication, not just a corrected parameter.</p>
+          </aside>
+        </div>
       </div>
     </div>
   </div>
@@ -4203,7 +4896,23 @@
 
         <p>Over time, talents moved beyond raw stat bonuses and began modifying skill behavior directly, making build choices more visible and impactful in gameplay, instead of leaving them as passive efficiency upgrades that only mattered on paper.</p>
 
-        <aside class="impact-note impact-note--spread" data-stamp="Progression signal" aria-label="Talent adoption: 60 percent of the eligible audience started the first new branch; approximately 4 thousand upgrades per day two months after role talents launched">
+        <div class="debug-new-block" data-debug-label="New · platform">
+          <aside class="talent-platform" aria-labelledby="talent-platform-title">
+            <span class="editorial-kicker">System design through production</span>
+            <h4 id="talent-platform-title">Shipping the platform, not only designing the tree</h4>
+            <p>I owned the system design and split delivery into server and editor logic, client protocol, UI and graphics, asset handling, and branch switching. I stayed involved through implementation and QA, including persistence and migration cases across relogging, death, and server restarts.</p>
+            <div class="talent-platform-modules" aria-label="Talent platform workstreams">
+              <span>Server &amp; editor</span>
+              <span>Client protocol</span>
+              <span>UI &amp; assets</span>
+              <span>Branch switching</span>
+              <span>Persistence</span>
+              <span>Migration</span>
+            </div>
+          </aside>
+        </div>
+
+        <aside class="impact-note impact-note--spread" aria-label="Talent adoption: 60 percent of the eligible audience started the first new branch; approximately 4 thousand upgrades per day two months after role talents launched">
           <span class="impact-note-kicker">Progression at scale</span>
           <span class="impact-note-grid">
             <span class="impact-note-stat">
@@ -4215,9 +4924,15 @@
               <span class="impact-note-copy">talent upgrades still made 2 months after role talents launched</span>
             </span>
           </span>
-          <span class="impact-note-evolution"><strong>Truth Enlightenment:</strong> an underpicked personal timing modifier was rebuilt into group support — and became a more frequent choice.</span>
           <span class="impact-note-source">Update 9.4 + role talent reports · rounded</span>
         </aside>
+
+        <div class="debug-new-block" data-debug-label="New · iteration">
+          <div>
+            <h4>Designed for iteration</h4>
+            <p>When Truth Enlightenment failed to create a meaningful live choice, I replaced the interaction instead of only increasing its numbers. The personal timing modifier moved to a different core skill and became party support, making it a more frequent choice without losing the branch's identity.</p>
+          </div>
+        </div>
 
         <h4>Examples of talent-driven gameplay changes</h4>
         <ul>
@@ -4238,13 +4953,29 @@
 
         <img src="assets/images/talent_tree_2.png" alt="Expanded talent tree showing class-specific upgrades" class="img-full" width="1307" height="914" loading="lazy" decoding="async" />
 
-        <h4>Development challenges</h4>
-        <ul class="challenge-list">
-          <li>Daily caps that encourage variety without feeling restrictive</li>
-          <li>Supporting build diversity without creating unsustainable balance complexity</li>
-          <li>Keeping build switching flexible while preserving meaningful decisions</li>
-          <li>Ensuring the system scales with future classes, events, and guild layers</li>
-        </ul>
+        <div class="debug-new-block" data-debug-label="New · validation">
+          <div>
+            <h4>What we validated</h4>
+            <ul class="challenge-list">
+              <li>Every class tree, branch activation, switching, and reset state</li>
+              <li>Persistence after relogging, death, and server restart</li>
+              <li>Old and new client states during rollout</li>
+              <li>Milestone-aware resets and active/inactive branch feedback</li>
+              <li>Skill and talent interactions that change behaviour rather than only values</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="debug-new-block" data-debug-label="New · recovery">
+          <aside class="talent-recovery" aria-labelledby="talent-recovery-title">
+            <span class="editorial-kicker">Progression incident / trust recovery</span>
+            <h4 id="talent-recovery-title">When progression broke</h4>
+            <p>After a restart disabled two talent branches that players had already spent progression currency to activate, I coordinated a recovery that treated player trust as part of the fix. We identified the affected characters, restored the live talent data, and refunded the currency spent on activation.</p>
+            <strong class="talent-recovery-metric">≈90 minutes from incident to production recovery</strong>
+            <div class="talent-recovery-path">Find affected accounts / restore live data / refund player progress</div>
+            <p>We later fixed a related editor save-flow issue, and I personally verified the corrected behaviour before the live data was synchronized back into the working environment.</p>
+          </aside>
+        </div>
       </div>
     </div>
   </div>
@@ -4481,6 +5212,20 @@
   </div>
 
   <hr />
+
+  <div class="debug-new-block" data-debug-label="New · tools">
+    <aside class="workflow-sidebar" aria-labelledby="workflow-sidebar-title">
+      <div>
+        <span class="editorial-kicker">Proprietary editors · production workflows</span>
+        <h3 id="workflow-sidebar-title">Improving the tools behind the game</h3>
+      </div>
+      <div>
+        <p>Throughout my years on Warspear Online, I have continuously improved the proprietary editors used by our designers and content team. I identify production bottlenecks, specify editor features, work through implementation and QA with programmers, and personally verify migrated live content.</p>
+        <p>One example was moving complex encounter logic from manual setup into a node-based visual editor while preserving its live behaviour. Later, I specified reusable telemetry nodes so designers could measure room completion, failure, timing, and class segments from the same workflow.</p>
+        <div class="workflow-caption">Preserve live behaviour / remove repeated setup / make outcomes observable</div>
+      </div>
+    </aside>
+  </div>
 
   <div class="accordion" data-detail="Reports · releases · sources" aria-expanded="false">
     <button class="accordion-header" type="button">

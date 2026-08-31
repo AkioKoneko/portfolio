@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Discovered Entrances - a Path of Exile 2 campaign navigation proposal by Aleksandr Detushev." />
+  <meta name="theme-color" content="#101213" />
+  <title>Discovered Entrances - Path of Exile 2</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101213;
+      --surface: #171a1b;
+      --text: #eeeeea;
+      --text-soft: #c5c7c3;
+      --muted: #929791;
+      --line: #343838;
+      --line-soft: #272b2b;
+      --amber: #d9a650;
+      --amber-soft: #f0c77c;
+      --blue: #82b8c4;
+      --max: 1120px;
+      --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: var(--blue); text-underline-offset: 0.2em; }
+    a:hover { color: #b8dbe1; }
+    a:focus-visible { outline: 2px solid var(--amber-soft); outline-offset: 3px; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 30;
+      top: 0.75rem;
+      left: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      background: var(--text);
+      color: #111;
+      font-weight: 700;
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .topbar {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(16, 18, 19, 0.96);
+    }
+
+    .topbar__inner {
+      display: flex;
+      min-height: 58px;
+      align-items: center;
+      justify-content: space-between;
+      width: min(calc(100% - 2rem), var(--max));
+      margin-inline: auto;
+      gap: 1rem;
+    }
+
+    .topbar strong { font-size: 0.82rem; letter-spacing: 0.03em; }
+    .topbar a { color: var(--text-soft); font-size: 0.78rem; text-decoration: none; }
+    .topbar a:hover { color: var(--text); }
+    .page { width: min(calc(100% - 2rem), var(--max)); margin-inline: auto; }
+
+    .doc-header {
+      padding: clamp(3.5rem, 7vw, 5.5rem) 0 2.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-label, .toc p {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 850px;
+      margin-bottom: 1rem;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 650;
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin-bottom: 0;
+      color: var(--text-soft);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      align-items: start;
+      gap: clamp(2rem, 6vw, 5rem);
+    }
+
+    .toc { position: sticky; top: 88px; padding-top: 4rem; }
+    .toc p { margin-bottom: 0.7rem; }
+    .toc ol { margin: 0; padding: 0; list-style: none; }
+    .toc li { border-top: 1px solid var(--line-soft); }
+
+    .toc a {
+      display: block;
+      padding: 0.65rem 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-decoration: none;
+    }
+
+    .toc a:hover { color: var(--text); }
+    .content { min-width: 0; }
+
+    .doc-section {
+      padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 70px;
+    }
+
+    .section-label { margin-bottom: 0.7rem; }
+
+    h2 {
+      margin-bottom: 1.4rem;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    h3 { margin: 2.4rem 0 0.85rem; font-size: 1.1rem; font-weight: 650; }
+    .lead { max-width: 760px; color: var(--text-soft); font-size: 1.05rem; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 2.25rem;
+      border: 1px solid var(--line);
+    }
+
+    .summary-item { padding: 1.35rem; }
+    .summary-item + .summary-item { border-left: 1px solid var(--line); }
+
+    .summary-item b {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: var(--amber-soft);
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .summary-item p { margin: 0; color: var(--text-soft); font-size: 0.9rem; }
+    .figure { margin: 2.25rem 0; }
+    .figure img { width: 100%; border: 1px solid var(--line); background: #0a0b0c; }
+    .figure figcaption { margin-top: 0.65rem; color: var(--muted); font-size: 0.74rem; }
+    .figure figcaption a { color: inherit; }
+
+    .annotated-figure__media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+    }
+
+    .annotated-figure__media img {
+      display: block;
+      width: 133.76%;
+      max-width: none;
+    }
+
+    .map-callout {
+      position: absolute;
+      top: 7%;
+      left: 2.5%;
+      z-index: 2;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid rgba(217, 164, 65, 0.8);
+      background: rgba(10, 11, 12, 0.88);
+      color: #e1bb70;
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.9vw, 0.72rem);
+      line-height: 1.35;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .map-callout small {
+      display: block;
+      margin-top: 0.18rem;
+      color: #d5d0c6;
+      font-size: 0.82em;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .map-callout-arrow {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .map-callout-arrow .arrow-line {
+      fill: none;
+      stroke: #e1bb70;
+      stroke-width: 4;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .map-callout-arrow .arrow-head { fill: #e1bb70; stroke: none; }
+
+    .flow {
+      margin: 1.5rem 0 0;
+      padding: 0;
+      counter-reset: flow;
+      list-style: none;
+    }
+
+    .flow li {
+      display: grid;
+      grid-template-columns: 2.6rem minmax(0, 1fr);
+      padding: 1rem 0;
+      border-top: 1px solid var(--line-soft);
+      counter-increment: flow;
+      gap: 1rem;
+    }
+
+    .flow li::before {
+      display: grid;
+      width: 2rem;
+      height: 2rem;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--text-soft);
+      content: counter(flow);
+      font-family: var(--mono);
+      font-size: 0.66rem;
+    }
+
+    .flow strong { display: block; margin-bottom: 0.2rem; }
+    .flow span { display: block; color: var(--muted); font-size: 0.9rem; }
+
+    .note {
+      margin: 2rem 0 0;
+      padding: 1.1rem 1.2rem;
+      border-left: 3px solid var(--amber);
+      background: var(--surface);
+      color: var(--text-soft);
+    }
+
+    .note strong { color: var(--text); }
+
+    .comparison {
+      width: 100%;
+      margin: 2rem 0;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .comparison th, .comparison td {
+      padding: 0.85rem 0.9rem;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .comparison th { background: var(--surface); color: var(--text); font-size: 0.78rem; }
+    .comparison td { color: var(--text-soft); }
+    .comparison td:first-child { color: var(--text); font-weight: 600; }
+
+    .marker-sample {
+      display: inline-grid;
+      width: 1.6rem;
+      height: 1.6rem;
+      place-items: center;
+      margin-right: 0.45rem;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      vertical-align: middle;
+    }
+
+    .marker-sample--amber { color: var(--amber-soft); }
+    .marker-sample--blue { color: var(--blue); }
+    .columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+    .checklist { margin: 0; padding: 0; list-style: none; }
+
+    .checklist li {
+      position: relative;
+      padding: 0.65rem 0 0.65rem 1.25rem;
+      border-top: 1px solid var(--line-soft);
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    .checklist li::before {
+      position: absolute;
+      top: 1.28rem;
+      left: 0.1rem;
+      width: 0.34rem;
+      height: 0.34rem;
+      border-radius: 50%;
+      background: var(--amber);
+      content: "";
+    }
+
+    .checklist--muted li::before { border: 1px solid var(--muted); background: transparent; }
+
+    .appendix {
+      padding: 1.3rem;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .appendix p:last-child { margin-bottom: 0; color: var(--text-soft); }
+    footer { padding: 2.25rem 0 3rem; color: var(--muted); font-size: 0.73rem; }
+    footer p { margin-bottom: 0.25rem; }
+
+    @media (max-width: 820px) {
+      .summary-grid, .columns { grid-template-columns: 1fr 1fr; }
+      .summary-item:nth-child(3) { grid-column: 1 / -1; border-top: 1px solid var(--line); border-left: 0; }
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; padding-top: 2rem; }
+      .toc ol { display: flex; flex-wrap: wrap; gap: 0 1rem; }
+      .toc li { border-top: 0; }
+      .toc a { padding: 0.35rem 0; }
+    }
+
+    @media (max-width: 560px) {
+      .topbar strong { max-width: 190px; font-size: 0.72rem; }
+      .summary-grid, .columns { grid-template-columns: 1fr; }
+      .summary-item + .summary-item, .summary-item:nth-child(3) { grid-column: auto; border-top: 1px solid var(--line); border-left: 0; }
+      .comparison { display: block; overflow-x: auto; }
+      .comparison th, .comparison td { min-width: 150px; }
+      .figure { margin-inline: -1rem; }
+      .figure figcaption { padding-inline: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <strong>PoE 2 · Discovered Entrances</strong>
+      <a href="../">Aleksandr Detushev - portfolio</a>
+    </div>
+  </header>
+
+  <main class="page" id="content">
+    <header class="doc-header">
+      <h1>Discovered Entrances</h1>
+      <p class="subtitle">A campaign navigation quality-of-life proposal that removes the need to enter a side area only to activate its waypoint and immediately leave.</p>
+    </header>
+
+    <div class="layout">
+      <nav class="toc" aria-label="Document contents">
+        <p>Contents</p>
+        <ol>
+          <li><a href="#summary">1. Summary</a></li>
+          <li><a href="#current-flow">2. Current flow</a></li>
+          <li><a href="#proposal">3. Proposed behavior</a></li>
+          <li><a href="#ui">4. UI concept</a></li>
+          <li><a href="#states">5. State model</a></li>
+          <li><a href="#scope">6. Scope</a></li>
+          <li><a href="#edge-cases">7. Edge cases</a></li>
+          <li><a href="#controller">8. Controller note</a></li>
+        </ol>
+      </nav>
+
+      <div class="content">
+        <section class="doc-section" id="summary" aria-labelledby="summary-title">
+          <p class="section-label">1 · Summary</p>
+          <h2 id="summary-title">Feature overview</h2>
+          <p class="lead">Players who find a side-area entrance often enter the area, activate the waypoint near its start, and leave immediately. This secures a return route before the parent area instance expires, but the interaction adds two area transitions without adding a gameplay decision.</p>
+          <div class="summary-grid">
+            <div class="summary-item"><b>Problem</b><p>Entering a side area only to bookmark it is optimal but repetitive.</p></div>
+            <div class="summary-item"><b>Proposal</b><p>Discovering an eligible entrance creates a provisional world-map destination.</p></div>
+            <div class="summary-item"><b>Constraint</b><p>The destination waypoint remains inactive until the player actually visits and activates it.</p></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="current-flow" aria-labelledby="current-flow-title">
+          <p class="section-label">2 · Current player flow</p>
+          <h2 id="current-flow-title">Checkpoint found next to a side-area entrance</h2>
+          <p>The Drowned City provides a clear example. The checkpoint and The Molten Vault transition are placed together. A player may want to continue toward Apex of Filth first, but entering the vault now is the safest way to preserve a direct return route.</p>
+          <figure class="figure">
+            <img src="assets/checkpoint-entrance.jpg" alt="The Molten Vault transition and a checkpoint visible together in The Drowned City." />
+            <figcaption>The Molten Vault entrance and its exterior checkpoint.</figcaption>
+          </figure>
+          <ol class="flow">
+            <li><div><strong>Discover the checkpoint and entrance</strong><span>The player has already done the exploration required to find the side route.</span></div></li>
+            <li><div><strong>Enter the side area</strong><span>The player loads The Molten Vault without intending to run it yet.</span></div></li>
+            <li><div><strong>Activate the waypoint</strong><span>The visit exists only to secure a future return point.</span></div></li>
+            <li><div><strong>Return to the parent area</strong><span>The player loads The Drowned City again and continues the original route.</span></div></li>
+          </ol>
+          <p>Freythorn creates the same route-planning friction earlier in the campaign: efficient routes commonly enter the side area, activate its waypoint near the start, and return to the Hunting Grounds before completing it later.</p>
+          <p class="note"><strong>Design issue:</strong> the player makes one useful decision - find the entrance and defer the side area - but performs two additional transitions to record that decision.</p>
+        </section>
+
+        <section class="doc-section" id="proposal" aria-labelledby="proposal-title">
+          <p class="section-label">3 · Proposed behavior</p>
+          <h2 id="proposal-title">Create a provisional “Entrance discovered” destination</h2>
+          <p class="lead">When a player discovers an eligible checkpoint paired with a visible area transition, the destination becomes available on the world map as an entrance - not as an activated waypoint.</p>
+          <ol class="flow">
+            <li><div><strong>Trigger</strong><span>The checkpoint beside an authored area transition is discovered.</span></div></li>
+            <li><div><strong>Map update</strong><span>An amber marker with a question mark appears for the destination area, labelled “Entrance discovered”.</span></div></li>
+            <li><div><strong>Travel</strong><span>Selecting “Travel to entrance” creates or reuses the destination instance under the existing rules and places the player at its entrance anchor.</span></div></li>
+            <li><div><strong>Resolution</strong><span>Activating the real waypoint replaces the provisional marker with the normal waypoint state.</span></div></li>
+          </ol>
+          <p>The feature records only what the player has actually discovered: the exterior checkpoint and the visible entrance. It does not activate the destination waypoint, complete objectives, or bypass transition permissions. Travelling through the provisional marker reproduces the same arrival the player would receive by crossing the entrance normally.</p>
+        </section>
+
+        <section class="doc-section" id="ui" aria-labelledby="ui-title">
+          <p class="section-label">4 · UI concept</p>
+          <h2 id="ui-title">World-map marker</h2>
+          <p>The provisional state uses an amber version of the existing map-node language with a question mark in the centre. It also uses explicit text so the state is not communicated by colour alone.</p>
+          <figure class="figure annotated-figure">
+            <div class="annotated-figure__media">
+              <img src="assets/freythorn-discovered-entrance-concept.png" alt="Concept mockup of an unvisited Freythorn represented by an amber question-mark entrance marker, without an active route or waypoint." />
+              <div class="map-callout">Provisional entrance<small>No route yet · waypoint inactive</small></div>
+              <svg class="map-callout-arrow" viewBox="0 0 1250 941" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <marker id="callout-arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+                    <path class="arrow-head" d="M 0 0 L 12 6 L 0 12 Z" />
+                  </marker>
+                </defs>
+                <path class="arrow-line" d="M 265 142 C 318 164, 344 214, 376 263" marker-end="url(#callout-arrowhead)" />
+              </svg>
+            </div>
+          </figure>
+        </section>
+
+        <section class="doc-section" id="states" aria-labelledby="states-title">
+          <p class="section-label">5 · State model</p>
+          <h2 id="states-title">Persistent states</h2>
+          <table class="comparison">
+            <thead><tr><th>State</th><th>World-map representation</th><th>Available travel</th><th>Transition</th></tr></thead>
+            <tbody>
+              <tr><td>Unknown</td><td>No destination node revealed.</td><td>None.</td><td>Player discovers the paired exterior checkpoint.</td></tr>
+              <tr><td>Entrance discovered</td><td>Amber `?` marker and explicit status text.</td><td>Travel to the destination entrance.</td><td>Player activates the destination waypoint.</td></tr>
+              <tr><td>Waypoint activated</td><td>Normal waypoint marker.</td><td>Existing waypoint travel behavior.</td><td>Final state.</td></tr>
+            </tbody>
+          </table>
+          <p>Visiting the destination without activating its waypoint does not need a separate map state. The provisional entrance remains available until the waypoint is activated.</p>
+        </section>
+
+        <section class="doc-section" id="scope" aria-labelledby="scope-title">
+          <p class="section-label">6 · Eligibility and exclusions</p>
+          <h2 id="scope-title">MVP scope</h2>
+          <div class="columns">
+            <div><h3>Eligible</h3><ul class="checklist"><li>Campaign areas</li><li>Authored checkpoint-transition pairs</li><li>Destinations with a safe entrance anchor</li><li>Destinations whose name is already revealed at the transition</li><li>Existing quest and party gates remain valid</li></ul></div>
+            <div><h3>Excluded</h3><ul class="checklist checklist--muted"><li>Boss arenas and trials</li><li>Cutscene or scripted-entry areas</li><li>Hidden destinations</li><li>Special or temporary instances</li><li>Any transition where entering is meaningful progression</li></ul></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="edge-cases" aria-labelledby="edge-cases-title">
+          <p class="section-label">7 · Edge cases</p>
+          <h2 id="edge-cases-title">Questions for prototype and implementation review</h2>
+          <table class="comparison">
+            <thead><tr><th>Area</th><th>Question</th><th>Safe default for an MVP</th></tr></thead>
+            <tbody>
+              <tr><td>Party state</td><td>Who receives entrance discovery?</td><td>Use the same ownership rule as checkpoint discovery.</td></tr>
+              <tr><td>Instance lifecycle</td><td>Reuse a live destination or create a new one?</td><td>Use the existing area-travel instance rules.</td></tr>
+              <tr><td>Quest gates</td><td>Can the outside checkpoint be found before entry is legal?</td><td>Quest and transition permissions always veto the marker.</td></tr>
+              <tr><td>Arrival safety</td><td>Is the entrance anchor always safe and valid?</td><td>Only include authored destinations that pass validation.</td></tr>
+              <tr><td>UI language</td><td>Can amber be confused with quest state?</td><td>Pair colour with the `?`, status label, and different action copy.</td></tr>
+              <tr><td>Controller</td><td>How is the provisional node focused and confirmed?</td><td>Use the normal world-map navigation order and explicit tooltip.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="doc-section" id="controller" aria-labelledby="controller-title">
+          <p class="section-label">8 · Separate controller note</p>
+          <h2 id="controller-title">Allow an L3 binding</h2>
+          <div class="appendix">
+            <p>Controller players can assign many actions, but the left-stick click is not generally available as a bindable input. Making L3 assignable would let players place a frequently used utility action - such as the overlay-map toggle - on that button.</p>
+            <p>This is a separate quality-of-life request, not part of the Discovered Entrances feature.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="page">
+    <p>Independent design exercise by Aleksandr Detushev.</p>
+    <p>Not affiliated with or endorsed by Grinding Gear Games.</p>
+  </footer>
+</body>
+</html>

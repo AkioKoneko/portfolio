@@ -1,6 +1,6 @@
 # Aleksandr Detushev — Game Design Portfolio
 
-Lead Game Designer with 8+ years working on **Warspear Online**, focused on live MMORPG systems, class design, long-term progression, and player-facing balance updates.
+Lead Game Designer with 7+ years working on **Warspear Online**, focused on live MMORPG systems, class design, long-term progression, and player-facing balance updates.
 
 ## Quick Links
 
